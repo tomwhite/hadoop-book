@@ -7,7 +7,7 @@
   <property name="src.dir" value="src/main"/>
   <property name="src.test.dir" value="src/test"/>
   <property name="data.dir" value="input"/>
-  <property name="dist.name" value="htdg-examples-0.1.0"/>
+  <property name="dist.name" value="htdg-examples-0.1.1"/>
   <property name="phragmite.pl" value="bin/phragmite_db.pl"/>
 
   <target name="examples" description="Creates an examples distribution to accompany the book.">
@@ -25,6 +25,7 @@
       <tarfileset dir="${basedir}" prefix="${dist.name}">
         <include name="build.xml"/>
         <include name="ivy.xml"/>
+        <include name="CHANGES"/>
         <include name="README"/>
       </tarfileset>
       <tarfileset dir="${src.dir}" prefix="${dist.name}/${src.dir}">

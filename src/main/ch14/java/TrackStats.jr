@@ -1,0 +1,11 @@
+module fm.last.hadoop.io.records {
+
+  class TrackStats {
+    int listeners;
+    int plays; 
+    int scrobbles;
+    int radioPlays; 
+    int skips; 
+  }
+
+}
