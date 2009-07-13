@@ -1,0 +1,21 @@
+-- == types_tuple_value_dump
+-- == types_tuple_literal_dump
+-- vv types_tuple_value_dump
+A = LOAD 'input/pig/tuples/A'
+  AS (t0:tuple(f0:int, f2:chararray));
+DUMP A;
+DESCRIBE A;
+-- ^^ types_tuple_value_dump
+-- vv types_tuple_literal_dump
+one = LOAD 'input/pig/types/one';
+B = FOREACH one GENERATE (1,'pomegranate')
+  AS t0:tuple(f0:int, f2:chararray);
+DUMP B;
+DESCRIBE B;
+-- ^^ types_tuple_literal_dump
+-- vv types_map_literal_dump
+C = FOREACH one GENERATE [1#'pomegranate']
+  AS t0:map[];
+DUMP C;
+DESCRIBE C;
+-- ^^ types_map_literal_dump

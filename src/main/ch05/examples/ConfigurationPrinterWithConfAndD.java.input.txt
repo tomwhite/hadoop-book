@@ -1,0 +1,3 @@
+hadoop ConfigurationPrinter -conf conf/hadoop-localhost.xml \
+  -D mapred.job.tracker=example.com:8021 \
+  | grep mapred.job.tracker

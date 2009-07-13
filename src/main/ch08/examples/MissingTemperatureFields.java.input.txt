@@ -1,0 +1,1 @@
+hadoop jar job.jar MissingTemperatureFields job_200904200610_0003

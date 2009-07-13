@@ -1,0 +1,2 @@
+hadoop v2.MaxTemperatureDriver -conf conf/hadoop-local.xml \
+  input/ncdc/micro max-temp

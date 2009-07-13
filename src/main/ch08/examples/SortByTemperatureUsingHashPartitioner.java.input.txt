@@ -1,0 +1,2 @@
+hadoop jar job.jar SortByTemperatureUsingHashPartitioner \
+  -D mapred.reduce.tasks=30 input/ncdc/all-seq output-hashsort

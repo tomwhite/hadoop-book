@@ -1,0 +1,223 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.3/" xmlns:xsi="http://www.w3.org/2001/XMLSc
+hema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.3/ http://www.mediawiki.or
+g/xml/export-0.3.xsd" version="0.3" xml:lang="en">
+  <siteinfo>
+    <sitename>Wikipedia</sitename>
+    <base>http://en.wikipedia.org/wiki/Main_Page</base>
+    <generator>MediaWiki 1.14alpha</generator>
+    <case>first-letter</case>
+      <namespaces>
+      <namespace key="-2">Media</namespace>
+      <namespace key="-1">Special</namespace>
+      <namespace key="0" />
+      <namespace key="1">Talk</namespace>
+      <namespace key="2">User</namespace>
+      <namespace key="3">User talk</namespace>
+      <namespace key="4">Wikipedia</namespace>
+      <namespace key="5">Wikipedia talk</namespace>
+      <namespace key="6">Image</namespace>
+      <namespace key="7">Image talk</namespace>
+      <namespace key="8">MediaWiki</namespace>
+      <namespace key="9">MediaWiki talk</namespace>
+      <namespace key="10">Template</namespace>
+      <namespace key="11">Template talk</namespace>
+      <namespace key="12">Help</namespace>
+      <namespace key="13">Help talk</namespace>
+      <namespace key="14">Category</namespace>
+      <namespace key="15">Category talk</namespace>
+      <namespace key="100">Portal</namespace>
+      <namespace key="101">Portal talk</namespace>
+    </namespaces>
+  </siteinfo>
+  <page>
+    <title>AmericanSamoa</title>
+    <id>6</id>
+    <revision>
+      <id>133452270</id>
+      <timestamp>2007-05-25T17:12:06Z</timestamp>
+      <contributor>
+        <username>Gurch</username>
+        <id>241822</id>
+      </contributor>
+      <minor />
+      <comment>Revert edit(s) by [[Special:Contributions/Ngaiklin|Ngaiklin]] to last version by [[S
+pecial:Contributions/Docu|Docu]]</comment>
+      <text xml:space="preserve">#REDIRECT [[American Samoa]]{{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AppliedEthics</title>
+    <id>8</id>
+    <revision>
+      <id>133452279</id>
+      <timestamp>2007-05-25T17:12:09Z</timestamp>
+      <contributor>
+        <username>Gurch</username>
+        <id>241822</id>
+      </contributor>
+      <minor />
+      <comment>Revert edit(s) by [[Special:Contributions/Ngaiklin|Ngaiklin]] to last version by [[S
+pecial:Contributions/Rory096|Rory096]]</comment>
+      <text xml:space="preserve">#REDIRECT [[Applied ethics]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AccessibleComputing</title>
+    <id>10</id>
+    <revision>
+      <id>133452289</id>
+      <timestamp>2007-05-25T17:12:12Z</timestamp>
+      <contributor>
+        <username>Gurch</username>
+        <id>241822</id>
+      </contributor>
+      <minor />
+      <comment>Revert edit(s) by [[Special:Contributions/Ngaiklin|Ngaiklin]] to last version by [[S
+pecial:Contributions/Rory096|Rory096]]</comment>
+      <text xml:space="preserve">#REDIRECT [[Computer accessibility]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AfghanistanHistory</title>
+    <id>13</id>
+    <revision>
+      <id>74466652</id>
+      <timestamp>2006-09-08T04:15:52Z</timestamp>
+      <contributor>
+        <username>Rory096</username>
+        <id>750223</id>
+      </contributor>
+      <comment>cat rd</comment>
+      <text xml:space="preserve">#REDIRECT [[History of Afghanistan]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AfghanistanGeography</title>
+    <id>14</id>
+    <revision>
+      <id>74466619</id>
+      <timestamp>2006-09-08T04:15:36Z</timestamp>
+      <contributor>
+        <username>Rory096</username>
+        <id>750223</id>
+      </contributor>
+      <comment>cat rd</comment>
+      <text xml:space="preserve">#REDIRECT [[Geography of Afghanistan]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AfghanistanPeople</title>
+    <id>15</id>
+    <revision>
+      <id>135089040</id>
+      <timestamp>2007-06-01T13:59:37Z</timestamp>
+      <contributor>
+        <username>RussBot</username>
+        <id>279219</id>
+      </contributor>
+      <minor />
+      <comment>Robot: Fixing [[Special:DoubleRedirects|double-redirect]] -&quot;Demographics of Afghanistan&quot; +&quot;Demography of Afghanistan&quot;</comment>
+      <text xml:space="preserve">#REDIRECT [[Demography of Afghanistan]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AfghanistanEconomy</title>
+    <id>17</id>
+    <revision>
+      <id>74466531</id>
+      <timestamp>2006-09-08T04:14:58Z</timestamp>
+      <contributor>
+        <username>Rory096</username>
+        <id>750223</id>
+      </contributor>
+      <comment>cat rd</comment>
+      <text xml:space="preserve">#REDIRECT [[Economy of Afghanistan]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AfghanistanCommunications</title>
+    <id>18</id>
+    <revision>
+      <id>74466499</id>
+      <timestamp>2006-09-08T04:14:42Z</timestamp>
+      <contributor>
+        <username>Rory096</username>
+        <id>750223</id>
+      </contributor>
+      <comment>cat rd</comment>
+      <text xml:space="preserve">#REDIRECT [[Communications in Afghanistan]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AfghanistanTransportations</title>
+    <id>19</id>
+    <revision>
+      <id>74466423</id>
+      <timestamp>2006-09-08T04:14:07Z</timestamp>
+      <contributor>
+        <username>Rory096</username>
+        <id>750223</id>
+      </contributor>
+      <comment>cat rd</comment>
+      <text xml:space="preserve">#REDIRECT [[Transport in Afghanistan]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AfghanistanMilitary</title>
+    <id>20</id>
+    <revision>
+      <id>74466354</id>
+      <timestamp>2006-09-08T04:13:27Z</timestamp>
+      <contributor>
+        <username>Rory096</username>
+        <id>750223</id>
+      </contributor>
+      <comment>cat rd</comment>
+      <text xml:space="preserve">#REDIRECT [[Military of Afghanistan]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AfghanistanTransnationalIssues</title>
+    <id>21</id>
+    <revision>
+      <id>46448859</id>
+      <timestamp>2006-04-01T12:08:42Z</timestamp>
+      <contributor>
+        <username>Gurch</username>
+        <id>241822</id>
+      </contributor>
+      <minor />
+      <comment>{{R from CamelCase}}</comment>
+      <text xml:space="preserve">#REDIRECT [[Foreign relations of Afghanistan]] {{R from CamelCase}
+}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AssistiveTechnology</title>
+    <id>23</id>
+    <revision>
+      <id>74466798</id>
+      <timestamp>2006-09-08T04:17:00Z</timestamp>
+      <contributor>
+        <username>Rory096</username>
+        <id>750223</id>
+      </contributor>
+      <comment>cat rd</comment>
+      <text xml:space="preserve">#REDIRECT [[Assistive_technology]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+  <page>
+    <title>AmoeboidTaxa</title>
+    <id>24</id>
+    <revision>
+      <id>74466889</id>
+      <timestamp>2006-09-08T04:17:51Z</timestamp>
+      <contributor>
+        <username>Rory096</username>
+        <id>750223</id>
+      </contributor>
+      <comment>cat rd</comment>
+      <text xml:space="preserve">#REDIRECT [[Amoeboid]] {{R from CamelCase}}</text>
+    </revision>
+  </page>
+</mediawiki>

@@ -1,0 +1,15 @@
+-- == combine_union
+-- == combine_schema
+A = LOAD 'input/pig/combine/A' AS (f0:int, f1:int);
+B = LOAD 'input/pig/combine/B' AS (f0:chararray, f1:chararray, f2:int);
+-- vv combine_union
+DUMP A;
+DUMP B;
+C = UNION A, B;
+DUMP C;
+-- ^^ combine_union
+-- vv combine_schema
+DESCRIBE A;
+DESCRIBE B;
+DESCRIBE C;
+-- ^^ combine_schema

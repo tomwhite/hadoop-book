@@ -1,0 +1,2 @@
+hadoop jar job.jar MaxTemperatureByStationNameUsingDistributedCacheFile \
+  -files input/ncdc/metadata/stations-fixed-width.txt input/ncdc/all output

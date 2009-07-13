@@ -1,0 +1,1 @@
+hadoop jar job.jar PartitionByStationUsingMultipleOutputFormat input/ncdc/all/190?.gz output-part-by-station

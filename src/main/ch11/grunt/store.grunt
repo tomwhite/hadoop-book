@@ -1,0 +1,6 @@
+-- == store_colon_delimited
+A = LOAD 'input/pig/foreach/A';
+-- vv store_colon_delimited
+STORE A INTO 'out' USING PigStorage(':');
+cat out
+-- ^^ store_colon_delimited

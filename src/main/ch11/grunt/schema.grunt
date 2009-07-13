@@ -1,0 +1,46 @@
+-- == schema_names_only
+-- == schema_types
+-- == schema_one_type_only
+-- == schema_absent
+-- == schema_absent_projected
+-- vv schema_names_only
+records = LOAD 'input/ncdc/micro-tab/sample.txt'
+  AS (year, temperature, quality);
+DESCRIBE records;
+-- ^^ schema_names_only
+-- vv schema_types
+records = LOAD 'input/ncdc/micro-tab/sample.txt'
+  AS (year:int, temperature:int, quality:int);
+DESCRIBE records;
+-- ^^ schema_types
+-- vv schema_one_type_only
+records = LOAD 'input/ncdc/micro-tab/sample.txt'
+  AS (year, temperature:int, quality:int);
+DESCRIBE records;
+-- ^^ schema_one_type_only
+-- vv schema_absent
+records = LOAD 'input/ncdc/micro-tab/sample.txt';
+DESCRIBE records;
+-- ^^ schema_absent
+-- vv schema_absent_projected
+projected_records = FOREACH records GENERATE $0, $1, $2;
+DUMP projected_records;
+DESCRIBE projected_records;
+-- ^^ schema_absent_projected
+
+-- Some casts
+-- schema is used at run time, if the value of the field cannot be cast, then a null is replaced with it
+A = LOAD 'input/pig/schema/A' AS (id:int, item:int);
+DESCRIBE A;
+
+B = FOREACH A GENERATE $0, $1;
+DESCRIBE B;
+C = FOREACH A GENERATE $0+0, $1;
+DESCRIBE C;
+D = FOREACH A GENERATE (int) $0 AS f0, $1;
+DESCRIBE D;
+
+E = FILTER A BY $0 >= 0;
+DESCRIBE E;
+
+EXPLAIN E;

@@ -1,0 +1,1 @@
+hadoop jar job.jar MaxTemperatureWithCounters input/ncdc/all output-counters

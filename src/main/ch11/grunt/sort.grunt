@@ -1,0 +1,20 @@
+-- == sort_dump
+-- == sort_order
+-- == sort_no_order
+-- == sort_limit
+A = LOAD 'input/pig/sort/A';
+-- vv sort_dump
+DUMP A;
+-- ^^ sort_dump
+-- vv sort_order
+B = ORDER A BY $0, $1 DESC;
+DUMP B;
+-- ^^ sort_order
+-- vv sort_no_order
+C = FOREACH B GENERATE *;
+-- ^^ sort_no_order
+DUMP C;
+-- vv sort_limit
+D = LIMIT B 2;
+DUMP D;
+-- ^^ sort_limit

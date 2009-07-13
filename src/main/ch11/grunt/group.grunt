@@ -1,0 +1,20 @@
+-- == group_dump
+-- == group_expression
+-- == group_all
+-- == group_count
+A = LOAD 'input/pig/group/A';
+-- vv group_dump
+DUMP A;
+-- ^^ group_dump
+-- vv group_expression
+B = GROUP A BY SIZE($1);
+DUMP B;
+-- ^^ group_expression
+-- vv group_all
+C = GROUP A ALL;
+DUMP C;
+-- ^^ group_all
+-- vv group_count
+D = FOREACH C GENERATE COUNT(A);
+DUMP D;
+-- ^^ group_count

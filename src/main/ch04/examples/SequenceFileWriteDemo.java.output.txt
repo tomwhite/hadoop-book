@@ -1,0 +1,22 @@
+[128]   100     One, two, buckle my shoe
+[173]   99      Three, four, shut the door
+[220]   98      Five, six, pick up sticks
+[264]   97      Seven, eight, lay them straight
+[314]   96      Nine, ten, a big fat hen
+[359]   95      One, two, buckle my shoe
+[404]   94      Three, four, shut the door
+[451]   93      Five, six, pick up sticks
+[495]   92      Seven, eight, lay them straight
+[545]   91      Nine, ten, a big fat hen
+...
+[1976]  60      One, two, buckle my shoe
+[2021]  59      Three, four, shut the door
+[2088]  58      Five, six, pick up sticks
+[2132]  57      Seven, eight, lay them straight
+[2182]  56      Nine, ten, a big fat hen
+...
+[4557]  5       One, two, buckle my shoe
+[4602]  4       Three, four, shut the door
+[4649]  3       Five, six, pick up sticks
+[4693]  2       Seven, eight, lay them straight
+[4743]  1       Nine, ten, a big fat hen

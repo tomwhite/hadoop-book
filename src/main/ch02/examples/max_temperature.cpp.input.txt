@@ -1,0 +1,6 @@
+hadoop pipes \
+  -D hadoop.pipes.java.recordreader=true \
+  -D hadoop.pipes.java.recordwriter=true \
+  -input sample.txt \
+  -output output \
+  -program bin/max_temperature

@@ -1,0 +1,1 @@
+hadoop MaxTemperatureWithCompression input/ncdc/sample.txt.gz output

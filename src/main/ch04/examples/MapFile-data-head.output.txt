@@ -1,0 +1,10 @@
+1       One, two, buckle my shoe
+2       Three, four, shut the door
+3       Five, six, pick up sticks
+4       Seven, eight, lay them straight
+5       Nine, ten, a big fat hen
+6       One, two, buckle my shoe
+7       Three, four, shut the door
+8       Five, six, pick up sticks
+9       Seven, eight, lay them straight
+10      Nine, ten, a big fat hen

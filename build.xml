@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+
+<project name="htdg" basedir="." default="jar" xmlns:ivy="antlib:org.apache.ivy.ant">
+
+	<property environment="env"/>
+	<property name="build.dir" value="build"/>
+	<property name="src.dir" value="src/main"/>
+	<property name="src.includes" value="**"/>
+	<property name="src.test.dir" value="src/test"/>
+    <property name="src.test.includes" value="**"/>
+	<property name="classes.dir" value="${build.dir}/classes"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="test.build.dir" value="${build.dir}/test"/>
+    <property name="test.log.dir" value="${test.build.dir}/log"/>
+	
+	<target name="init">
+		<fail message="Please set the environment variable HADOOP_INSTALL.">
+			<condition>
+				<not>
+					<isset property="env.HADOOP_INSTALL"/>
+				</not>
+			</condition>
+		</fail>
+        <fail message="Please set the environment variable HBASE_INSTALL.">
+            <condition>
+                <not>
+                    <isset property="env.HBASE_INSTALL"/>
+                </not>
+            </condition>
+        </fail>		
+        <fail message="Please set the environment variable PIG_INSTALL.">
+            <condition>
+                <not>
+                    <isset property="env.PIG_INSTALL"/>
+                </not>
+            </condition>
+        </fail>
+        <fail message="Please set the environment variable ZOOKEEPER_INSTALL.">
+            <condition>
+                <not>
+                    <isset property="env.ZOOKEEPER_INSTALL"/>
+                </not>
+            </condition>
+        </fail>
+		<path id="classpath">
+			<pathelement location="${classes.dir}"/>
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="${env.HADOOP_INSTALL}">
+				<include name="*.jar"/>
+				<include name="lib/**/*.jar"/>
+			</fileset>
+	        <fileset dir="${env.PIG_INSTALL}">
+	            <include name="*.jar"/>
+	            <include name="lib/**/*.jar"/>
+	        </fileset>
+	         <fileset dir="${env.ZOOKEEPER_INSTALL}">
+                <include name="*.jar"/>
+                <include name="lib/**/*.jar"/>
+            </fileset>
+		</path>
+        <path id="hbase.classpath">
+            <pathelement location="${classes.dir}"/>
+            <fileset dir="${env.HBASE_INSTALL}">
+                <include name="*.jar"/>
+                <include name="lib/**/*.jar"/>
+            </fileset>
+        </path>
+	</target>
+
+	<target name="clean" description="Deletes all build artifacts.">
+		<delete dir="${build.dir}"/>
+	</target>
+
+	<target name="retrieve-dependencies" description="Retrieves dependencies (except Hadoop) using Ivy.">
+		<ivy:retrieve log="download-only"/>
+    </target>
+
+	<target name="compile" depends="init,retrieve-dependencies" description="Compile main source tree.">
+
+		<mkdir dir="${classes.dir}"/>
+
+		<javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.includes}" excludes="ch12/">
+			<src path="${src.dir}"/>
+			<classpath refid="classpath"/>
+		</javac>
+		
+		<javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.test.includes}">
+			<src path="${src.test.dir}"/>
+			<classpath refid="classpath"/>
+		</javac>
+
+        <copy todir="${classes.dir}">
+            <fileset dir="${src.dir}"/>
+            <mapper type="regexp" from=".*?/java/(.*)\.(properties|txt|xml)$$" to="\1.\2"/>
+        </copy>
+		
+	</target>
+	
+    <target name="hbase.compile" depends="init,retrieve-dependencies" description="Compile HBase source tree.">
+
+        <mkdir dir="${classes.dir}"/>
+
+        <javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.includes}">
+            <src path="${src.dir}/ch12"/>
+            <classpath refid="hbase.classpath"/>
+        </javac>
+        
+    </target>
+
+	<target name="jar" depends="compile" description="Creates a jar for running MapReduce jobs.">
+		<jar destfile="job.jar" basedir="${classes.dir}"/>
+	</target>
+
+    <target name="hbase" depends="hbase.compile" description="Creates a jar for running HBase examples.">
+        <jar destfile="hbase.jar" basedir="${classes.dir}"/>
+    </target>
+
+    <target name="pig" depends="compile" description="Creates a jar containing Pig UDFs.">
+        <jar destfile="pig.jar" basedir="${classes.dir}"/>
+    </target>
+	    
+
+    <target name="findbugs" depends="jar">
+       <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"/>
+    	<property name="findbugs.out.dir" value="${test.build.dir}/findbugs"/>
+        <property name="findbugs.report.htmlfile" value="${findbugs.out.dir}/hadoop-findbugs-report.html"/>
+        <property name="findbugs.report.xmlfile" value="${findbugs.out.dir}/hadoop-findbugs-report.xml"/>
+    	
+    	<mkdir dir="${findbugs.out.dir}"/>
+        	
+       <findbugs home="${findbugs.home}"
+       	         excludeFilter="findbugs-exclude.xml"
+                 output="xml:withMessages"
+                 outputFile="${findbugs.report.xmlfile}">
+         <auxClasspath refid="classpath"/>
+        <sourcePath path="${src.dir}/common/java" />
+        <sourcePath path="${src.dir}/ch02/java" />
+        <sourcePath path="${src.dir}/ch03/java" />
+        <sourcePath path="${src.dir}/ch04/java" />
+        <sourcePath path="${src.dir}/ch05/java" />
+        <sourcePath path="${src.dir}/ch06/java" />
+        <sourcePath path="${src.dir}/ch09/java" />
+         <class location="${build.dir}/job.jar" />
+       </findbugs>
+    	
+    	   <xslt style="${findbugs.home}/src/xsl/default.xsl"
+    	        in="${findbugs.report.xmlfile}"
+    	        out="${findbugs.report.htmlfile}"/>
+     </target>
+
+	<target name="test" depends="init,compile" description="Runs unit tests.">
+		<mkdir dir="${test.build.dir}"/>
+        <mkdir dir="${test.log.dir}"/>
+		
+		<junit printsummary="yes" haltonfailure="no"
+			  errorProperty="tests.failed" failureProperty="tests.failed"
+			  fork="yes" maxmemory="256m">
+			<sysproperty key="hadoop.log.dir" value="${test.log.dir}"/>
+			<classpath refid="classpath"/>
+			<formatter type="plain"/>
+			<batchtest todir="${test.build.dir}" unless="testcase">
+				<fileset dir="${classes.dir}" includes="**/*Test.class"/>
+			</batchtest>
+			<batchtest todir="${test.build.dir}" if="testcase">
+				<fileset dir="${classes.dir}" includes="**/${testcase}.class"/>
+			</batchtest>
+		</junit>
+		<fail if="tests.failed">Tests failed!</fail>
+	</target>
+	
+	<target name="all" depends="clean,test,jar" description="Runs clean,test,jar"/>
+
+</project>

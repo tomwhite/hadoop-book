@@ -1,0 +1,14 @@
+-- == foreach_generate
+A = LOAD 'input/pig/foreach/A'
+  AS (f0:chararray, f1:chararray, f2:int);
+-- vv foreach_generate
+DUMP A;
+B = FOREACH A GENERATE $0, $2+1, 'Constant';
+DUMP B;
+-- ^^ foreach_generate
+DESCRIBE B;
+C = FOREACH A GENERATE $0, (int) $2 AS f1, 'Constant' AS f2;
+DUMP C;
+DESCRIBE C;
+
+-- C = FOREACH A GENERATE $0, (int) $2 AS f1, 'Constant' AS f2, ($2 > 3 ? 1 : 0);

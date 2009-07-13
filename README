@@ -1,0 +1,17 @@
+Example code for "Hadoop: The Definitive Guide" by Tom White.
+Copyright (C) 2009 O'Reilly Media Inc., 978-0-596-52199-8
+
+http://www.hadoopbook.com/
+http://oreilly.com/catalog/9780596521998/
+
+This version of the code has been tested with Hadoop Core 0.20.0, Pig 0.2.0, 
+HBase 0.20.0-dev (compiled from SVN trunk), and ZooKeeper 3.1.1.
+
+Before running the examples you need to install Hadoop Core, Pig, HBase, and
+ZooKeeper as explained in the book.
+
+Then you can compile the code:
+
+ant jar pig hbase
+
+You should then be able to run the examples from the book.
