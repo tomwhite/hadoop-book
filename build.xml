@@ -35,6 +35,13 @@
                 </not>
             </condition>
         </fail>
+        <fail message="Please set the environment variable HIVE_INSTALL.">
+            <condition>
+                <not>
+                    <isset property="env.HIVE_INSTALL"/>
+                </not>
+            </condition>
+        </fail>
         <fail message="Please set the environment variable ZOOKEEPER_INSTALL.">
             <condition>
                 <not>
@@ -52,6 +59,10 @@
 				<include name="lib/**/*.jar"/>
 			</fileset>
 	        <fileset dir="${env.PIG_INSTALL}">
+	            <include name="*.jar"/>
+	            <include name="lib/**/*.jar"/>
+	        </fileset>
+	        <fileset dir="${env.HIVE_INSTALL}">
 	            <include name="*.jar"/>
 	            <include name="lib/**/*.jar"/>
 	        </fileset>
@@ -121,6 +132,9 @@
         <jar destfile="pig.jar" basedir="${classes.dir}"/>
     </target>
 	    
+    <target name="hive" depends="compile" description="Creates a jar containing Hiveß UDFs.">
+        <jar destfile="hive.jar" basedir="${classes.dir}"/>
+    </target>
 
     <target name="findbugs" depends="jar">
        <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"/>
