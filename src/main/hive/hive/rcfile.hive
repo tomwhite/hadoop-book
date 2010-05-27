@@ -1,0 +1,3 @@
+CREATE TABLE columnar (a STRING, b STRING, c STRING, d STRING, e STRING)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.columnar.ColumnarSerDe'
+STORED AS RCFILE;

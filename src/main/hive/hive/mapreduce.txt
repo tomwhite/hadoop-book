@@ -1,0 +1,26 @@
+ADD FILE /Users/tom/workspace/hadoop-book/src/main/hive/python/is_good_quality.py; 
+ADD FILE /Users/tom/workspace/hadoop-book/src/main/hive/python/max_temperature_reduce.py;
+
+FROM records2
+SELECT TRANSFORM(year, temperature, quality)
+USING 'is_good_quality.py'
+AS year, temperature;
+
+FROM (
+  FROM records2
+  MAP year, temperature, quality
+  USING 'is_good_quality.py'
+  AS year, temperature) map_output
+REDUCE year, temperature
+USING 'max_temperature_reduce.py'
+AS year, temperature;
+
+FROM (
+  FROM records2
+  SELECT TRANSFORM(year, temperature, quality)
+  USING 'is_good_quality.py'
+  AS year, temperature) map_output
+SELECT TRANSFORM(year, temperature)
+USING 'max_temperature_reduce.py'
+AS year, temperature;
+

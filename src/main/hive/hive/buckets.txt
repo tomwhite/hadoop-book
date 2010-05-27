@@ -1,0 +1,47 @@
+echo -e '0\x01Nat' > /Users/tom/workspace/hadoop-book/input/hive/tables/users.txt
+echo -e '2\x01Joe' >> /Users/tom/workspace/hadoop-book/input/hive/tables/users.txt
+echo -e '3\x01Kay' >> /Users/tom/workspace/hadoop-book/input/hive/tables/users.txt
+echo -e '4\x01Ann' >> /Users/tom/workspace/hadoop-book/input/hive/tables/users.txt
+
+drop table users;
+drop table bucketed_users;
+
+CREATE TABLE users (id INT, name STRING);
+
+LOAD DATA LOCAL INPATH '/Users/tom/workspace/hadoop-book/input/hive/tables/users.txt'
+OVERWRITE INTO TABLE users;
+
+dfs -cat /user/hive/warehouse/users/users.txt;
+
+CREATE TABLE bucketed_users (id INT, name STRING)
+CLUSTERED BY (id) INTO 4 BUCKETS;
+
+CREATE TABLE bucketed_users (id INT, name STRING)
+CLUSTERED BY (id) SORTED BY (id) INTO 4 BUCKETS;
+
+SELECT * FROM users;
+
+SET hive.enforce.bucketing=true;  -- from Hive 0.6.0, previously had to set number of reducers manually
+
+INSERT OVERWRITE TABLE bucketed_users
+SELECT * FROM users;
+
+dfs -ls /user/hive/warehouse/bucketed_users;
+
+-- Sampling
+-- why is this useful again?
+-- useful for creating samples of tables to try out your queries on
+-- can use rand() on unbucketed tables, but inefficient as it scans whole dataset
+
+SELECT * FROM bucketed_users
+TABLESAMPLE(BUCKET 1 OUT OF 4 ON id);
+
+SELECT * FROM bucketed_users
+TABLESAMPLE(BUCKET 1 OUT OF 2 ON id);
+
+SELECT * FROM users
+TABLESAMPLE(BUCKET 1 OUT OF 4 ON rand());
+
+-- buckets make certain mapside joins possible, since if the two tables are bucketed on the same column. Only the necessary buckets
+need be fetched.
+-- if sorted, even more efficient, since the mapper only needs to merge (not sort)

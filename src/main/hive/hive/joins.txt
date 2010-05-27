@@ -1,0 +1,49 @@
+CREATE TABLE sales (name STRING, id INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+CREATE TABLE things (id INT, name STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+LOAD DATA LOCAL INPATH '/Users/tom/workspace/hadoop-book/input/hive/joins/sales.txt'
+OVERWRITE INTO TABLE sales;
+
+LOAD DATA LOCAL INPATH '/Users/tom/workspace/hadoop-book/input/hive/joins/things.txt'
+OVERWRITE INTO TABLE things;
+
+SELECT * FROM sales;
+
+SELECT * FROM things;
+
+-- inner
+
+SELECT sales.*, things.*
+FROM sales JOIN things ON (sales.id = things.id);
+
+
+-- outer
+
+SELECT sales.*, things.*
+FROM sales LEFT OUTER JOIN things ON (sales.id = things.id);
+
+SELECT sales.*, things.*
+FROM sales RIGHT OUTER JOIN things ON (sales.id = things.id);
+
+SELECT sales.*, things.*
+FROM sales FULL OUTER JOIN things ON (sales.id = things.id);
+
+-- semi join
+
+SELECT *
+FROM things
+WHERE things.id IN (SELECT id from sales);
+
+SELECT *
+FROM things LEFT SEMI JOIN sales ON (sales.id = things.id);
+
+-- map side
+
+SELECT /*+ MAPJOIN(things) */ sales.*, things.*
+FROM sales JOIN things ON (sales.id = things.id);
+
+SELECT /*+ MAPJOIN(things) */ sales.*, things.*
+FROM sales LEFT OUTER JOIN things ON (sales.id = things.id);

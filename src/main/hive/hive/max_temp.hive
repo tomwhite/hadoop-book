@@ -1,0 +1,76 @@
+CREATE TABLE records (year STRING, temperature INT, quality INT)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t';
+  
+LOAD DATA LOCAL INPATH 'input/ncdc/micro-tab/sample.txt'
+OVERWRITE INTO TABLE records;
+
+SELECT year, MAX(temperature)
+FROM records
+WHERE temperature != 9999
+  AND (quality = 0 OR quality = 1 OR quality = 4 OR quality = 5 OR quality = 9)
+GROUP BY year;
+
+-- weather dataset stats
+
+CREATE TABLE records2 (station STRING, year STRING, temperature INT, quality INT)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t';
+
+LOAD DATA LOCAL INPATH '/Users/tom/workspace/hadoop-book/input/ncdc/micro-tab/sample2.txt'
+OVERWRITE INTO TABLE records2;
+
+-- total stations and records (by year)
+SELECT year, COUNT(DISTINCT station), COUNT(1)
+FROM records2
+GROUP BY year;
+
+-- total good records (by year)
+SELECT year, COUNT(1)
+FROM records2
+WHERE temperature != 9999
+  AND (quality = 0 OR quality = 1 OR quality = 4 OR quality = 5 OR quality = 9)
+GROUP BY year;
+
+-- scans data twice...
+
+CREATE TABLE stations_by_year (year STRING, num INT);
+CREATE TABLE records_by_year (year STRING, num INT);
+CREATE TABLE good_records_by_year (year STRING, num INT);
+
+FROM records2
+INSERT OVERWRITE TABLE stations_by_year
+  SELECT year, COUNT(DISTINCT station)
+  GROUP BY year 
+INSERT OVERWRITE TABLE records_by_year
+  SELECT year, COUNT(1)
+  GROUP BY year
+INSERT OVERWRITE TABLE good_records_by_year
+  SELECT year, COUNT(1)
+  WHERE temperature != 9999
+    AND (quality = 0 OR quality = 1 OR quality = 4 OR quality = 5 OR quality = 9)
+  GROUP BY year;  
+  
+SELECT /*+ MAPJOIN(records_by_year,good_records_by_year) */
+  stations_by_year.year, stations_by_year.num, records_by_year.num, good_records_by_year.num
+FROM stations_by_year
+  JOIN records_by_year ON (stations_by_year.year = records_by_year.year)
+  JOIN good_records_by_year ON (stations_by_year.year = good_records_by_year.year);
+  
+  
+-- 
+
+-- DISTRIBUTED BY
+
+FROM records2
+SELECT year, temperature
+DISTRIBUTE BY year
+SORT BY year ASC, temperature DESC;
+
+FROM (
+FROM records2
+SELECT year, temperature
+DISTRIBUTE BY year
+SORT BY year ASC, temperature DESC) t
+SELECT year, MAX(temperature)
+GROUP BY year;

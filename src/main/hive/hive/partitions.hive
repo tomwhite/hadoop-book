@@ -1,0 +1,10 @@
+CREATE TABLE logs (ts BIGINT, line STRING)
+PARTITIONED BY (dt STRING, country STRING);
+
+LOAD DATA LOCAL INPATH 'input/hive/tables/file1'
+INTO TABLE logs
+PARTITION (dt='2001-01-01', country='GB');
+
+SELECT ts, dt, line
+FROM logs
+WHERE country='GB';
