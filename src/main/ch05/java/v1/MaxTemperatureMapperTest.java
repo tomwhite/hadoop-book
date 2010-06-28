@@ -2,7 +2,6 @@ package v1;
 // cc MaxTemperatureMapperTestV1 Unit test for MaxTemperatureMapper
 // == MaxTemperatureMapperTestV1Missing
 // vv MaxTemperatureMapperTestV1
-import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
