@@ -38,9 +38,7 @@ public class MaxTemperatureMapperTest {
 
     mapper.map(null, value, output, null);
     
-    Text outputKey = anyObject();
-    IntWritable outputValue = anyObject();
-    verify(output, never()).collect(outputKey, outputValue);
+    verify(output, never()).collect(any(Text.class), any(IntWritable.class));
   }
 }
 //^^ MaxTemperatureMapperTestV2

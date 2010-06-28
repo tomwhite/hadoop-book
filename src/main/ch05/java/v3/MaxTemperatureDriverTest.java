@@ -5,11 +5,16 @@ import static org.junit.Assert.assertThat;
 
 import java.io.*;
 import org.apache.hadoop.fs.*;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.mapred.*;
 import org.junit.Test;
 
 public class MaxTemperatureDriverTest {
+  
+  public static class OutputLogFilter implements PathFilter {
+    public boolean accept(Path path) {
+      return !path.getName().startsWith("_");
+    }
+  }
   
 //vv MaxTemperatureDriverTestV3
   @Test

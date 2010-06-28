@@ -10,6 +10,12 @@ import org.apache.hadoop.mapred.*;
 // A test for MaxTemperatureDriver that runs in a "mini" HDFS and MapReduce cluster
 public class MaxTemperatureDriverMiniTest extends ClusterMapReduceTestCase {
   
+  public static class OutputLogFilter implements PathFilter {
+    public boolean accept(Path path) {
+      return !path.getName().startsWith("_");
+    }
+  }
+  
   @Override
   protected void setUp() throws Exception {
     if (System.getProperty("test.build.data") == null) {

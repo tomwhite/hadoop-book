@@ -94,6 +94,7 @@ public class SplitTest {
   }
   
   @Test
+  @Ignore("Needs more investigation")
   public void recordsCoincideWithBlocks() throws IOException {
     int recordLength = 1024;
     Path input = new Path("input");
