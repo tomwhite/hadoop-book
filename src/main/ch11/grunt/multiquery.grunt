@@ -1,0 +1,5 @@
+A = LOAD 'input/pig/multiquery/A';
+B = FILTER A BY $1 == 'banana';
+C = FILTER A BY $1 != 'banana';
+STORE B INTO 'output/b';
+STORE C INTO 'output/c';
