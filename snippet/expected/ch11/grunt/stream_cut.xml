@@ -1,0 +1,6 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">C = STREAM A THROUGH `cut -f 2`;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP C;</userinput>
+(cherry)
+(apple)
+(banana)
+(apple)</screen>

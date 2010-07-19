@@ -1,7 +1,6 @@
 -- == group_dump
 -- == group_expression
 -- == group_all
--- == group_count
 A = LOAD 'input/pig/group/A';
 -- vv group_dump
 DUMP A;
@@ -14,7 +13,5 @@ DUMP B;
 C = GROUP A ALL;
 DUMP C;
 -- ^^ group_all
--- vv group_count
 D = FOREACH C GENERATE COUNT(A);
 DUMP D;
--- ^^ group_count

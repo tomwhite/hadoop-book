@@ -1,0 +1,8 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">records = LOAD 'input/ncdc/micro-tab/sample_corrupt.txt'</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  AS (year:chararray, temperature:int, quality:int);</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP records;</userinput>
+(1950,0,1)
+(1950,22,1)
+(1950,,1)
+(1949,111,1)
+(1949,78,1)</screen>

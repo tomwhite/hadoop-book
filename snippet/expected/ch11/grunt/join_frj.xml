@@ -1,0 +1,1 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">C = JOIN A BY $0, B BY $1 USING &quot;replicated&quot;;</userinput></screen>

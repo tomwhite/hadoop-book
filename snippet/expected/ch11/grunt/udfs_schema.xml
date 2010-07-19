@@ -1,0 +1,15 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP A;</userinput>
+( pomegranate)
+(banana  )
+(apple)
+(  lychee )
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DESCRIBE A;</userinput>
+A: {fruit: chararray}
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">B = FOREACH A GENERATE com.hadoopbook.pig.Trim(fruit);</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP B;</userinput>
+(pomegranate)
+(banana)
+(apple)
+(lychee)
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DESCRIBE B;</userinput>
+B: {chararray}</screen>

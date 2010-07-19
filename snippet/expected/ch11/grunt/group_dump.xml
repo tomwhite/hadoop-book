@@ -1,0 +1,5 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP A;</userinput>
+(Joe,cherry)
+(Ali,apple)
+(Joe,banana)
+(Eve,apple)</screen>

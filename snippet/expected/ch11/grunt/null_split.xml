@@ -1,0 +1,9 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">SPLIT records INTO good_records IF temperature is not null,</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  bad_records IF temperature is null;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP good_records;</userinput>
+(1950,0,1)
+(1950,22,1)
+(1949,111,1)
+(1949,78,1)
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP bad_records;</userinput>
+(1950,,1)</screen>

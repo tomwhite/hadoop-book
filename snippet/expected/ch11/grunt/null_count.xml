@@ -1,0 +1,4 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">grouped = GROUP corrupt_records ALL;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">all_grouped = FOREACH grouped GENERATE group, COUNT(corrupt_records);</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP all_grouped;</userinput>
+(all,1L)</screen>

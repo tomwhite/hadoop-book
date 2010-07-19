@@ -1,0 +1,1 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">C = FOREACH B GENERATE *;</userinput></screen>

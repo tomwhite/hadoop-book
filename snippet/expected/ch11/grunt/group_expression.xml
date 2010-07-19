@@ -1,0 +1,4 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">B = GROUP A BY SIZE($1);</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP B;</userinput>
+(5L,{(Ali,apple),(Eve,apple)})
+(6L,{(Joe,cherry),(Joe,banana)})</screen>

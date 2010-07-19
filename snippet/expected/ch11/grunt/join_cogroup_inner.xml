@@ -1,0 +1,6 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">E = COGROUP A BY $0 INNER, B BY $1;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP E;</userinput>
+(1,{(1,Scarf)},{})
+(2,{(2,Tie)},{(Joe,2),(Hank,2)})
+(3,{(3,Hat)},{(Eve,3)})
+(4,{(4,Coat)},{(Hank,4)})</screen>

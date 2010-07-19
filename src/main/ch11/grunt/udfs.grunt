@@ -1,7 +1,6 @@
 -- == udfs_register
 -- == udfs_invoke_long
 -- == udfs_invoke_short
--- == udfs_dump
 -- == udfs_schema
 -- == udfs_schema_given
 -- == udfs_load
@@ -17,9 +16,7 @@ filtered_records = FILTER records BY temperature != 9999 AND
 DEFINE isGood com.hadoopbook.pig.IsGoodQuality();
 filtered_records = FILTER records BY temperature != 9999 AND isGood(quality);
 -- ^^ udfs_invoke_short
--- vv udfs_dump
 DUMP filtered_records;
--- ^^ udfs_dump
 
 A = LOAD 'input/pig/udfs/A' AS (fruit:chararray);
 -- vv udfs_schema

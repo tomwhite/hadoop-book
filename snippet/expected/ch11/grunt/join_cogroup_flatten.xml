@@ -1,0 +1,6 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">F = FOREACH E GENERATE FLATTEN(A), B.$0;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP F;</userinput>
+(1,Scarf,{})
+(2,Tie,{(Joe),(Hank)})
+(3,Hat,{(Eve)})
+(4,Coat,{(Hank)})</screen>

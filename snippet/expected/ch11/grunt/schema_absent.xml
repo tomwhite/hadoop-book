@@ -1,0 +1,3 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">records = LOAD 'input/ncdc/micro-tab/sample.txt';</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DESCRIBE records;</userinput>
+Schema for records unknown.</screen>

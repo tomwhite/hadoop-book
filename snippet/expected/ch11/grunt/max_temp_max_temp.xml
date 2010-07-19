@@ -1,0 +1,2 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">max_temp = FOREACH grouped_records GENERATE group,</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  MAX(filtered_records.temperature);</userinput></screen>

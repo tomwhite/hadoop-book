@@ -1,0 +1,6 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DESCRIBE A;</userinput>
+A: {f0: int,f1: int}
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DESCRIBE B;</userinput>
+B: {f0: chararray,f1: chararray,f2: int}
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DESCRIBE C;</userinput>
+Schema for C unknown.</screen>

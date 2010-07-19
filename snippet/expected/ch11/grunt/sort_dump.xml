@@ -1,0 +1,4 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP A;</userinput>
+(2,3)
+(1,2)
+(2,4)</screen>

@@ -1,0 +1,2 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">records = LOAD 'input/ncdc/micro-tab/sample.txt'</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  AS (year:chararray, temperature:int, quality:int);</userinput></screen>

@@ -1,0 +1,2 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DESCRIBE records;</userinput>
+records: {year: chararray,temperature: int,quality: int}</screen>

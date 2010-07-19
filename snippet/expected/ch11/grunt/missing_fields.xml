@@ -1,0 +1,11 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">A = LOAD 'input/pig/corrupt/missing_fields';</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP A;</userinput>
+(2,Tie)
+(4,Coat)
+(3)
+(1,Scarf)
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">B = FILTER A BY SIZE(*) &gt; 1;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP B;</userinput>
+(2,Tie)
+(4,Coat)
+(1,Scarf)</screen>

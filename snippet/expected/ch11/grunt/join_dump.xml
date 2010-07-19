@@ -1,0 +1,11 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP A;</userinput>
+(2,Tie)
+(4,Coat)
+(3,Hat)
+(1,Scarf)
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP B;</userinput>
+(Joe,2)
+(Hank,4)
+(Ali,0)
+(Eve,3)
+(Hank,2)</screen>

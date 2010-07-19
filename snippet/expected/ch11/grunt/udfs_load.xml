@@ -1,0 +1,9 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">records = LOAD 'input/ncdc/micro/sample.txt'</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  USING com.hadoopbook.pig.CutLoadFunc('16-19,88-92,93-93')</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  AS (year:int, temperature:int, quality:int);</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP records;</userinput>
+(1950,0,1)
+(1950,22,1)
+(1950,-11,1)
+(1949,111,1)
+(1949,78,1)</screen>

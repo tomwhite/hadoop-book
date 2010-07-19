@@ -92,7 +92,7 @@
 
 		<mkdir dir="${classes.dir}"/>
 
-		<javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.includes}" excludes="ch11/,ch12/">
+		<javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.includes}" excludes="ch12/,ch15/">
 			<src path="${src.dir}"/>
 			<classpath refid="classpath"/>
 		</javac>

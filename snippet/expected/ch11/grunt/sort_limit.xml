@@ -1,0 +1,4 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">D = LIMIT B 2;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP D;</userinput>
+(1,2)
+(2,4)</screen>

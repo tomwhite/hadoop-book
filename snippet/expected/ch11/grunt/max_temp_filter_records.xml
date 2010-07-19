@@ -1,0 +1,8 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">filtered_records = FILTER records BY temperature != 9999 AND</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  (quality == 0 OR quality == 1 OR quality == 4 OR quality == 5 OR quality == 9);</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP filtered_records;</userinput>
+(1950,0,1)
+(1950,22,1)
+(1950,-11,1)
+(1949,111,1)
+(1949,78,1)</screen>

@@ -1,0 +1,4 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">grouped_records = GROUP filtered_records BY year;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP grouped_records;</userinput>
+(1949,{(1949,111,1),(1949,78,1)})
+(1950,{(1950,0,1),(1950,22,1),(1950,-11,1)})</screen>

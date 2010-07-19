@@ -1,0 +1,2 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">filtered_records = FILTER records BY temperature != 9999 AND</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  com.hadoopbook.pig.IsGoodQuality(quality);</userinput></screen>

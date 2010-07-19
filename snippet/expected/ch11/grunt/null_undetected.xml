@@ -1,0 +1,16 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">records = LOAD 'input/ncdc/micro-tab/sample_corrupt.txt'</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  AS (year:chararray, temperature, quality:int);</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP records;</userinput>
+(1950,0,1)
+(1950,22,1)
+(1950,e,1)
+(1949,111,1)
+(1949,78,1)
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">filtered_records = FILTER records BY temperature != 9999 AND</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  (quality == 0 OR quality == 1 OR quality == 4 OR quality == 5 OR quality == 9);</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">grouped_records = GROUP filtered_records BY year;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">max_temp = FOREACH grouped_records GENERATE group,</userinput>
+<prompt moreinfo="none">&gt;&gt; </prompt><userinput moreinfo="none">  MAX(filtered_records.temperature);</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP max_temp;</userinput>
+(1949,111.0)
+(1950,22.0)</screen>

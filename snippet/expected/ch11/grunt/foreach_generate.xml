@@ -1,0 +1,11 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP A;</userinput>
+(Joe,cherry,2)
+(Ali,apple,3)
+(Joe,banana,2)
+(Eve,apple,7)
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">B = FOREACH A GENERATE $0, $2+1, 'Constant';</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP B;</userinput>
+(Joe,3,Constant)
+(Ali,4,Constant)
+(Joe,3,Constant)
+(Eve,8,Constant)</screen>

@@ -1,0 +1,5 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">B = ORDER A BY $0, $1 DESC;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP B;</userinput>
+(1,2)
+(2,4)
+(2,3)</screen>

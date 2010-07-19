@@ -1,0 +1,6 @@
+<screen format="linespecific"><prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">STORE A INTO 'out' USING PigStorage(':');</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">cat out</userinput>
+Joe:cherry:2
+Ali:apple:3
+Joe:banana:2
+Eve:apple:7</screen>
