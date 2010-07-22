@@ -92,7 +92,7 @@
 
 		<mkdir dir="${classes.dir}"/>
 
-		<javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.includes}" excludes="ch12/,ch15/">
+		<javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.includes}" excludes="ch13/,ch15/">
 			<src path="${src.dir}"/>
 			<classpath refid="classpath"/>
 		</javac>
@@ -114,7 +114,7 @@
         <mkdir dir="${classes.dir}"/>
 
         <javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.includes}">
-            <src path="${src.dir}/ch12"/>
+            <src path="${src.dir}/ch13"/>
             <classpath refid="hbase.classpath"/>
         </javac>
         
