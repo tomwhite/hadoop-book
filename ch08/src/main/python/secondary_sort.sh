@@ -6,9 +6,9 @@ org.apache.hadoop.mapred.lib.KeyFieldBasedComparator \
   -D mapred.text.key.comparator.options="-k1n -k2nr" \
   -input input/ncdc/all \
   -output output_secondarysort_streaming \
-  -mapper src/main/ch08/python/secondary_sort_map.py \
+  -mapper ch08/src/main/python/secondary_sort_map.py \
   -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner \
-  -reducer src/main/ch08/python/secondary_sort_reduce.py \
-  -file src/main/ch08/python/secondary_sort_map.py \
-  -file src/main/ch08/python/secondary_sort_reduce.py
+  -reducer ch08/src/main/python/secondary_sort_reduce.py \
+  -file ch08/src/main/python/secondary_sort_map.py \
+  -file ch08/src/main/python/secondary_sort_reduce.py
   

@@ -13,7 +13,7 @@ cd "$bin"/../..
 rm -rf $actual/ch11/grunt
 mkdir -p $actual/ch11/grunt
 
-for f in src/main/ch11/grunt/*.grunt; do
+for f in ch11/src/main/grunt/*.grunt; do
   out=$f.output.txt
   pig -x local < $f 2> /dev/null \
       | grep -v INFO \

@@ -1,6 +1,6 @@
 -- max_temp_filter_stream.pig
 DEFINE is_good_quality `is_good_quality.py`
-  SHIP ('src/main/ch11/python/is_good_quality.py');
+  SHIP ('ch11/src/main/python/is_good_quality.py');
 records = LOAD 'input/ncdc/micro-tab/sample.txt'
   AS (year:chararray, temperature:int, quality:int);
 filtered_records = STREAM records THROUGH is_good_quality

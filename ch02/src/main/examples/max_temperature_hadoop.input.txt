@@ -1,5 +1,5 @@
 hadoop jar $HADOOP_INSTALL/contrib/streaming/hadoop-*-streaming.jar \
   -input input/ncdc/sample.txt \
   -output output \
-  -mapper src/main/ch02/ruby/max_temperature_map.rb \
-  -reducer src/main/ch02/ruby/max_temperature_reduce.rb
+  -mapper ch02/src/main/ruby/max_temperature_map.rb \
+  -reducer ch02/src/main/ruby/max_temperature_reduce.rb

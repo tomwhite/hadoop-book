@@ -92,18 +92,28 @@
 
 		<mkdir dir="${classes.dir}"/>
 
-		<javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.includes}" excludes="ch13/,ch15/">
-			<src path="${src.dir}"/>
+		<javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.includes}">
+			<src path="common/${src.dir}"/>
+			<src path="ch02/${src.dir}"/>
+			<src path="ch03/${src.dir}"/>
+			<src path="ch04/${src.dir}"/>
+			<src path="ch05/${src.dir}"/>
+			<src path="ch06/${src.dir}"/>
+			<src path="ch08/${src.dir}"/>
+			<src path="ch11/${src.dir}"/>
+			<src path="ch12/${src.dir}"/>
+			<src path="ch14/${src.dir}"/>
 			<classpath refid="classpath"/>
 		</javac>
 		
 		<javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.test.includes}">
-			<src path="${src.test.dir}"/>
+			<src path="common/${src.test.dir}"/>
+			<src path="book/${src.test.dir}"/>
 			<classpath refid="classpath"/>
 		</javac>
 
         <copy todir="${classes.dir}">
-            <fileset dir="${src.dir}"/>
+            <fileset dir="."/>
             <mapper type="regexp" from=".*?/java/(.*)\.(properties|txt|xml)$$" to="\1.\2"/>
         </copy>
 		
@@ -114,7 +124,7 @@
         <mkdir dir="${classes.dir}"/>
 
         <javac destdir="${classes.dir}" debug="true" deprecation="false" optimize="false" failonerror="true" includes="${src.includes}">
-            <src path="${src.dir}/ch13"/>
+            <src path="ch13/${src.dir}"/>
             <classpath refid="hbase.classpath"/>
         </javac>
         
@@ -149,13 +159,13 @@
                  output="xml:withMessages"
                  outputFile="${findbugs.report.xmlfile}">
          <auxClasspath refid="classpath"/>
-        <sourcePath path="${src.dir}/common/java" />
-        <sourcePath path="${src.dir}/ch02/java" />
-        <sourcePath path="${src.dir}/ch03/java" />
-        <sourcePath path="${src.dir}/ch04/java" />
-        <sourcePath path="${src.dir}/ch05/java" />
-        <sourcePath path="${src.dir}/ch06/java" />
-        <sourcePath path="${src.dir}/ch09/java" />
+        <sourcePath path="common/${src.dir}/common/java" />
+        <sourcePath path="ch02/${src.dir}/java" />
+        <sourcePath path="ch03/${src.dir}/java" />
+        <sourcePath path="ch04/${src.dir}/java" />
+        <sourcePath path="ch05/${src.dir}/java" />
+        <sourcePath path="ch06/${src.dir}/java" />
+        <sourcePath path="ch09/${src.dir}/java" />
          <class location="${build.dir}/job.jar" />
        </findbugs>
     	
