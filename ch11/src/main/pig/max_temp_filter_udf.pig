@@ -1,5 +1,5 @@
 -- max_temp_filter_udf.pig
-REGISTER pig.jar;
+REGISTER pig-examples.jar;
 DEFINE isGood com.hadoopbook.pig.IsGoodQuality();
 records = LOAD 'input/ncdc/micro-tab/sample.txt'
   AS (year:chararray, temperature:int, quality:int);

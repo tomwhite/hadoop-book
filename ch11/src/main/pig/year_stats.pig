@@ -1,5 +1,5 @@
 -- year_stats.pig
-REGISTER pig.jar;
+REGISTER pig-examples.jar;
 DEFINE isGood com.hadoopbook.pig.IsGoodQuality();
 records = LOAD 'input/ncdc/all/19{1,2,3,4,5}0*'
   USING com.hadoopbook.pig.CutLoadFunc('5-10,11-15,16-19,88-92,93-93')

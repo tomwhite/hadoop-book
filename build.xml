@@ -139,11 +139,11 @@
     </target>
 
     <target name="pig" depends="compile" description="Creates a jar containing Pig UDFs.">
-        <jar destfile="pig.jar" basedir="${classes.dir}"/>
+        <jar destfile="pig-examples.jar" basedir="${classes.dir}"/>
     </target>
 	    
     <target name="hive" depends="compile" description="Creates a jar containing Hive UDFs.">
-        <jar destfile="hive.jar" basedir="${classes.dir}"/>
+        <jar destfile="hive-examples.jar" basedir="${classes.dir}"/>
     </target>
 
     <target name="findbugs" depends="jar">

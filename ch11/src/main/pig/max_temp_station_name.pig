@@ -1,5 +1,5 @@
 -- max_temp_station_name.pig
-REGISTER pig.jar;
+REGISTER pig-examples.jar;
 DEFINE isGood com.hadoopbook.pig.IsGoodQuality();
 
 stations = LOAD 'input/ncdc/metadata/stations-fixed-width.txt'

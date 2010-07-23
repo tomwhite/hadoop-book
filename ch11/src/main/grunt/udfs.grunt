@@ -5,7 +5,7 @@
 -- == udfs_schema_given
 -- == udfs_load
 -- vv udfs_register
-REGISTER pig.jar;
+REGISTER pig-examples.jar;
 -- ^^ udfs_register
 records = LOAD 'input/ncdc/micro-tab/sample.txt' AS (year:chararray, temperature:int, quality);
 -- vv udfs_invoke_long
