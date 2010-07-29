@@ -1,0 +1,9 @@
+{
+  "type": "record",
+  "name": "Pair",
+  "doc": "A pair of strings, sorted by right field descending.",
+  "fields": [
+    {"name": "left", "type": "string", "order": "ignore"},
+    {"name": "right", "type": "string", "order": "descending"}
+  ]
+}

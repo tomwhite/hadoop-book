@@ -1,0 +1,6 @@
+{
+  "type": "enum",
+  "name": "Cutlery",
+  "doc": "An eating utensil.",
+  "symbols": ["KNIFE", "FORK", "SPOON"]
+}
