@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <limits>
+#include <stdint.h>
 #include <string>
 
 #include "hadoop/Pipes.hh"
