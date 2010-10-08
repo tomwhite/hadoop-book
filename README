@@ -1,20 +1,27 @@
-Example code for "Hadoop: The Definitive Guide" by Tom White.
-Copyright (C) 2009 O'Reilly Media Inc., 978-0-596-52199-8
+Example code for "Hadoop: The Definitive Guide, Second Edition" by Tom White.
+Copyright (C) 2010 Tom White, 978-1-449-38973-4
 
 http://www.hadoopbook.com/
-http://oreilly.com/catalog/9780596521998/
+http://oreilly.com/catalog/9781449389734/
 
-This version of the code has been tested with Hadoop Core 0.20.0, Pig 0.2.0, 
-HBase 0.20.0-dev (compiled from SVN trunk), and ZooKeeper 3.1.1.
+The code is hosted at http://github.com/tomwhite/hadoop-book/. You can find code
+for the first edition at http://github.com/tomwhite/hadoop-book/tree/1e.
 
-Before running the examples you need to install Hadoop Core, Pig, Hive, HBase,
+This version of the code has been tested with:
+ * Hadoop 0.20.2
+ * Pig 0.7.0
+ * Hive 0.5.0-dev (compiled from SVN trunk)
+ * HBase 0.89.0-SNAPSHOT (compiled from SVN trunk)
+ * ZooKeeper 3.3.1.
+
+Before running the examples you need to install Hadoop, Pig, Hive, HBase,
 and ZooKeeper as explained in the book.
 
 You also need to install Ivy (http://ant.apache.org/ivy/).
 
 Then you can compile the code:
 
-ant jar pig hbase
+ant jar pig hive hbase
 
 You should then be able to run the examples from the book.
 
@@ -38,5 +45,5 @@ ch15 - Sqoop
 ch16 - Case Studies
 
 app1 - Installing Apache Hadoop
-app2 - Cloudera’s Distribution for Hadoop
+app2 - Cloudera's Distribution for Hadoop
 app3 - Preparing the NCDC Weather Data
