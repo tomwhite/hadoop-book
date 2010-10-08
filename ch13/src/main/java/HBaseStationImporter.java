@@ -4,7 +4,7 @@ import java.util.Map;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.HTable;
-import org.apache.hadoop.hbase.io.BatchUpdate;
+import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.util.*;
 
@@ -23,12 +23,14 @@ public class HBaseStationImporter extends Configured implements Tool {
     Map<String, String> stationIdToNameMap = metadata.getStationIdToNameMap();
     
     for (Map.Entry<String, String> entry : stationIdToNameMap.entrySet()) {
-      byte[] rowKey = Bytes.toBytes(entry.getKey());
-      BatchUpdate bu = new BatchUpdate(rowKey);
-      bu.put("info:name", Bytes.toBytes(entry.getValue()));
-      bu.put("info:description", Bytes.toBytes("Description..."));
-      bu.put("info:location", Bytes.toBytes("Location..."));
-      table.commit(bu);
+      Put put = new Put(Bytes.toBytes(entry.getKey()));
+      put.add(HBaseStationCli.INFO_COLUMNFAMILY, HBaseStationCli.NAME_QUALIFIER,
+        Bytes.toBytes(entry.getValue()));
+      put.add(HBaseStationCli.INFO_COLUMNFAMILY, HBaseStationCli.DESCRIPTION_QUALIFIER,
+        Bytes.toBytes("Description..."));
+      put.add(HBaseStationCli.INFO_COLUMNFAMILY, HBaseStationCli.LOCATION_QUALIFIER,
+        Bytes.toBytes("Location..."));
+      table.put(put);
     }
     return 0;
   }

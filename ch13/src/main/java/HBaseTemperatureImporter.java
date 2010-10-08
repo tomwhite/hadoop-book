@@ -4,7 +4,7 @@ import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.HTable;
-import org.apache.hadoop.hbase.io.BatchUpdate;
+import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapred.*;
@@ -26,9 +26,11 @@ public class HBaseTemperatureImporter extends Configured implements Tool {
       if (parser.isValidTemperature()) {
         byte[] rowKey = RowKeyConverter.makeObservationRowKey(parser.getStationId(),
           parser.getObservationDate().getTime());
-        BatchUpdate bu = new BatchUpdate(rowKey);
-        bu.put("data:airtemp", Bytes.toBytes(parser.getAirTemperature()));
-        table.commit(bu);
+        Put p = new Put(rowKey);
+        p.add(HBaseTemperatureCli.DATA_COLUMNFAMILY,
+          HBaseTemperatureCli.AIRTEMP_QUALIFIER,
+          Bytes.toBytes(parser.getAirTemperature()));
+        table.put(p);
       }
     }
 
@@ -41,6 +43,12 @@ public class HBaseTemperatureImporter extends Configured implements Tool {
       } catch (IOException e) {
         throw new RuntimeException("Failed HTable construction", e);
       }
+    }
+
+    @Override
+    public void close() throws IOException {
+      super.close();
+      table.close();
     }
   }
 

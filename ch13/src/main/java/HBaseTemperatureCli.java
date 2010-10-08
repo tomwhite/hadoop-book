@@ -4,33 +4,33 @@ import java.util.*;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.*;
-import org.apache.hadoop.hbase.client.Scanner;
-import org.apache.hadoop.hbase.io.RowResult;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.util.*;
 
 public class HBaseTemperatureCli extends Configured implements Tool {
+  static final byte [] DATA_COLUMNFAMILY = Bytes.toBytes("data");
+  static final byte [] AIRTEMP_QUALIFIER = Bytes.toBytes("airtemp");
   
   public NavigableMap<Long, Integer> getStationObservations(HTable table,
       String stationId, long maxStamp, int maxCount) throws IOException {
-    byte[][] columns = { Bytes.toBytes("data:airtemp") };
     byte[] startRow = RowKeyConverter.makeObservationRowKey(stationId, maxStamp);
-    RowResult res = null;
     NavigableMap<Long, Integer> resultMap = new TreeMap<Long, Integer>();
-    byte[] airtempColumn = Bytes.toBytes("data:airtemp");
-    Scanner s = table.getScanner(columns, startRow);
+    Scan scan = new Scan(startRow);
+    scan.addColumn(DATA_COLUMNFAMILY, AIRTEMP_QUALIFIER);
+    ResultScanner scanner = table.getScanner(scan);
+    Result res = null;
     int count = 0;
     try {
-      while ((res = s.next()) != null && count++ < maxCount) {
+      while ((res = scanner.next()) != null && count++ < maxCount) {
         byte[] row = res.getRow();
-        byte[] value = res.get(airtempColumn).getValue();
+        byte[] value = res.getValue(DATA_COLUMNFAMILY, AIRTEMP_QUALIFIER);
         Long stamp = Long.MAX_VALUE -
           Bytes.toLong(row, row.length - Bytes.SIZEOF_LONG, Bytes.SIZEOF_LONG);
         Integer temp = Bytes.toInt(value);
         resultMap.put(stamp, temp);
       }
     } finally {
-      s.close();
+      scanner.close();
     }
     return resultMap;
   }

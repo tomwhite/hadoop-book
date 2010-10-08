@@ -15,5 +15,4 @@ public class RowKeyConverter {
     Bytes.putLong(row, STATION_ID_LENGTH, reverseOrderEpoch);
     return row;
   }
-
 }
