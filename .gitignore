@@ -5,3 +5,6 @@
 /out
 /output
 snippet/actual
+target
+/target
+.project
