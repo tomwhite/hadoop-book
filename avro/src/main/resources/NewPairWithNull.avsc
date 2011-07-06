@@ -5,6 +5,6 @@
   "fields": [
     {"name": "left", "type": "string"},
     {"name": "right", "type": "string"},
-    {"name": "description", "type": ["null", "string"], "default": "null"}
+    {"name": "description", "type": ["null", "string"], "default": null}
   ]
 }
