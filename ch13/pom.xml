@@ -11,7 +11,7 @@
   <artifactId>ch13</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>ch13</name>
+  <name>Chapter 13: HBase</name>
   <dependencies>
     <dependency>
       <groupId>com.hadoopbook</groupId>

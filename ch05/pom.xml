@@ -11,7 +11,7 @@
   <artifactId>ch05</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>ch05</name>
+  <name>Chapter 5: Developing a MapReduce Application</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.hadoop</groupId>

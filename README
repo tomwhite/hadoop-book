@@ -9,19 +9,20 @@ for the first edition at http://github.com/tomwhite/hadoop-book/tree/1e.
 
 This version of the code has been tested with:
  * Hadoop 0.20.2
- * Pig 0.7.0
- * Hive 0.5.0-dev (compiled from SVN trunk)
- * HBase 0.89.0-SNAPSHOT (compiled from SVN trunk)
- * ZooKeeper 3.3.1.
+ * Pig 0.8.3
+ * Hive 0.7.1-SNAPSHOT
+ * HBase 0.90.3
+ * ZooKeeper 3.3.3
+ * Sqoop 1.2.0-cdh3u0
 
 Before running the examples you need to install Hadoop, Pig, Hive, HBase,
-and ZooKeeper as explained in the book.
+ZooKeeper, and Sqoop (as appropriate) as explained in the book.
 
-You also need to install Ivy (http://ant.apache.org/ivy/).
+You also need to install Maven.
 
-Then you can compile the code:
+Then you can build the code with:
 
-ant jar pig hive hbase
+% mvn package -DskipTests
 
 You should then be able to run the examples from the book.
 

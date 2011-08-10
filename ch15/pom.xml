@@ -11,7 +11,7 @@
   <artifactId>ch15</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>ch15</name>
+  <name>Chapter 15: Sqoop</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.hadoop</groupId>

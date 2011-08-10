@@ -11,7 +11,7 @@
   <artifactId>ch03</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>ch03</name>
+  <name>Chapter 3: The Hadoop Distributed Filesystem</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.hadoop</groupId>

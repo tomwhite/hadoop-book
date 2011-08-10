@@ -11,7 +11,7 @@
   <artifactId>ch14</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>ch14</name>
+  <name>Chapter 14: ZooKeeper</name>
   <dependencies>
     <dependency>
       <groupId>log4j</groupId>

@@ -11,7 +11,7 @@
   <artifactId>ch12</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>ch12</name>
+  <name>Chapter 12: Hive</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.hadoop</groupId>

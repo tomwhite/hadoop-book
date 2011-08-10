@@ -11,7 +11,7 @@
   <artifactId>ch04</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>ch04</name>
+  <name>Chapter 4: Hadoop I/O</name>
   <dependencies>
     <dependency>
       <groupId>com.hadoopbook</groupId>

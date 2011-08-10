@@ -11,7 +11,7 @@
   <artifactId>ch11</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>ch11</name>
+  <name>Chapter 11: Pig</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.hadoop</groupId>

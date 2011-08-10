@@ -11,7 +11,7 @@
   <artifactId>common</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>common</name>
+  <name>Common Code</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.hadoop</groupId>

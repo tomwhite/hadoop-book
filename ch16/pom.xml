@@ -11,7 +11,7 @@
   <artifactId>ch16</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>ch16</name>
+  <name>Chapter 16: Case Studies</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.hadoop</groupId>

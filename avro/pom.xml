@@ -11,7 +11,7 @@
   <artifactId>avro</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>avro</name>
+  <name>Chapter 4: Hadoop I/O (Avro)</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.avro</groupId>
