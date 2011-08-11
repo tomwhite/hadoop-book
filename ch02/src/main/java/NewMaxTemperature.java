@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 // vv NewMaxTemperature
 public class NewMaxTemperature {
   
-  static class NewMaxTemperatureMapper
+  public static class NewMaxTemperatureMapper
     /*[*/extends Mapper<LongWritable, Text, Text, IntWritable>/*]*/ {
 
     private static final int MISSING = 9999;
@@ -33,7 +33,7 @@ public class NewMaxTemperature {
     }
   }
   
-  static class NewMaxTemperatureReducer
+  public static class NewMaxTemperatureReducer
     /*[*/extends Reducer<Text, IntWritable, Text, IntWritable>/*]*/ {
   
     public void reduce(Text key, /*[*/Iterable/*]*/<IntWritable> values,
