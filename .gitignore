@@ -7,4 +7,6 @@
 snippet/actual
 target
 /target
+.classpath
 .project
+.settings
