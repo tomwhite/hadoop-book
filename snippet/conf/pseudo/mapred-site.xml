@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- mapred-site.xml -->
+<configuration>
+  <property>
+    <name>mapred.job.tracker</name>
+    <value>localhost:8021</value>
+  </property>
+
+<!--property>
+  <name>mapred.jobtracker.taskScheduler</name>
+  <value>org.apache.hadoop.mapred.FairScheduler</value>
+</property-->
+  <property>
+    <name>mapred.fairscheduler.allocation.file</name>
+    <value>/Users/tom/dev/hadoop-conf/fairshare.xml</value>
+  </property>
+  <property>
+    <name>mapred.fairscheduler.preemption</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>mapred.fairscheduler.update.interval</name>
+    <value>100</value>
+  </property>
+  <property>
+    <name>mapred.fairscheduler.preemption.interval</name>
+    <value>100</value>
+  </property>
+  <!--property>
+    <name>mapred.fairscheduler.poolnameproperty</name>
+    <value>pool.name</value>
+  </property>
+  <property>
+    <name>pool.name</name>
+    <value>\${mapreduce.job.user.name}</value>
+  </property-->
+</configuration>

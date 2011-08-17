@@ -1,0 +1,1 @@
+hadoop MinimalMapReduce "input/ncdc/all/190{1,2}.gz" output
