@@ -98,7 +98,7 @@
 			<src path="ch03/${src.dir}"/>
 			<src path="ch04/${src.dir}"/>
 			<src path="ch05/${src.dir}"/>
-			<src path="ch06/${src.dir}"/>
+			<src path="ch07/${src.dir}"/>
 			<src path="ch08/${src.dir}"/>
 			<src path="ch11/${src.dir}"/>
 			<src path="ch12/${src.dir}"/>
@@ -164,7 +164,7 @@
         <sourcePath path="ch03/${src.dir}/java" />
         <sourcePath path="ch04/${src.dir}/java" />
         <sourcePath path="ch05/${src.dir}/java" />
-        <sourcePath path="ch06/${src.dir}/java" />
+        <sourcePath path="ch07/${src.dir}/java" />
         <sourcePath path="ch09/${src.dir}/java" />
          <class location="${build.dir}/job.jar" />
        </findbugs>

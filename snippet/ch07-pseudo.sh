@@ -18,9 +18,9 @@ function TEARDOWN {
 }
 
 function TEST_MaxTemperatureByStationNameUsingDistributedCacheFile {
-  source ch06/src/main/examples/PartitionByStationUsingMultipleOutputFormat.java.input.txt || return 1
+  source ch07/src/main/examples/PartitionByStationUsingMultipleOutputFormat.java.input.txt || return 1
   hadoop fs -getmerge output-part-by-station output || return 1
-  #diff output snippet/expected/ch06/sh/part-00000 || return 1
+  #diff output snippet/expected/ch07/sh/part-00000 || return 1
 }
 
 source bashunit.sh

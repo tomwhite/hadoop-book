@@ -20,7 +20,7 @@
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch06</artifactId>
+      <artifactId>ch07</artifactId>
       <version>3.0</version>
     </dependency>
   </dependencies>

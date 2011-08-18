@@ -8,10 +8,10 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>ch06</artifactId>
+  <artifactId>ch07</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>Chapter 6: How MapReduce Works</name>
+  <name>Chapter 7: MapReduce Types and Formats</name>
   <dependencies>
     <dependency>
       <groupId>com.hadoopbook</groupId>
