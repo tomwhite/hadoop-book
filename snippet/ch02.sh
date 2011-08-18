@@ -15,9 +15,14 @@ function TEARDOWN {
   cd $cwd
 }
 
-function TEST_ch02 {
+function TEST_MaxTemperature {
   source ch02/src/main/examples/MaxTemperature.java.input.txt || return 1
   diff output/part-00000 snippet/expected/ch02/sh/part-00000 || return 1
+}
+
+function TEST_NewMaxTemperature {
+  source ch02/src/main/examples/NewMaxTemperature.java.input.txt || return 1
+  diff output/part-r-00000 snippet/expected/ch02/sh/part-00000 || return 1
 }
 
 source bashunit.sh

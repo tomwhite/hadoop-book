@@ -1,0 +1,1 @@
+hadoop MaxTemperatureWithMapOutputCompression input/ncdc/sample.txt.gz output
