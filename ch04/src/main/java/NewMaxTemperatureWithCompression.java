@@ -27,9 +27,9 @@ public class NewMaxTemperatureWithCompression {
     FileOutputFormat.setCompressOutput(job, true);
     FileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
     
-    job.setMapperClass(NewMaxTemperature.NewMaxTemperatureMapper.class);
-    job.setCombinerClass(NewMaxTemperature.NewMaxTemperatureReducer.class);
-    job.setReducerClass(NewMaxTemperature.NewMaxTemperatureReducer.class);
+    job.setMapperClass(NewMaxTemperatureMapper.class);
+    job.setCombinerClass(NewMaxTemperatureReducer.class);
+    job.setReducerClass(NewMaxTemperatureReducer.class);
     
     System.exit(job.waitForCompletion(true) ? 0 : 1);
   }

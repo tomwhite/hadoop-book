@@ -31,9 +31,9 @@ public class NewMaxTemperatureWithMapOutputCompression {
     FileInputFormat.addInputPath(job, new Path(args[0]));
     FileOutputFormat.setOutputPath(job, new Path(args[1]));
     
-    job.setMapperClass(NewMaxTemperature.NewMaxTemperatureMapper.class);
-    job.setCombinerClass(NewMaxTemperature.NewMaxTemperatureReducer.class);
-    job.setReducerClass(NewMaxTemperature.NewMaxTemperatureReducer.class);
+    job.setMapperClass(NewMaxTemperatureMapper.class);
+    job.setCombinerClass(NewMaxTemperatureReducer.class);
+    job.setReducerClass(NewMaxTemperatureReducer.class);
     
     System.exit(job.waitForCompletion(true) ? 0 : 1);
   }
