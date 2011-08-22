@@ -5,7 +5,7 @@
     <groupId>com.hadoopbook</groupId>
     <artifactId>book</artifactId>
     <version>3.0</version>
-    <relativePath>../pom.xml</relativePath>
+    <relativePath>../book/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
   <artifactId>ch13</artifactId>

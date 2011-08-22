@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.hadoopbook</groupId>
-    <artifactId>book</artifactId>
+    <artifactId>hadoop-meta</artifactId>
     <version>3.0</version>
-    <relativePath>../pom.xml</relativePath>
+    <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
   <artifactId>ch04</artifactId>
@@ -17,14 +17,6 @@
       <groupId>com.hadoopbook</groupId>
       <artifactId>ch02</artifactId>
       <version>3.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-test</artifactId>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

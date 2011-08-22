@@ -3,19 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.hadoopbook</groupId>
-    <artifactId>book</artifactId>
+    <artifactId>hadoop-meta</artifactId>
     <version>3.0</version>
-    <relativePath>../pom.xml</relativePath>
+    <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
   <artifactId>ch16</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
   <name>Chapter 16: Case Studies</name>
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-core</artifactId>
-    </dependency>
-  </dependencies>
+
 </project>
