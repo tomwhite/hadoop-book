@@ -26,5 +26,6 @@
     <module>ch16</module>
     <module>experimental</module>
     <module>distribution</module>
+    <module>snippet</module>
   </modules>
 </project>
