@@ -1,14 +1,15 @@
-Example code for "Hadoop: The Definitive Guide, Second Edition" by Tom White.
-Copyright (C) 2010 Tom White, 978-1-449-38973-4
+Example code for "Hadoop: The Definitive Guide, Third Edition" by Tom White.
+Copyright (C) 2011 Tom White, 978-1-449-31152-0
 
 http://www.hadoopbook.com/
-http://oreilly.com/catalog/9781449389734/
+http://oreilly.com/catalog/9781449311520/
 
 The code is hosted at http://github.com/tomwhite/hadoop-book/. You can find code
 for the first edition at http://github.com/tomwhite/hadoop-book/tree/1e.
 
 This version of the code has been tested with:
  * Hadoop 0.20.2
+ * Avro 1.4.1
  * Pig 0.8.3
  * Hive 0.7.1-SNAPSHOT
  * HBase 0.90.3
