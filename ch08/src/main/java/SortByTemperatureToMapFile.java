@@ -1,33 +1,34 @@
 // cc SortByTemperatureToMapFile A MapReduce program for sorting a SequenceFile and producing MapFiles as output
-import java.io.IOException;
-
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile.CompressionType;
 import org.apache.hadoop.io.compress.GzipCodec;
-import org.apache.hadoop.mapred.*;
-import org.apache.hadoop.util.*;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.MapFileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 // vv SortByTemperatureToMapFile
 public class SortByTemperatureToMapFile extends Configured implements Tool {
   
   @Override
-  public int run(String[] args) throws IOException {
-    JobConf conf = JobBuilder.parseInputAndOutput(this, getConf(), args);
-    if (conf == null) {
+  public int run(String[] args) throws Exception {
+    Job job = JobBuilder.parseInputAndOutput(this, getConf(), args);
+    if (job == null) {
       return -1;
     }
     
-    conf.setInputFormat(SequenceFileInputFormat.class);
-    conf.setOutputKeyClass(IntWritable.class);
-    /*[*/conf.setOutputFormat(MapFileOutputFormat.class);/*]*/
-    SequenceFileOutputFormat.setCompressOutput(conf, true);
-    SequenceFileOutputFormat.setOutputCompressorClass(conf, GzipCodec.class);
-    SequenceFileOutputFormat.setOutputCompressionType(conf,
+    job.setInputFormatClass(SequenceFileInputFormat.class);
+    job.setOutputKeyClass(IntWritable.class);
+    /*[*/job.setOutputFormatClass(MapFileOutputFormat.class);/*]*/
+    SequenceFileOutputFormat.setCompressOutput(job, true);
+    SequenceFileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
+    SequenceFileOutputFormat.setOutputCompressionType(job,
         CompressionType.BLOCK);
 
-    JobClient.runJob(conf);
-    return 0;
+    return job.waitForCompletion(true) ? 0 : 1;
   }
   
   public static void main(String[] args) throws Exception {

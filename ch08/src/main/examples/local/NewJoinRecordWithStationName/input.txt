@@ -1,1 +1,0 @@
-hadoop NewJoinRecordWithStationName input/ncdc/sample.txt input/ncdc/metadata/stations-fixed-width.txt output

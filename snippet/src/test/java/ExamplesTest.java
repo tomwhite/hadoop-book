@@ -45,9 +45,17 @@ public class ExamplesTest {
   @Parameters
   public static Collection<Object[]> data() {
     Collection<Object[]> data = new ArrayList<Object[]>();
-    File dir = new File(projectBaseDir, "ch02/src/main/examples/local");
-    for (File file : dir.listFiles()) {
-      data.add(new Object[] { file });
+    String[] dirNames = {
+        "ch02/src/main/examples/local",
+        "ch04/src/main/examples/local",
+        "ch07/src/main/examples/local",
+        "ch08/src/main/examples/local",
+    };
+    for (String dirName : dirNames) {
+      File dir = new File(projectBaseDir, dirName);
+      for (File file : dir.listFiles()) {
+        data.add(new Object[] { file });
+      }
     }
     return data;
   }

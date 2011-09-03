@@ -2,17 +2,17 @@
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.*;
-import org.apache.hadoop.mapred.lib.MultipleInputs;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Partitioner;
+import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.*;
 
 // vv JoinRecordWithStationName
 public class JoinRecordWithStationName extends Configured implements Tool {
   
-  public static class KeyPartitioner implements Partitioner<TextPair, Text> {
-    @Override
-    public void configure(JobConf job) {}
-    
+  public static class KeyPartitioner extends Partitioner<TextPair, Text> {
     @Override
     public int getPartition(/*[*/TextPair key/*]*/, Text value, int numPartitions) {
       return (/*[*/key.getFirst().hashCode()/*]*/ & Integer.MAX_VALUE) % numPartitions;
@@ -26,30 +26,29 @@ public class JoinRecordWithStationName extends Configured implements Tool {
       return -1;
     }
     
-    JobConf conf = new JobConf(getConf(), getClass());
-    conf.setJobName("Join record with station name");
+    Job job = new Job(getConf(), "Join weather records with station names");
+    job.setJarByClass(getClass());
     
     Path ncdcInputPath = new Path(args[0]);
     Path stationInputPath = new Path(args[1]);
     Path outputPath = new Path(args[2]);
     
-    MultipleInputs.addInputPath(conf, ncdcInputPath,
+    MultipleInputs.addInputPath(job, ncdcInputPath,
         TextInputFormat.class, JoinRecordMapper.class);
-    MultipleInputs.addInputPath(conf, stationInputPath,
+    MultipleInputs.addInputPath(job, stationInputPath,
         TextInputFormat.class, JoinStationMapper.class);
-    FileOutputFormat.setOutputPath(conf, outputPath);
+    FileOutputFormat.setOutputPath(job, outputPath);
+    
+    /*[*/job.setPartitionerClass(KeyPartitioner.class);
+    job.setGroupingComparatorClass(TextPair.FirstComparator.class);/*]*/
+    
+    job.setMapOutputKeyClass(TextPair.class);
+    
+    job.setReducerClass(JoinReducer.class);
 
-    /*[*/conf.setPartitionerClass(KeyPartitioner.class);
-    conf.setOutputValueGroupingComparator(TextPair.FirstComparator.class);/*]*/
+    job.setOutputKeyClass(Text.class);
     
-    conf.setMapOutputKeyClass(TextPair.class);
-    
-    conf.setReducerClass(JoinReducer.class);
-
-    conf.setOutputKeyClass(Text.class);
-    
-    JobClient.runJob(conf);
-    return 0;
+    return job.waitForCompletion(true) ? 0 : 1;
   }
   
   public static void main(String[] args) throws Exception {

@@ -2,19 +2,18 @@
 import java.io.IOException;
 
 import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.mapreduce.Mapper;
 
 // vv JoinStationMapper
-public class JoinStationMapper extends MapReduceBase
-    implements Mapper<LongWritable, Text, TextPair, Text> {
+public class JoinStationMapper
+    extends Mapper<LongWritable, Text, TextPair, Text> {
   private NcdcStationMetadataParser parser = new NcdcStationMetadataParser();
 
-  public void map(LongWritable key, Text value,
-      OutputCollector<TextPair, Text> output, Reporter reporter)
-      throws IOException {
-
+  @Override
+  protected void map(LongWritable key, Text value, Context context)
+      throws IOException, InterruptedException {
     if (parser.parse(value)) {
-      output.collect(new TextPair(parser.getStationId(), "0"),
+      context.write(new TextPair(parser.getStationId(), "0"),
           new Text(parser.getStationName()));
     }
   }

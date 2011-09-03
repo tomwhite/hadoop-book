@@ -1,44 +1,48 @@
 // cc MinimalMapReduceWithDefaults A minimal MapReduce driver, with the defaults explicitly set
-import java.io.IOException;
-
 import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
-import org.apache.hadoop.mapred.lib.*;
-import org.apache.hadoop.util.*;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
+import org.apache.hadoop.mapreduce.lib.partition.HashPartitioner;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 //vv MinimalMapReduceWithDefaults
 public class MinimalMapReduceWithDefaults extends Configured implements Tool {
   
   @Override
-  public int run(String[] args) throws IOException {
-    JobConf conf = JobBuilder.parseInputAndOutput(this, getConf(), args);
-    if (conf == null) {
+  public int run(String[] args) throws Exception {
+    Job job = JobBuilder.parseInputAndOutput(this, getConf(), args);
+    if (job == null) {
       return -1;
     }
     
-    /*[*/conf.setInputFormat(TextInputFormat.class);
+    /*[*/job.setInputFormatClass(TextInputFormat.class); // cf setInputFormat
     
-    conf.setNumMapTasks(1);
-    conf.setMapperClass(IdentityMapper.class);
-    conf.setMapRunnerClass(MapRunner.class);
+    // job.setNumMapTasks(1); cf not in new API
+    job.setMapperClass(Mapper.class); // Mapper is abstract and the identity
+    //job.setMapRunnerClass(MapRunner.class); // Override Mapper to control flow
     
-    conf.setMapOutputKeyClass(LongWritable.class);
-    conf.setMapOutputValueClass(Text.class);
+    job.setMapOutputKeyClass(LongWritable.class);
+    job.setMapOutputValueClass(Text.class);
     
-    conf.setPartitionerClass(HashPartitioner.class);
+    job.setPartitionerClass(HashPartitioner.class);
     
-    conf.setNumReduceTasks(1);
-    conf.setReducerClass(IdentityReducer.class);
+    job.setNumReduceTasks(1);
+    job.setReducerClass(Reducer.class); // identity
 
-    conf.setOutputKeyClass(LongWritable.class);
-    conf.setOutputValueClass(Text.class);
+    job.setOutputKeyClass(LongWritable.class);
+    job.setOutputValueClass(Text.class);
 
-    conf.setOutputFormat(TextOutputFormat.class);/*]*/
+    job.setOutputFormatClass(TextOutputFormat.class);/*]*/ // cf setOutputFormat
     
-    JobClient.runJob(conf);
-    return 0;
+    return job.waitForCompletion(true) ? 0 : 1;
   }
+  
   public static void main(String[] args) throws Exception {
     int exitCode = ToolRunner.run(new MinimalMapReduceWithDefaults(), args);
     System.exit(exitCode);

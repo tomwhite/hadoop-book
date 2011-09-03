@@ -3,41 +3,47 @@ import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.mapred.*;
-import org.apache.hadoop.util.*;
+import org.apache.hadoop.mapred.JobConf;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.util.GenericOptionsParser;
+import org.apache.hadoop.util.Tool;
 
 public class JobBuilder {
   
   private final Class<?> driverClass;
-  private final JobConf conf;
+  private final Job job;
   private final int extraArgCount;
   private final String extrArgsUsage;
   
   private String[] extraArgs;
   
-  public JobBuilder(Class<?> driverClass) {
+  public JobBuilder(Class<?> driverClass) throws IOException {
     this(driverClass, 0, "");
   }
   
-  public JobBuilder(Class<?> driverClass, int extraArgCount, String extrArgsUsage) {
+  public JobBuilder(Class<?> driverClass, int extraArgCount, String extrArgsUsage) throws IOException {
     this.driverClass = driverClass;
     this.extraArgCount = extraArgCount;
-    this.conf = new JobConf(driverClass);
+    this.job = new Job();
+    this.job.setJarByClass(driverClass);
     this.extrArgsUsage = extrArgsUsage;
   }
 
   // vv JobBuilder
-  public static JobConf parseInputAndOutput(Tool tool, Configuration conf,
-      String[] args) {
+  public static Job parseInputAndOutput(Tool tool, Configuration conf,
+      String[] args) throws IOException {
     
     if (args.length != 2) {
       printUsage(tool, "<input> <output>");
       return null;
     }
-    JobConf jobConf = new JobConf(conf, tool.getClass());
-    FileInputFormat.addInputPath(jobConf, new Path(args[0]));
-    FileOutputFormat.setOutputPath(jobConf, new Path(args[1]));
-    return jobConf;
+    Job job = new Job(conf);
+    job.setJarByClass(tool.getClass());
+    FileInputFormat.addInputPath(job, new Path(args[0]));
+    FileOutputFormat.setOutputPath(job, new Path(args[1]));
+    return job;
   }
 
   public static void printUsage(Tool tool, String extraArgsUsage) {
@@ -48,6 +54,7 @@ public class JobBuilder {
   // ^^ JobBuilder
   
   public JobBuilder withCommandLineArgs(String... args) throws IOException {
+    Configuration conf = job.getConfiguration();
     GenericOptionsParser parser = new GenericOptionsParser(conf, args);
     String[] otherArgs = parser.getRemainingArgs();
     if (otherArgs.length < 2 && otherArgs.length > 3 + extraArgCount) {
@@ -74,13 +81,13 @@ public class JobBuilder {
       output.getFileSystem(conf).delete(output, true);
     }
     
-    FileInputFormat.addInputPath(conf, input);
-    FileOutputFormat.setOutputPath(conf, output);
+    FileInputFormat.addInputPath(job, input);
+    FileOutputFormat.setOutputPath(job, output);
     return this;
   }
   
-  public JobConf build() {
-    return conf;
+  public Job build() {
+    return job;
   }
   
   public String[] getExtraArgs() {

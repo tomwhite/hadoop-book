@@ -1,0 +1,1 @@
+hadoop MaxTemperatureUsingSecondarySort input/ncdc/sample.txt output

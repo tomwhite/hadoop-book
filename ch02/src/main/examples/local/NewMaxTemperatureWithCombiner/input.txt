@@ -1,1 +1,0 @@
-hadoop NewMaxTemperatureWithCombiner input/ncdc/sample.txt output

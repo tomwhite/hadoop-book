@@ -1,4 +1,4 @@
-// cc PartitionByStationUsingMultipleOutputs Partitions whole dataset into files named by the station ID using MultipleOutputs
+// == PartitionByStationYearUsingMultipleOutputs
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configured;
@@ -14,8 +14,7 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 // TODO: check output name
-//vv PartitionByStationUsingMultipleOutputs
-public class PartitionByStationUsingMultipleOutputs extends Configured
+public class PartitionByStationYearUsingMultipleOutputs extends Configured
   implements Tool {
   
   static class StationMapper
@@ -31,10 +30,11 @@ public class PartitionByStationUsingMultipleOutputs extends Configured
     }
   }
   
-  /*[*/static class MultipleOutputsReducer
-      extends Reducer<Text, Text, NullWritable, Text> {
+  static class MultipleOutputsReducer
+    extends Reducer<Text, Text, NullWritable, Text> {
     
     private MultipleOutputs<NullWritable, Text> multipleOutputs;
+    private NcdcRecordParser parser = new NcdcRecordParser();
 
     @Override
     protected void setup(Context context)
@@ -42,21 +42,25 @@ public class PartitionByStationUsingMultipleOutputs extends Configured
       multipleOutputs = new MultipleOutputs<NullWritable, Text>(context);
     }
 
+// vv PartitionByStationYearUsingMultipleOutputs
     @Override
     protected void reduce(Text key, Iterable<Text> values, Context context)
         throws IOException, InterruptedException {
       for (Text value : values) {
-        multipleOutputs.write("station", NullWritable.get(), value,
-            "station-" + key.toString().replace("-", ""));
+        parser.parse(value);
+        String basePath = String.format("%s/%s/part",
+            parser.getStationId(), parser.getYear());
+        multipleOutputs.write(NullWritable.get(), value, basePath);
       }
     }
+// ^^ PartitionByStationYearUsingMultipleOutputs
     
     @Override
     protected void cleanup(Context context)
         throws IOException, InterruptedException {
       multipleOutputs.close();
     }
-  }/*]*/
+  }
 
   @Override
   public int run(String[] args) throws Exception {
@@ -70,15 +74,14 @@ public class PartitionByStationUsingMultipleOutputs extends Configured
     job.setReducerClass(MultipleOutputsReducer.class);
     job.setOutputKeyClass(NullWritable.class);
     
-    /*[*/MultipleOutputs.addNamedOutput(job, "station", TextOutputFormat.class,
-        NullWritable.class, Text.class);/*]*/
+    MultipleOutputs.addNamedOutput(job, "station", TextOutputFormat.class,
+        NullWritable.class, Text.class);
 
     return job.waitForCompletion(true) ? 0 : 1;
   }
   public static void main(String[] args) throws Exception {
-    int exitCode = ToolRunner.run(new PartitionByStationUsingMultipleOutputs(),
+    int exitCode = ToolRunner.run(new PartitionByStationYearUsingMultipleOutputs(),
         args);
     System.exit(exitCode);
   }
 }
-//^^ PartitionByStationUsingMultipleOutputs

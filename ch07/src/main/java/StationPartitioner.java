@@ -1,9 +1,10 @@
 // == StationPartitioner
-import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Partitioner;
 
-// vv StationPartitioner
-public class StationPartitioner implements Partitioner<LongWritable, Text> {
+//vv StationPartitioner
+public class StationPartitioner extends Partitioner<LongWritable, Text> {
   
   private NcdcRecordParser parser = new NcdcRecordParser();
   
@@ -20,7 +21,5 @@ public class StationPartitioner implements Partitioner<LongWritable, Text> {
 // vv StationPartitioner
   }
 
-  @Override
-  public void configure(JobConf conf) { }
 }
-// ^^ StationPartitioner
+//^^ StationPartitioner

@@ -11,4 +11,3 @@ for snippet_file in sys.argv[2:]:
   index = manuscript.find(open(snippet_file, 'r').read())
   if index == -1:
     print "Snippet not found", snippet_file
-    sys.exit(1)

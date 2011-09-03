@@ -4,25 +4,27 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
-import org.apache.hadoop.mapred.lib.MultipleInputs;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.*;
 
 public class MaxTemperatureWithMultipleInputFormats extends Configured
   implements Tool {
   
-  static class MetOfficeMaxTemperatureMapper extends MapReduceBase
-    implements Mapper<LongWritable, Text, Text, IntWritable> {
+  static class MetOfficeMaxTemperatureMapper
+    extends Mapper<LongWritable, Text, Text, IntWritable> {
   
     private MetOfficeRecordParser parser = new MetOfficeRecordParser();
     
-    public void map(LongWritable key, Text value,
-        OutputCollector<Text, IntWritable> output, Reporter reporter)
-        throws IOException {
-      
+    @Override
+    protected void map(LongWritable key, Text value, Context context)
+        throws IOException, InterruptedException {
       parser.parse(value);
       if (parser.isValidTemperature()) {
-        output.collect(new Text(parser.getYear()),
+        context.write(new Text(parser.getYear()),
             new IntWritable(parser.getAirTemperature()));
       }
     }
@@ -35,29 +37,28 @@ public class MaxTemperatureWithMultipleInputFormats extends Configured
       return -1;
     }
     
-    JobConf conf = new JobConf(getConf(), getClass());
-    conf.setJobName("Max temperature with multiple input formats");
+    Job job = new Job(getConf(), "Max temperature with multiple input formats");
+    job.setJarByClass(getClass());
     
     Path ncdcInputPath = new Path(args[0]);
     Path metOfficeInputPath = new Path(args[1]);
     Path outputPath = new Path(args[2]);
     
 // vv MaxTemperatureWithMultipleInputFormats    
-    MultipleInputs.addInputPath(conf, ncdcInputPath,
+    MultipleInputs.addInputPath(job, ncdcInputPath,
         TextInputFormat.class, MaxTemperatureMapper.class);
-    MultipleInputs.addInputPath(conf, metOfficeInputPath,
+    MultipleInputs.addInputPath(job, metOfficeInputPath,
         TextInputFormat.class, MetOfficeMaxTemperatureMapper.class);
 // ^^ MaxTemperatureWithMultipleInputFormats
-    FileOutputFormat.setOutputPath(conf, outputPath);
+    FileOutputFormat.setOutputPath(job, outputPath);
     
-    conf.setOutputKeyClass(Text.class);
-    conf.setOutputValueClass(IntWritable.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
     
-    conf.setCombinerClass(MaxTemperatureReducer.class);
-    conf.setReducerClass(MaxTemperatureReducer.class);
+    job.setCombinerClass(MaxTemperatureReducer.class);
+    job.setReducerClass(MaxTemperatureReducer.class);
 
-    JobClient.runJob(conf);
-    return 0;
+    return job.waitForCompletion(true) ? 0 : 1;
   }
   
   public static void main(String[] args) throws Exception {

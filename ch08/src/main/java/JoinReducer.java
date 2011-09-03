@@ -3,21 +3,20 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.mapreduce.Reducer;
 
 // vv JoinReducer
-public class JoinReducer extends MapReduceBase implements
-    Reducer<TextPair, Text, Text, Text> {
+public class JoinReducer extends Reducer<TextPair, Text, Text, Text> {
 
-  public void reduce(TextPair key, Iterator<Text> values,
-      OutputCollector<Text, Text> output, Reporter reporter)
-      throws IOException {
-
-    Text stationName = new Text(values.next());
-    while (values.hasNext()) {
-      Text record = values.next();
+  @Override
+  protected void reduce(TextPair key, Iterable<Text> values, Context context)
+      throws IOException, InterruptedException {
+    Iterator<Text> iter = values.iterator();
+    Text stationName = new Text(iter.next());
+    while (iter.hasNext()) {
+      Text record = iter.next();
       Text outValue = new Text(stationName.toString() + "\t" + record.toString());
-      output.collect(key.getFirst(), outValue);
+      context.write(key.getFirst(), outValue);
     }
   }
 }

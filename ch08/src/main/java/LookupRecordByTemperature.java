@@ -3,8 +3,9 @@ import org.apache.hadoop.conf.*;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.io.MapFile.Reader;
-import org.apache.hadoop.mapred.*;
-import org.apache.hadoop.mapred.lib.HashPartitioner;
+import org.apache.hadoop.mapreduce.Partitioner;
+import org.apache.hadoop.mapreduce.lib.output.MapFileOutputFormat;
+import org.apache.hadoop.mapreduce.lib.partition.HashPartitioner;
 import org.apache.hadoop.util.*;
 
 // vv LookupRecordByTemperature
@@ -18,9 +19,8 @@ public class LookupRecordByTemperature extends Configured implements Tool {
     }
     Path path = new Path(args[0]);
     IntWritable key = new IntWritable(Integer.parseInt(args[1]));
-    FileSystem fs = path.getFileSystem(getConf());
     
-    Reader[] readers = /*[*/MapFileOutputFormat.getReaders(fs, path, getConf())/*]*/;
+    Reader[] readers = /*[*/MapFileOutputFormat.getReaders(path, getConf())/*]*/;
     Partitioner<IntWritable, Text> partitioner =
       new HashPartitioner<IntWritable, Text>();
     Text val = new Text();

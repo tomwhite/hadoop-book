@@ -1,6 +1,10 @@
 // cc MissingTemperatureFields Application to calculate the proportion of records with missing temperature fields
 import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.mapreduce.Cluster;
+import org.apache.hadoop.mapreduce.Counters;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.JobID;
+import org.apache.hadoop.mapreduce.TaskCounter;
 import org.apache.hadoop.util.*;
 
 public class MissingTemperatureFields extends Configured implements Tool {
@@ -11,9 +15,9 @@ public class MissingTemperatureFields extends Configured implements Tool {
       JobBuilder.printUsage(this, "<job ID>");
       return -1;
     }
-    JobClient jobClient = new JobClient(new JobConf(getConf()));
+    Cluster cluster = new Cluster(getConf());
     String jobID = args[0];
-    RunningJob job = jobClient.getJob(JobID.forName(jobID));
+    Job job = cluster.getJob(JobID.forName(jobID));
     if (job == null) {
       System.err.printf("No job with ID %s found.\n", jobID);
       return -1;
@@ -24,11 +28,10 @@ public class MissingTemperatureFields extends Configured implements Tool {
     }
     
     Counters counters = job.getCounters();
-    long missing = counters.getCounter(
-        MaxTemperatureWithCounters.Temperature.MISSING);
+    long missing = counters.findCounter(
+        MaxTemperatureWithCounters.Temperature.MISSING).getValue();
     
-    long total = counters.findCounter("org.apache.hadoop.mapred.Task$Counter",
-        "MAP_INPUT_RECORDS").getCounter();
+    long total = counters.findCounter(TaskCounter.MAP_INPUT_RECORDS).getValue();
 
     System.out.printf("Records with missing temperature fields: %.2f%%\n",
         100.0 * missing / total);

@@ -1,45 +1,35 @@
 // cc WholeFileRecordReader The RecordReader used by WholeFileInputFormat for reading a whole file as a record
 import java.io.IOException;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.*;
-import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
 
-// vv WholeFileRecordReader
-class WholeFileRecordReader implements RecordReader<NullWritable, BytesWritable> {
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.BytesWritable;
+import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.mapreduce.InputSplit;
+import org.apache.hadoop.mapreduce.RecordReader;
+import org.apache.hadoop.mapreduce.TaskAttemptContext;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
+
+//vv WholeFileRecordReader
+class WholeFileRecordReader extends RecordReader<NullWritable, BytesWritable> {
   
   private FileSplit fileSplit;
   private Configuration conf;
+  private BytesWritable value = new BytesWritable();
   private boolean processed = false;
+
+  @Override
+  public void initialize(InputSplit split, TaskAttemptContext context)
+      throws IOException, InterruptedException {
+    this.fileSplit = (FileSplit) split;
+    this.conf = context.getConfiguration();
+  }
   
-  public WholeFileRecordReader(FileSplit fileSplit, Configuration conf)
-      throws IOException {
-    this.fileSplit = fileSplit;
-    this.conf = conf;
-  }
-
   @Override
-  public NullWritable createKey() {
-    return NullWritable.get();
-  }
-
-  @Override
-  public BytesWritable createValue() {
-    return new BytesWritable();
-  }
-
-  @Override
-  public long getPos() throws IOException {
-    return processed ? fileSplit.getLength() : 0;
-  }
-
-  @Override
-  public float getProgress() throws IOException {
-    return processed ? 1.0f : 0.0f;
-  }
-
-  @Override
-  public boolean next(NullWritable key, BytesWritable value) throws IOException {
+  public boolean nextKeyValue() throws IOException, InterruptedException {
     if (!processed) {
       byte[] contents = new byte[(int) fileSplit.getLength()];
       Path file = fileSplit.getPath();
@@ -57,10 +47,26 @@ class WholeFileRecordReader implements RecordReader<NullWritable, BytesWritable>
     }
     return false;
   }
+  
+  @Override
+  public NullWritable getCurrentKey() throws IOException, InterruptedException {
+    return NullWritable.get();
+  }
+
+  @Override
+  public BytesWritable getCurrentValue() throws IOException,
+      InterruptedException {
+    return value;
+  }
+
+  @Override
+  public float getProgress() throws IOException {
+    return processed ? 1.0f : 0.0f;
+  }
 
   @Override
   public void close() throws IOException {
     // do nothing
   }
 }
-// ^^ WholeFileRecordReader
+//^^ WholeFileRecordReader

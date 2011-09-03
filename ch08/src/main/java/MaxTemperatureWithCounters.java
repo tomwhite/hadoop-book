@@ -2,9 +2,13 @@
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
-import org.apache.hadoop.util.*;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 // vv MaxTemperatureWithCounters
 public class MaxTemperatureWithCounters extends Configured implements Tool {
@@ -14,49 +18,47 @@ public class MaxTemperatureWithCounters extends Configured implements Tool {
     MALFORMED
   }
   
-  static class MaxTemperatureMapperWithCounters extends MapReduceBase
-    implements Mapper<LongWritable, Text, Text, IntWritable> {
+  static class MaxTemperatureMapperWithCounters
+    extends Mapper<LongWritable, Text, Text, IntWritable> {
     
     private NcdcRecordParser parser = new NcdcRecordParser();
   
-    public void map(LongWritable key, Text value,
-        OutputCollector<Text, IntWritable> output, Reporter reporter)
-        throws IOException {
+    @Override
+    protected void map(LongWritable key, Text value, Context context)
+        throws IOException, InterruptedException {
       
       parser.parse(value);
       if (parser.isValidTemperature()) {
         int airTemperature = parser.getAirTemperature();
-        output.collect(new Text(parser.getYear()),
+        context.write(new Text(parser.getYear()),
             new IntWritable(airTemperature));
       } else if (parser.isMalformedTemperature()) {
         System.err.println("Ignoring possibly corrupt input: " + value);
-        reporter.incrCounter(Temperature.MALFORMED, 1);
+        context.getCounter(Temperature.MALFORMED).increment(1);
       } else if (parser.isMissingTemperature()) {
-        reporter.incrCounter(Temperature.MISSING, 1);
+        context.getCounter(Temperature.MISSING).increment(1);
       }
       
       // dynamic counter
-      reporter.incrCounter("TemperatureQuality", parser.getQuality(), 1);
-      
+      context.getCounter("TemperatureQuality", parser.getQuality()).increment(1);
     }
   }
   
   @Override
-  public int run(String[] args) throws IOException {
-    JobConf conf = JobBuilder.parseInputAndOutput(this, getConf(), args);
-    if (conf == null) {
+  public int run(String[] args) throws Exception {
+    Job job = JobBuilder.parseInputAndOutput(this, getConf(), args);
+    if (job == null) {
       return -1;
     }
     
-    conf.setOutputKeyClass(Text.class);
-    conf.setOutputValueClass(IntWritable.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
 
-    conf.setMapperClass(MaxTemperatureMapperWithCounters.class);
-    conf.setCombinerClass(MaxTemperatureReducer.class);
-    conf.setReducerClass(MaxTemperatureReducer.class);
+    job.setMapperClass(MaxTemperatureMapperWithCounters.class);
+    job.setCombinerClass(MaxTemperatureReducer.class);
+    job.setReducerClass(MaxTemperatureReducer.class);
 
-    JobClient.runJob(conf);
-    return 0;
+    return job.waitForCompletion(true) ? 0 : 1;
   }
   
   public static void main(String[] args) throws Exception {
