@@ -76,7 +76,7 @@ public class ExamplesTest {
     env.put("HADOOP_HOME", "/Users/tom/dev/hadoop-0.20.2-cdh3u1");
     env.put("PATH", env.get("HADOOP_HOME") + "/bin" + ":" + env.get("PATH"));
     env.put("HADOOP_CONF_DIR", "snippet/bin/local");
-    env.put("HADOOP_CLASSPATH", "common/target/classes:ch02/target/classes:ch04/target/classes:ch07/target/classes:ch08/target/classes");
+    env.put("HADOOP_CLASSPATH", "hadoop-examples.jar");
     
     if (actualOutputDir.exists()) {
       Files.deleteRecursively(actualOutputDir);

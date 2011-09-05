@@ -8,19 +8,14 @@
     <relativePath>../book/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>distribution</artifactId>
+  <artifactId>sqoop-examples</artifactId>
   <packaging>pom</packaging>
   <version>3.0</version>
-  <name>Distribution</name>
+  <name>Sqoop Examples JAR</name>
   <dependencies>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>common</artifactId>
-      <version>3.0</version>
-    </dependency>
-    <dependency>
-      <groupId>com.hadoopbook</groupId>
-      <artifactId>ch07</artifactId>
+      <artifactId>ch15</artifactId>
       <version>3.0</version>
     </dependency>
   </dependencies>
@@ -31,9 +26,9 @@
         <version>2.2.1</version>
         <configuration>
           <descriptors>
-            <descriptor>src/assembly/assembly.xml</descriptor>
+            <descriptor>../book/src/assembly/assembly.xml</descriptor>
           </descriptors>
-          <finalName>job</finalName>
+          <finalName>sqoop-examples</finalName>
           <outputDirectory>${project.build.directory}/../..</outputDirectory>
           <appendAssemblyId>false</appendAssemblyId>
         </configuration>
