@@ -5,7 +5,8 @@ http://www.hadoopbook.com/
 http://oreilly.com/catalog/9781449311520/
 
 The code is hosted at http://github.com/tomwhite/hadoop-book/. You can find code
-for the first edition at http://github.com/tomwhite/hadoop-book/tree/1e.
+for the first edition at http://github.com/tomwhite/hadoop-book/tree/1e, and
+for the second edition at http://github.com/tomwhite/hadoop-book/tree/2e.
 
 This version of the code has been tested with:
  * Hadoop 0.20.2
