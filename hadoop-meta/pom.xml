@@ -53,15 +53,15 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/NewJoinRecordWithStationName.java</exclude>
-                <exclude>**/NewLookupRecordByTemperature.java</exclude>
-                <exclude>**/NewLookupRecordsByTemperature.java</exclude>
-                <exclude>**/NewMissingTemperatureFields.java</exclude>
-                <exclude>**/NewSortByTemperatureToMapFile.java</exclude>
-                <exclude>**/NewSortByTemperatureUsingTotalOrderPartitioner.java</exclude>
-                <exclude>**/NewPartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/NewMaxTemperatureWithMultipleInputFormats.java</exclude>
-                <exclude>**/NewPartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>**/JoinRecordWithStationName.java</exclude>
+                <exclude>**/LookupRecordByTemperature.java</exclude>
+                <exclude>**/LookupRecordsByTemperature.java</exclude>
+                <exclude>**/MissingTemperatureFields.java</exclude>
+                <exclude>**/SortByTemperatureToMapFile.java</exclude>
+                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
+                <exclude>**/MaxTemperatureWithMultipleInputFormats.java</exclude>
+                <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -92,15 +92,15 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/NewJoinRecordWithStationName.java</exclude>
-                <exclude>**/NewLookupRecordByTemperature.java</exclude>
-                <exclude>**/NewLookupRecordsByTemperature.java</exclude>
-                <exclude>**/NewMissingTemperatureFields.java</exclude>
-                <exclude>**/NewSortByTemperatureToMapFile.java</exclude>
-                <exclude>**/NewSortByTemperatureUsingTotalOrderPartitioner.java</exclude>
-                <exclude>**/NewPartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/NewMaxTemperatureWithMultipleInputFormats.java</exclude>
-                <exclude>**/NewPartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>**/JoinRecordWithStationName.java</exclude>
+                <exclude>**/LookupRecordByTemperature.java</exclude>
+                <exclude>**/LookupRecordsByTemperature.java</exclude>
+                <exclude>**/MissingTemperatureFields.java</exclude>
+                <exclude>**/SortByTemperatureToMapFile.java</exclude>
+                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
+                <exclude>**/MaxTemperatureWithMultipleInputFormats.java</exclude>
+                <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -131,11 +131,11 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/NewLookupRecordByTemperature.java</exclude>
-                <exclude>**/NewLookupRecordsByTemperature.java</exclude>
-                <exclude>**/NewMissingTemperatureFields.java</exclude>
-                <exclude>**/NewSortByTemperatureToMapFile.java</exclude>
-                <exclude>**/NewSortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>**/LookupRecordByTemperature.java</exclude>
+                <exclude>**/LookupRecordsByTemperature.java</exclude>
+                <exclude>**/MissingTemperatureFields.java</exclude>
+                <exclude>**/SortByTemperatureToMapFile.java</exclude>
+                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
             </configuration>
           </plugin>
