@@ -3,6 +3,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeTrue;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
 
@@ -37,7 +38,15 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class ExamplesTest {
 
-  private static File projectBaseDir = new File("/Users/tom/workspace/hadoop-book");
+  private static final File PROJECT_BASE_DIR =
+    new File(System.getProperty("hadoop.book.basedir",
+        "/Users/tom/workspace/hadoop-book"));
+  
+  private static final String EXAMPLE_DIRS_PROPERTY = "example.dirs";
+  private static final String EXAMPLE_DIRS_DEFAULT =
+    "ch02/src/main/examples/local,ch04/src/main/examples/local," +
+    "ch07/src/main/examples/local,ch08/src/main/examples/local";
+
   private static final IOFileFilter HIDDEN_FILE_FILTER =
     new OrFileFilter(HiddenFileFilter.HIDDEN, new PrefixFileFilter("_"));
   private static final IOFileFilter NOT_HIDDEN_FILE_FILTER =
@@ -46,14 +55,13 @@ public class ExamplesTest {
   @Parameters
   public static Collection<Object[]> data() {
     Collection<Object[]> data = new ArrayList<Object[]>();
-    String[] dirNames = {
-        "ch02/src/main/examples/local",
-        "ch04/src/main/examples/local",
-        "ch07/src/main/examples/local",
-        "ch08/src/main/examples/local",
-    };
-    for (String dirName : dirNames) {
-      File dir = new File(projectBaseDir, dirName);
+    String exampleDirs = System.getProperty(EXAMPLE_DIRS_PROPERTY,
+        EXAMPLE_DIRS_DEFAULT);
+    for (String dirName : Splitter.on(',').split(exampleDirs)) {
+      File dir = new File(PROJECT_BASE_DIR, dirName);
+      if (!dir.exists()) {
+        fail(dir + " does not exist");
+      }
       for (File file : dir.listFiles()) {
         data.add(new Object[] { file });
       }
@@ -62,7 +70,7 @@ public class ExamplesTest {
   }
 
   private File example; // parameter
-  private File actualOutputDir = new File(projectBaseDir, "output");
+  private File actualOutputDir = new File(PROJECT_BASE_DIR, "output");
   private Map<String, String> env;
   
   public ExamplesTest(File example) {
@@ -74,7 +82,8 @@ public class ExamplesTest {
     assumeTrue(!example.getPath().endsWith(".ignore"));
 
     String hadoopHome = System.getenv("HADOOP_HOME");
-    assertNotNull("Export the HADOOP_HOME environment variable to run the snippet tests", hadoopHome);
+    assertNotNull("Export the HADOOP_HOME environment variable " +
+        "to run the snippet tests", hadoopHome);
     env = new HashMap<String, String>(EnvironmentUtils.getProcEnvironment());
     env.put("HADOOP_HOME", hadoopHome);
     env.put("PATH", env.get("HADOOP_HOME") + "/bin" + ":" + env.get("PATH"));
@@ -97,7 +106,7 @@ public class ExamplesTest {
       CommandLine cl = CommandLine.parse("/bin/bash " +
           inputFile.getAbsolutePath());
       DefaultExecutor exec = new DefaultExecutor();
-      exec.setWorkingDirectory(projectBaseDir);
+      exec.setWorkingDirectory(PROJECT_BASE_DIR);
       exec.setStreamHandler(psh);
       exec.execute(cl, env);
     } finally {
