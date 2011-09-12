@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeTrue;
 
@@ -72,8 +73,10 @@ public class ExamplesTest {
   public void setUp() throws IOException {
     assumeTrue(!example.getPath().endsWith(".ignore"));
 
+    String hadoopHome = System.getenv("HADOOP_HOME");
+    assertNotNull("Export the HADOOP_HOME environment variable to run the snippet tests", hadoopHome);
     env = new HashMap<String, String>(EnvironmentUtils.getProcEnvironment());
-    env.put("HADOOP_HOME", "/Users/tom/dev/hadoop-0.20.2-cdh3u1");
+    env.put("HADOOP_HOME", hadoopHome);
     env.put("PATH", env.get("HADOOP_HOME") + "/bin" + ":" + env.get("PATH"));
     env.put("HADOOP_CONF_DIR", "snippet/bin/local");
     env.put("HADOOP_CLASSPATH", "hadoop-examples.jar");
