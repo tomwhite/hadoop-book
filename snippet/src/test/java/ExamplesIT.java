@@ -6,15 +6,19 @@ import static org.junit.Assume.assumeTrue;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.io.Files;
+import com.google.common.io.InputSupplier;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 import junitx.framework.FileAssert;
 
@@ -136,11 +140,29 @@ public class ExamplesIT {
       File expectedFile = expectedParts.get(i);
       File actualFile = actualParts.get(i);
       if (expectedFile.getPath().endsWith(".gz")) {
-        FileAssert.assertBinaryEquals(expectedFile, actualFile);
+        File expectedDecompressed = decompress(expectedFile);
+        File actualDecompressed = decompress(expectedFile);
+        FileAssert.assertEquals(expectedDecompressed, actualDecompressed);
       } else {
         FileAssert.assertEquals(expectedFile, actualFile);
       }
     }
+  }
+
+  private File decompress(File file) throws IOException {
+    File decompressed = File.createTempFile(getClass().getSimpleName(), ".txt");
+    decompressed.deleteOnExit();
+    final GZIPInputStream in = new GZIPInputStream(new FileInputStream(file));
+    try {
+      Files.copy(new InputSupplier<InputStream>() {
+          public InputStream getInput() throws IOException {
+            return in;
+          }
+      }, decompressed);
+    } finally {
+      in.close();
+    }
+    return decompressed;
   }
 
 }
