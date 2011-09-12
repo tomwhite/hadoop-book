@@ -141,7 +141,7 @@ public class ExamplesIT {
       File actualFile = actualParts.get(i);
       if (expectedFile.getPath().endsWith(".gz")) {
         File expectedDecompressed = decompress(expectedFile);
-        File actualDecompressed = decompress(expectedFile);
+        File actualDecompressed = decompress(actualFile);
         FileAssert.assertEquals(expectedDecompressed, actualDecompressed);
       } else {
         FileAssert.assertEquals(expectedFile, actualFile);
