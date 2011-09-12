@@ -41,7 +41,7 @@ import org.junit.runners.Parameterized.Parameters;
  * output produced is the same as all the files in output.
  */
 @RunWith(Parameterized.class)
-public class ExamplesTest {
+public class ExamplesIT {
 
   private static final File PROJECT_BASE_DIR =
     new File(System.getProperty("hadoop.book.basedir",
@@ -78,7 +78,7 @@ public class ExamplesTest {
   private File actualOutputDir = new File(PROJECT_BASE_DIR, "output");
   private Map<String, String> env;
   
-  public ExamplesTest(File example) {
+  public ExamplesIT(File example) {
     this.example = example;
   }
   
