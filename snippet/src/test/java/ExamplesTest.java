@@ -35,6 +35,11 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+/**
+ * This test runs the examples and checks that they produce the expected output.
+ * It takes each input.txt file and runs it as a script, then tests that the
+ * output produced is the same as all the files in output.
+ */
 @RunWith(Parameterized.class)
 public class ExamplesTest {
 
@@ -77,6 +82,7 @@ public class ExamplesTest {
     this.example = example;
   }
   
+  @SuppressWarnings("unchecked")
   @Before
   public void setUp() throws IOException {
     assumeTrue(!example.getPath().endsWith(".ignore"));
