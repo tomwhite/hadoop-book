@@ -18,12 +18,15 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
 import junitx.framework.FileAssert;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
+import org.apache.commons.exec.ExecuteException;
 import org.apache.commons.exec.PumpStreamHandler;
 import org.apache.commons.exec.environment.EnvironmentUtils;
 import org.apache.commons.io.FileUtils;
@@ -81,6 +84,7 @@ public class ExamplesIT {
   private File example; // parameter
   private File actualOutputDir = new File(PROJECT_BASE_DIR, "output");
   private Map<String, String> env;
+  private String version;
   
   public ExamplesIT(File example) {
     this.example = example;
@@ -100,6 +104,15 @@ public class ExamplesIT {
     env.put("HADOOP_CONF_DIR", "snippet/bin/local");
     env.put("HADOOP_CLASSPATH", "hadoop-examples.jar");
     
+    String versionOut = execute("hadoop version");
+    for (String line : Splitter.on("\n").split(versionOut)) {
+      Matcher matcher = Pattern.compile("^Hadoop (.+)+$").matcher(line);
+      if (matcher.matches()) {
+        version = matcher.group(1);
+      }
+    }
+    assertNotNull("Version not found", version);
+    
     if (actualOutputDir.exists()) {
       Files.deleteRecursively(actualOutputDir);
     }
@@ -107,21 +120,23 @@ public class ExamplesIT {
   
   @Test
   public void test() throws Exception {
-    File inputFile = new File(example, "input.txt");
-    File expectedOutputDir = new File(example, "output");
-    
-    ByteArrayOutputStream stdout = new ByteArrayOutputStream();
-    try {
-      PumpStreamHandler psh = new PumpStreamHandler(stdout);
-      CommandLine cl = CommandLine.parse("/bin/bash " +
-          inputFile.getAbsolutePath());
-      DefaultExecutor exec = new DefaultExecutor();
-      exec.setWorkingDirectory(PROJECT_BASE_DIR);
-      exec.setStreamHandler(psh);
-      exec.execute(cl, env);
-    } finally {
-      System.out.println(stdout.toString());
+    File inputFile;
+    File expectedOutputDir;
+
+    // First look for data for the particular version
+    File versionedExample = new File(example, version);
+    if (versionedExample.exists()) {
+      inputFile = new File(versionedExample, "input.txt");
+      expectedOutputDir = new File(versionedExample, "output");
+      // if empty then skip
+      assumeTrue(inputFile.exists());
+    } else {    // Otherwise use the standard fallback
+      inputFile = new File(example, "input.txt");
+      expectedOutputDir = new File(example, "output");
     }
+    
+    String systemOut = execute(inputFile.getAbsolutePath());
+    System.out.println(systemOut);
     
     if (!expectedOutputDir.exists()) {
       FileUtils.copyDirectory(actualOutputDir, expectedOutputDir);
@@ -147,6 +162,17 @@ public class ExamplesIT {
         FileAssert.assertEquals(expectedFile, actualFile);
       }
     }
+  }
+
+  private String execute(String commandLine) throws ExecuteException, IOException {
+    ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+    PumpStreamHandler psh = new PumpStreamHandler(stdout);
+    CommandLine cl = CommandLine.parse("/bin/bash " + commandLine);
+    DefaultExecutor exec = new DefaultExecutor();
+    exec.setWorkingDirectory(PROJECT_BASE_DIR);
+    exec.setStreamHandler(psh);
+    exec.execute(cl, env);
+    return stdout.toString();
   }
 
   private File decompress(File file) throws IOException {
