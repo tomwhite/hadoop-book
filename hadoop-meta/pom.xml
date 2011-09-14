@@ -158,27 +158,31 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-common</artifactId>
+          <version>0.23.0-SNAPSHOT</version>
+          <type>test-jar</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdfs</artifactId>
           <version>0.23.0-SNAPSHOT</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-mapred</artifactId>
+          <artifactId>hadoop-hdfs</artifactId>
+          <version>0.23.0-SNAPSHOT</version>
+          <type>test-jar</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-mapreduce-client-core</artifactId>
           <version>0.23.0-SNAPSHOT</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-common-test</artifactId>
-          <version>0.23.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-hdfs-test</artifactId>
-          <version>0.23.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-mapred-test</artifactId>
+          <artifactId>hadoop-mapred-test</artifactId> <!-- MR1 -->
           <version>0.23.0-SNAPSHOT</version>
         </dependency>
       </dependencies>

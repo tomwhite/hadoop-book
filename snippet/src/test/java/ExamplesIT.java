@@ -171,7 +171,15 @@ public class ExamplesIT {
     DefaultExecutor exec = new DefaultExecutor();
     exec.setWorkingDirectory(PROJECT_BASE_DIR);
     exec.setStreamHandler(psh);
-    exec.execute(cl, env);
+    try {
+      exec.execute(cl, env);
+    } catch (ExecuteException e) {
+      System.out.println(stdout.toString());
+      throw e;
+    } catch (IOException e) {
+      System.out.println(stdout.toString());
+      throw e;
+    }
     return stdout.toString();
   }
 
