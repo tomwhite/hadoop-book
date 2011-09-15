@@ -69,6 +69,7 @@ public class ExamplesIT {
     Collection<Object[]> data = new ArrayList<Object[]>();
     String exampleDirs = System.getProperty(EXAMPLE_DIRS_PROPERTY,
         EXAMPLE_DIRS_DEFAULT);
+    int i = 0;
     for (String dirName : Splitter.on(',').split(exampleDirs)) {
       File dir = new File(PROJECT_BASE_DIR, dirName);
       if (!dir.exists()) {
@@ -76,11 +77,13 @@ public class ExamplesIT {
       }
       for (File file : dir.listFiles()) {
         data.add(new Object[] { file });
+        // so we can see which test corresponds to which file
+        System.out.printf("%s: %s\n", i++, file);
       }
     }
     return data;
   }
-
+  
   private File example; // parameter
   private File actualOutputDir = new File(PROJECT_BASE_DIR, "output");
   private Map<String, String> env;
