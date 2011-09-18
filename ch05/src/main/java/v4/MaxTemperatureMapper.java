@@ -6,15 +6,13 @@ import java.io.IOException;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.MapReduceBase;
-import org.apache.hadoop.mapred.Mapper;
-import org.apache.hadoop.mapred.OutputCollector;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapreduce.Mapper;
+
 import v3.NcdcRecordParser;
 
 //vv MaxTemperatureMapperV4
-public class MaxTemperatureMapper extends MapReduceBase
-  implements Mapper<LongWritable, Text, Text, IntWritable> {
+public class MaxTemperatureMapper
+  extends Mapper<LongWritable, Text, Text, IntWritable> {
 
   /*[*/enum Temperature {
     OVER_100
@@ -22,19 +20,19 @@ public class MaxTemperatureMapper extends MapReduceBase
   
   private NcdcRecordParser parser = new NcdcRecordParser();
 
-  public void map(LongWritable key, Text value,
-      OutputCollector<Text, IntWritable> output, Reporter reporter)
-      throws IOException {
+  @Override
+  public void map(LongWritable key, Text value, Context context)
+      throws IOException, InterruptedException {
     
     parser.parse(value);
     if (parser.isValidTemperature()) {
       int airTemperature = parser.getAirTemperature();
       /*[*/if (airTemperature > 1000) {
         System.err.println("Temperature over 100 degrees for input: " + value);
-        reporter.setStatus("Detected possibly corrupt record: see logs.");
-        reporter.incrCounter(Temperature.OVER_100, 1);
+        context.setStatus("Detected possibly corrupt record: see logs.");
+        context.getCounter(Temperature.OVER_100).increment(1);
       }/*]*/
-      output.collect(new Text(parser.getYear()), new IntWritable(airTemperature));
+      context.write(new Text(parser.getYear()), new IntWritable(airTemperature));
     }
   }
 }

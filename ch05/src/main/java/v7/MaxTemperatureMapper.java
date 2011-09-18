@@ -5,16 +5,14 @@ import java.io.IOException;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.MapReduceBase;
-import org.apache.hadoop.mapred.Mapper;
-import org.apache.hadoop.mapred.OutputCollector;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.mapreduce.Mapper;
+
 import v5.NcdcRecordParser;
 
 // vv MaxTemperatureMapperV7
-public class MaxTemperatureMapper extends MapReduceBase
-  implements Mapper<LongWritable, Text, Text, IntWritable> {
-  
+public class MaxTemperatureMapper
+  extends Mapper<LongWritable, Text, Text, IntWritable> {
+
   enum Temperature {
     MALFORMED
   }
@@ -23,18 +21,18 @@ public class MaxTemperatureMapper extends MapReduceBase
   /*[*/private Text year = new Text();
   private IntWritable temp = new IntWritable();/*]*/
   
-  public void map(LongWritable key, Text value,
-      OutputCollector<Text, IntWritable> output, Reporter reporter)
-      throws IOException {
+  @Override
+  public void map(LongWritable key, Text value, Context context)
+      throws IOException, InterruptedException {
     
     parser.parse(value);
     if (parser.isValidTemperature()) {
       /*[*/year.set(parser.getYear());
       temp.set(parser.getAirTemperature());
-      output.collect(year, temp);/*]*/
+      context.write(year, temp);/*]*/
     } else if (parser.isMalformedTemperature()) {
       System.err.println("Ignoring possibly corrupt input: " + value);
-      reporter.incrCounter(Temperature.MALFORMED, 1);
+      context.getCounter(Temperature.MALFORMED).increment(1);
     }
   }
 }

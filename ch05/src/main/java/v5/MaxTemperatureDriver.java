@@ -2,14 +2,19 @@
 //vv MaxTemperatureDriverV5
 package v5;
 
-import org.apache.hadoop.conf.*;
+import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
-import org.apache.hadoop.util.*;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 import v1.MaxTemperatureReducer;
 
+//Identical to v4 except for v5 mapper
 public class MaxTemperatureDriver extends Configured implements Tool {
 
   @Override
@@ -21,21 +26,20 @@ public class MaxTemperatureDriver extends Configured implements Tool {
       return -1;
     }
     
-    JobConf conf = new JobConf(getConf(), getClass());
-    conf.setJobName("Max temperature");
-    
-    FileInputFormat.addInputPath(conf, new Path(args[0]));
-    FileOutputFormat.setOutputPath(conf, new Path(args[1]));
-    
-    conf.setOutputKeyClass(Text.class);
-    conf.setOutputValueClass(IntWritable.class);
+    Job job = new Job(getConf(), "Max temperature");
+    job.setJarByClass(getClass());
 
-    conf.setMapperClass(MaxTemperatureMapper.class);
-    conf.setCombinerClass(MaxTemperatureReducer.class);
-    conf.setReducerClass(MaxTemperatureReducer.class);
+    FileInputFormat.addInputPath(job, new Path(args[0]));
+    FileOutputFormat.setOutputPath(job, new Path(args[1]));
+    
+    job.setMapperClass(MaxTemperatureMapper.class);
+    job.setCombinerClass(MaxTemperatureReducer.class);
+    job.setReducerClass(MaxTemperatureReducer.class);
 
-    JobClient.runJob(conf);
-    return 0;
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
+    
+    return job.waitForCompletion(true) ? 0 : 1;
   }
   
   public static void main(String[] args) throws Exception {

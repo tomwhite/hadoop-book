@@ -11,6 +11,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 public class MaxTemperatureReducer
   extends Reducer<Text, IntWritable, Text, IntWritable> {
   
+  @Override
   public void reduce(Text key, Iterable<IntWritable> values,
       Context context)
       throws IOException, InterruptedException {

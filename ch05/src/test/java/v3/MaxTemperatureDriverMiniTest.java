@@ -1,11 +1,18 @@
 package v3;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-import java.io.*;
-import org.apache.hadoop.fs.*;
-import org.apache.hadoop.mapred.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import org.apache.hadoop.fs.FileUtil;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.PathFilter;
+import org.apache.hadoop.mapred.ClusterMapReduceTestCase;
+import org.apache.hadoop.mapred.JobConf;
 
 // A test for MaxTemperatureDriver that runs in a "mini" HDFS and MapReduce cluster
 public class MaxTemperatureDriverMiniTest extends ClusterMapReduceTestCase {
@@ -20,6 +27,9 @@ public class MaxTemperatureDriverMiniTest extends ClusterMapReduceTestCase {
   protected void setUp() throws Exception {
     if (System.getProperty("test.build.data") == null) {
       System.setProperty("test.build.data", "/tmp");
+    }
+    if (System.getProperty("hadoop.log.dir") == null) {
+      System.setProperty("hadoop.log.dir", "/tmp");
     }
     super.setUp();
   }

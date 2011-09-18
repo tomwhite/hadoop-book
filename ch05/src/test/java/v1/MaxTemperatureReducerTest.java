@@ -6,24 +6,25 @@ import static org.mockito.Mockito.*;
 import java.io.IOException;
 import java.util.*;
 import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.OutputCollector;
 import org.junit.*;
 
 public class MaxTemperatureReducerTest {
   
   //vv MaxTemperatureReducerTestV1
   @Test
-  public void returnsMaximumIntegerInValues() throws IOException {
+  public void returnsMaximumIntegerInValues() throws IOException,
+      InterruptedException {
     MaxTemperatureReducer reducer = new MaxTemperatureReducer();
     
     Text key = new Text("1950");
-    Iterator<IntWritable> values = Arrays.asList(
-        new IntWritable(10), new IntWritable(5)).iterator();
-    OutputCollector<Text, IntWritable> output = mock(OutputCollector.class);
+    List<IntWritable> values = Arrays.asList(
+        new IntWritable(10), new IntWritable(5));
+    MaxTemperatureReducer.Context context =
+      mock(MaxTemperatureReducer.Context.class);
     
-    reducer.reduce(key, values, output, null);
+    reducer.reduce(key, values, context);
     
-    verify(output).collect(key, new IntWritable(10));
+    verify(context).write(key, new IntWritable(10));
   }
   //^^ MaxTemperatureReducerTestV1
 }

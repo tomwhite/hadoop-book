@@ -104,7 +104,7 @@ public class ExamplesIT {
     env = new HashMap<String, String>(EnvironmentUtils.getProcEnvironment());
     env.put("HADOOP_HOME", hadoopHome);
     env.put("PATH", env.get("HADOOP_HOME") + "/bin" + ":" + env.get("PATH"));
-    env.put("HADOOP_CONF_DIR", "snippet/bin/local");
+    env.put("HADOOP_CONF_DIR", "snippet/conf/local");
     env.put("HADOOP_CLASSPATH", "hadoop-examples.jar");
     
     String versionOut = execute("hadoop version");
