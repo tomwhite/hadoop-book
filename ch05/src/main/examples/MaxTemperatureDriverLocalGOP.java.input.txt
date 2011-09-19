@@ -1,1 +1,0 @@
-hadoop v2.MaxTemperatureDriver -fs file:/// -jt local input/ncdc/micro max-temp

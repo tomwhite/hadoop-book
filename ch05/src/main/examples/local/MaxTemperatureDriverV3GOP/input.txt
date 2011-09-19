@@ -1,0 +1,1 @@
+hadoop v3.MaxTemperatureDriver -fs file:/// -jt local input/ncdc/micro output

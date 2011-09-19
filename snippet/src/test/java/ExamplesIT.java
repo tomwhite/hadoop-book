@@ -56,8 +56,11 @@ public class ExamplesIT {
   
   private static final String EXAMPLE_DIRS_PROPERTY = "example.dirs";
   private static final String EXAMPLE_DIRS_DEFAULT =
-    "ch02/src/main/examples/local,ch04/src/main/examples/local," +
-    "ch07/src/main/examples/local,ch08/src/main/examples/local";
+    "ch02/src/main/examples/local," +
+    "ch04/src/main/examples/local," +
+    "ch05/src/main/examples/local," +
+    "ch07/src/main/examples/local," +
+    "ch08/src/main/examples/local";
 
   private static final IOFileFilter HIDDEN_FILE_FILTER =
     new OrFileFilter(HiddenFileFilter.HIDDEN, new PrefixFileFilter("_"));

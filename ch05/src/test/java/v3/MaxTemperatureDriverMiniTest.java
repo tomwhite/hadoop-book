@@ -8,11 +8,11 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.PathFilter;
 import org.apache.hadoop.mapred.ClusterMapReduceTestCase;
-import org.apache.hadoop.mapred.JobConf;
 
 // A test for MaxTemperatureDriver that runs in a "mini" HDFS and MapReduce cluster
 public class MaxTemperatureDriverMiniTest extends ClusterMapReduceTestCase {
@@ -36,7 +36,7 @@ public class MaxTemperatureDriverMiniTest extends ClusterMapReduceTestCase {
   
   // Not marked with @Test since ClusterMapReduceTestCase is a JUnit 3 test case
   public void test() throws Exception {
-    JobConf conf = createJobConf();
+    Configuration conf = createJobConf();
     
     Path localInput = new Path("input/ncdc/micro");
     Path input = getInputDir();

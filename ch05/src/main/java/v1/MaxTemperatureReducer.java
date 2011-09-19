@@ -1,5 +1,5 @@
 package v1;
-// == MaxTemperatureReducerV1
+//cc MaxTemperatureReducerV1 Reducer for maximum temperature example
 import java.io.IOException;
 
 import org.apache.hadoop.io.IntWritable;

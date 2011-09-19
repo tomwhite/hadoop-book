@@ -33,6 +33,7 @@ public class MaxTemperatureDriver extends Configured implements Tool {
     conf.set("mapreduce.task.profile.params", "-agentlib:hprof=cpu=samples," +
         "heap=sites,depth=6,force=n,thread=y,verbose=n,file=%s");
     conf.set("mapreduce.task.profile.maps", "0-2");
+    conf.set("mapreduce.task.profile.reduces", ""); // no reduces
     Job job = new Job(conf, "Max temperature");
     //^^ MaxTemperatureDriverV6
     
@@ -41,6 +42,7 @@ public class MaxTemperatureDriver extends Configured implements Tool {
 //    conf.set(JobContext.TASK_PROFILE_PARAMS, "-agentlib:hprof=cpu=samples," +
 //        "heap=sites,depth=6,force=n,thread=y,verbose=n,file=%s");
 //    conf.set(JobContext.NUM_MAP_PROFILES, "0-2");
+//    conf.set(JobContext.NUM_REDUCE_PROFILES, "");
     
     job.setJarByClass(getClass());
     
