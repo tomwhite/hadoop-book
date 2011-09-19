@@ -1,5 +1,3 @@
-// == MaxTemperatureMapperTestV3
-// vv MaxTemperatureMapperTestV3
 package v3;
 
 import static org.mockito.Mockito.*;
@@ -79,4 +77,3 @@ public class MaxTemperatureMapperTest {
   }
   
 }
-//^^ MaxTemperatureMapperTestV3

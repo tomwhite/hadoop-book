@@ -1,5 +1,3 @@
-// == MaxTemperatureMapperTestV2
-// vv MaxTemperatureMapperTestV2
 package v2;
 
 import static org.mockito.Mockito.*;
@@ -43,4 +41,3 @@ public class MaxTemperatureMapperTest {
     verify(context, never()).write(any(Text.class), any(IntWritable.class));
   }
 }
-//^^ MaxTemperatureMapperTestV2

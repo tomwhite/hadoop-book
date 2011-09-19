@@ -1,8 +1,6 @@
-// cc NcdcRecordParserV5 A class for parsing weather records in NCDC format
 package v5;
 import org.apache.hadoop.io.Text;
 
-// vv NcdcRecordParserV5
 public class NcdcRecordParser {
   
   private static final int MISSING_TEMPERATURE = 9999;
@@ -47,4 +45,3 @@ public class NcdcRecordParser {
     return airTemperature;
   }
 }
-// ^^ NcdcRecordParserV5

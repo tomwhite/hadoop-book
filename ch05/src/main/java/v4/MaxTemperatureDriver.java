@@ -1,5 +1,3 @@
-// == MaxTemperatureDriverV4
-// vv MaxTemperatureDriverV4
 package v4;
 
 import org.apache.hadoop.conf.Configured;
@@ -47,4 +45,3 @@ public class MaxTemperatureDriver extends Configured implements Tool {
     System.exit(exitCode);
   }
 }
-//^^ MaxTemperatureDriverV4
