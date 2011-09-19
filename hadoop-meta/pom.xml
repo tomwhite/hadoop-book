@@ -108,6 +108,45 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       </build>
     </profile>
     <profile>
+      <id>apache-204</id>
+      <properties>
+        <property>profile.activated</property>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-core</artifactId>
+          <version>0.20.204.0</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-test</artifactId>
+          <version>0.20.204.0</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <exclude>**/JoinRecordWithStationName.java</exclude>
+                <exclude>**/LookupRecordByTemperature.java</exclude>
+                <exclude>**/LookupRecordsByTemperature.java</exclude>
+                <exclude>**/MissingTemperatureFields.java</exclude>
+                <exclude>**/SortByTemperatureToMapFile.java</exclude>
+                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
+                <exclude>**/MaxTemperatureWithMultipleInputFormats.java</exclude>
+                <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>cdh3</id>
       <properties>
         <property>profile.activated</property>
@@ -137,6 +176,61 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>**/SortByTemperatureToMapFile.java</exclude>
                 <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>apache-21</id>
+      <properties>
+        <property>profile.activated</property>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-common</artifactId>
+          <version>0.21.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-common-test</artifactId>
+          <version>0.21.0-SNAPSHOT</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-hdfs</artifactId>
+          <version>0.21.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-hdfs-test</artifactId>
+          <version>0.21.0-SNAPSHOT</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-mapred</artifactId>
+          <version>0.21.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-mapred-test</artifactId>
+          <version>0.21.0-SNAPSHOT</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <testExcludes>
+                <exclude>**/CoherencyModelTest.java</exclude>
+                <exclude>**/ShowFileStatusTest.java</exclude>
+              </testExcludes>
             </configuration>
           </plugin>
         </plugins>
