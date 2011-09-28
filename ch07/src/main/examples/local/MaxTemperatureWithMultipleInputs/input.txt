@@ -1,0 +1,1 @@
+hadoop MaxTemperatureWithMultipleInputs input/ncdc/micro/sample.txt input/metoffice output

@@ -1,4 +1,4 @@
-// == MaxTemperatureWithMultipleInputFormats
+// == MaxTemperatureWithMultipleInputs
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configured;
@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.*;
 
-public class MaxTemperatureWithMultipleInputFormats extends Configured
+public class MaxTemperatureWithMultipleInputs extends Configured
   implements Tool {
   
   static class MetOfficeMaxTemperatureMapper
@@ -44,12 +44,12 @@ public class MaxTemperatureWithMultipleInputFormats extends Configured
     Path metOfficeInputPath = new Path(args[1]);
     Path outputPath = new Path(args[2]);
     
-// vv MaxTemperatureWithMultipleInputFormats    
+// vv MaxTemperatureWithMultipleInputs    
     MultipleInputs.addInputPath(job, ncdcInputPath,
         TextInputFormat.class, MaxTemperatureMapper.class);
     MultipleInputs.addInputPath(job, metOfficeInputPath,
         TextInputFormat.class, MetOfficeMaxTemperatureMapper.class);
-// ^^ MaxTemperatureWithMultipleInputFormats
+// ^^ MaxTemperatureWithMultipleInputs
     FileOutputFormat.setOutputPath(job, outputPath);
     
     job.setOutputKeyClass(Text.class);
@@ -62,7 +62,7 @@ public class MaxTemperatureWithMultipleInputFormats extends Configured
   }
   
   public static void main(String[] args) throws Exception {
-    int exitCode = ToolRunner.run(new MaxTemperatureWithMultipleInputFormats(),
+    int exitCode = ToolRunner.run(new MaxTemperatureWithMultipleInputs(),
         args);
     System.exit(exitCode);
   }

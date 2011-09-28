@@ -60,7 +60,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>**/SortByTemperatureToMapFile.java</exclude>
                 <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
                 <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/MaxTemperatureWithMultipleInputFormats.java</exclude>
+                <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
                 <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
               </excludes>
             </configuration>
@@ -99,7 +99,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>**/SortByTemperatureToMapFile.java</exclude>
                 <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
                 <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/MaxTemperatureWithMultipleInputFormats.java</exclude>
+                <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
                 <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
               </excludes>
             </configuration>
@@ -138,7 +138,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>**/SortByTemperatureToMapFile.java</exclude>
                 <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
                 <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/MaxTemperatureWithMultipleInputFormats.java</exclude>
+                <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
                 <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
               </excludes>
             </configuration>
