@@ -21,11 +21,9 @@ public class MinimalMapReduceWithDefaults extends Configured implements Tool {
       return -1;
     }
     
-    /*[*/job.setInputFormatClass(TextInputFormat.class); // cf setInputFormat
+    /*[*/job.setInputFormatClass(TextInputFormat.class);
     
-    // job.setNumMapTasks(1); cf not in new API
-    job.setMapperClass(Mapper.class); // Mapper is abstract and the identity
-    //job.setMapRunnerClass(MapRunner.class); // Override Mapper to control flow
+    job.setMapperClass(Mapper.class);
     
     job.setMapOutputKeyClass(LongWritable.class);
     job.setMapOutputValueClass(Text.class);
@@ -33,12 +31,12 @@ public class MinimalMapReduceWithDefaults extends Configured implements Tool {
     job.setPartitionerClass(HashPartitioner.class);
     
     job.setNumReduceTasks(1);
-    job.setReducerClass(Reducer.class); // identity
+    job.setReducerClass(Reducer.class);
 
     job.setOutputKeyClass(LongWritable.class);
     job.setOutputValueClass(Text.class);
 
-    job.setOutputFormatClass(TextOutputFormat.class);/*]*/ // cf setOutputFormat
+    job.setOutputFormatClass(TextOutputFormat.class);/*]*/
     
     return job.waitForCompletion(true) ? 0 : 1;
   }
