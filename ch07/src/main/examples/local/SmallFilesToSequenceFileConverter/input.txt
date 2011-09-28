@@ -1,0 +1,1 @@
+hadoop SmallFilesToSequenceFileConverter input/smallfiles output
