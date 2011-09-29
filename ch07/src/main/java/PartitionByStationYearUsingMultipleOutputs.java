@@ -9,11 +9,9 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
-import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-// TODO: check output name
 public class PartitionByStationYearUsingMultipleOutputs extends Configured
   implements Tool {
   
@@ -73,9 +71,6 @@ public class PartitionByStationYearUsingMultipleOutputs extends Configured
     job.setMapOutputKeyClass(Text.class);
     job.setReducerClass(MultipleOutputsReducer.class);
     job.setOutputKeyClass(NullWritable.class);
-    
-    MultipleOutputs.addNamedOutput(job, "station", TextOutputFormat.class,
-        NullWritable.class, Text.class);
 
     return job.waitForCompletion(true) ? 0 : 1;
   }

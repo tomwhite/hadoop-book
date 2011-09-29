@@ -9,11 +9,9 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
-import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-// TODO: check output name
 //vv PartitionByStationUsingMultipleOutputs
 public class PartitionByStationUsingMultipleOutputs extends Configured
   implements Tool {
@@ -46,8 +44,7 @@ public class PartitionByStationUsingMultipleOutputs extends Configured
     protected void reduce(Text key, Iterable<Text> values, Context context)
         throws IOException, InterruptedException {
       for (Text value : values) {
-        multipleOutputs.write("station", NullWritable.get(), value,
-            "station-" + key.toString().replace("-", ""));
+        multipleOutputs.write(NullWritable.get(), value, key.toString());
       }
     }
     
@@ -69,9 +66,6 @@ public class PartitionByStationUsingMultipleOutputs extends Configured
     job.setMapOutputKeyClass(Text.class);
     job.setReducerClass(MultipleOutputsReducer.class);
     job.setOutputKeyClass(NullWritable.class);
-    
-    /*[*/MultipleOutputs.addNamedOutput(job, "station", TextOutputFormat.class,
-        NullWritable.class, Text.class);/*]*/
 
     return job.waitForCompletion(true) ? 0 : 1;
   }
