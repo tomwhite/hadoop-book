@@ -1,2 +1,2 @@
-hadoop jar job.jar SortByTemperatureUsingTotalOrderPartitioner \
+hadoop jar hadoop-examples.jar SortByTemperatureUsingTotalOrderPartitioner \
   -D mapred.reduce.tasks=30 input/ncdc/all-seq output-totalsort
