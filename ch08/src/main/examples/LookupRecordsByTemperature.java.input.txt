@@ -1,2 +1,2 @@
-hadoop jar job.jar LookupRecordsByTemperature output-hashmapsort -100 \
+hadoop jar hadoop-examples.jar LookupRecordsByTemperature output-hashmapsort -100 \
   2> /dev/null | wc -l

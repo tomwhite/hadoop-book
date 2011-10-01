@@ -1,0 +1,2 @@
+hadoop SortDataPreprocessor input/ncdc/micro output-seq
+hadoop SortByTemperatureToMapFile output-seq output

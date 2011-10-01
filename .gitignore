@@ -3,7 +3,7 @@
 /build
 /lib
 /out
-/output
+/output*
 snippet/actual
 target
 /target

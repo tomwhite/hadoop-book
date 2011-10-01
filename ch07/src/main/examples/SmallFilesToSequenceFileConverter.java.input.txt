@@ -1,2 +1,2 @@
-hadoop jar job.jar SmallFilesToSequenceFileConverter \
+hadoop jar hadoop-examples.jar SmallFilesToSequenceFileConverter \
   -conf conf/hadoop-localhost.xml -D mapred.reduce.tasks=2 input/smallfiles output

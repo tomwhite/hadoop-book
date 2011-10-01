@@ -40,16 +40,13 @@ public class SortByTemperatureUsingTotalOrderPartitioner extends Configured
     InputSampler.Sampler<IntWritable, Text> sampler =
       new InputSampler.RandomSampler<IntWritable, Text>(0.1, 10000, 10);
     
-    Path input = FileInputFormat.getInputPaths(job)[0];
-    input = input.makeQualified(input.getFileSystem(getConf()));
-    
-    Path partitionFile = new Path(input, "_partitions");
-    TotalOrderPartitioner.setPartitionFile(job.getConfiguration(),
-        partitionFile);
     InputSampler.writePartitionFile(job, sampler);
 
     // Add to DistributedCache
-    URI partitionUri = new URI(partitionFile.toString() + "#_partitions");
+    String partitionFile =
+      TotalOrderPartitioner.getPartitionFile(job.getConfiguration());
+    URI partitionUri = new URI(partitionFile + "#" +
+        TotalOrderPartitioner.DEFAULT_PATH);
     job.addCacheFile(partitionUri);
     job.createSymlink();
 
