@@ -1,8 +1,10 @@
-// cc MaxTemperatureByStationNameUsingDistributedCacheFile Application to find the maximum temperature by station, showing station names from a lookup table passed as a distributed cache file
+// == MaxTemperatureByStationNameUsingDistributedCacheFileApi
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configured;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
@@ -12,8 +14,8 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-// vv MaxTemperatureByStationNameUsingDistributedCacheFile
-public class MaxTemperatureByStationNameUsingDistributedCacheFile
+
+public class MaxTemperatureByStationNameUsingDistributedCacheFileApi
   extends Configured implements Tool {
   
   static class StationTemperatureMapper
@@ -36,26 +38,33 @@ public class MaxTemperatureByStationNameUsingDistributedCacheFile
   static class MaxTemperatureReducerWithStationLookup
     extends Reducer<Text, IntWritable, Text, IntWritable> {
     
-    /*[*/private NcdcStationMetadata metadata;/*]*/
+    private NcdcStationMetadata metadata;
     
-    /*[*/@Override
+ // vv MaxTemperatureByStationNameUsingDistributedCacheFileApi
+    @Override
     protected void setup(Context context)
         throws IOException, InterruptedException {
       metadata = new NcdcStationMetadata();
-      metadata.initialize(new File("stations-fixed-width.txt"));
-    }/*]*/
+      Path[] localPaths = context.getLocalCacheFiles();
+      if (localPaths.length == 0) {
+        throw new FileNotFoundException("Distributed cache file not found.");
+      }
+      File localFile = new File(localPaths[0].toUri());
+      metadata.initialize(localFile);
+    }
+ // ^^ MaxTemperatureByStationNameUsingDistributedCacheFileApi
 
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values,
         Context context) throws IOException, InterruptedException {
       
-      /*[*/String stationName = metadata.getStationName(key.toString());/*]*/
+      String stationName = metadata.getStationName(key.toString());
       
       int maxValue = Integer.MIN_VALUE;
       for (IntWritable value : values) {
         maxValue = Math.max(maxValue, value.get());
       }
-      context.write(new Text(/*[*/stationName/*]*/), new IntWritable(maxValue));
+      context.write(new Text(stationName), new IntWritable(maxValue));
     }
   }
 
@@ -78,8 +87,7 @@ public class MaxTemperatureByStationNameUsingDistributedCacheFile
   
   public static void main(String[] args) throws Exception {
     int exitCode = ToolRunner.run(
-        new MaxTemperatureByStationNameUsingDistributedCacheFile(), args);
+        new MaxTemperatureByStationNameUsingDistributedCacheFileApi(), args);
     System.exit(exitCode);
   }
 }
-// ^^ MaxTemperatureByStationNameUsingDistributedCacheFile

@@ -1,0 +1,2 @@
+hadoop MaxTemperatureByStationNameUsingDistributedCacheFileApi \
+  -files input/ncdc/metadata/stations-fixed-width.txt input/ncdc/micro output

@@ -62,6 +62,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
                 <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
                 <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -101,6 +102,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
                 <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
                 <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -140,6 +142,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
                 <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
                 <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -175,6 +178,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>**/MissingTemperatureFields.java</exclude>
                 <exclude>**/SortByTemperatureToMapFile.java</exclude>
                 <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
               </excludes>
             </configuration>
           </plugin>
