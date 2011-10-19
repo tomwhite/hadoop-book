@@ -57,13 +57,8 @@ public class ExamplesIT {
   
   private static final String mode = "local";
   
-  private static final String EXAMPLE_DIRS_PROPERTY = "example.dirs";
-  private static final String EXAMPLE_DIRS_DEFAULT =
-    "ch02/src/main/examples/local," +
-    "ch04/src/main/examples/local," +
-    "ch05/src/main/examples/local," +
-    "ch07/src/main/examples/local," +
-    "ch08/src/main/examples/local";
+  private static final String EXAMPLE_CHAPTERS_PROPERTY = "example.chapters";
+  private static final String EXAMPLE_CHAPTERS_DEFAULT = "ch02,ch04,ch05,ch07,ch08";
 
   private static final IOFileFilter HIDDEN_FILE_FILTER =
     new OrFileFilter(HiddenFileFilter.HIDDEN, new PrefixFileFilter("_"));
@@ -73,11 +68,12 @@ public class ExamplesIT {
   @Parameters
   public static Collection<Object[]> data() {
     Collection<Object[]> data = new ArrayList<Object[]>();
-    String exampleDirs = System.getProperty(EXAMPLE_DIRS_PROPERTY,
-        EXAMPLE_DIRS_DEFAULT);
+    String exampleDirs = System.getProperty(EXAMPLE_CHAPTERS_PROPERTY,
+        EXAMPLE_CHAPTERS_DEFAULT);
     int i = 0;
     for (String dirName : Splitter.on(',').split(exampleDirs)) {
-      File dir = new File(PROJECT_BASE_DIR, dirName);
+      File dir = new File(new File(PROJECT_BASE_DIR, dirName),
+          "src/main/examples/" + mode);
       if (!dir.exists()) {
         fail(dir + " does not exist");
       }
