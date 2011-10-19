@@ -37,6 +37,7 @@ import org.apache.commons.io.filefilter.OrFileFilter;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -53,6 +54,8 @@ public class ExamplesIT {
   private static final File PROJECT_BASE_DIR =
     new File(System.getProperty("hadoop.book.basedir",
         "/Users/tom/workspace/hadoop-book"));
+  
+  private static final String mode = "local";
   
   private static final String EXAMPLE_DIRS_PROPERTY = "example.dirs";
   private static final String EXAMPLE_DIRS_DEFAULT =
@@ -89,25 +92,23 @@ public class ExamplesIT {
   
   private File example; // parameter
   private File actualOutputDir = new File(PROJECT_BASE_DIR, "output");
-  private Map<String, String> env;
-  private String version;
+  private static Map<String, String> env;
+  private static String version;
   
   public ExamplesIT(File example) {
     this.example = example;
   }
   
   @SuppressWarnings("unchecked")
-  @Before
-  public void setUp() throws IOException {
-    assumeTrue(!example.getPath().endsWith(".ignore"));
-
+  @BeforeClass
+  public static void setUpClass() throws IOException {
     String hadoopHome = System.getenv("HADOOP_HOME");
     assertNotNull("Export the HADOOP_HOME environment variable " +
         "to run the snippet tests", hadoopHome);
     env = new HashMap<String, String>(EnvironmentUtils.getProcEnvironment());
     env.put("HADOOP_HOME", hadoopHome);
     env.put("PATH", env.get("HADOOP_HOME") + "/bin" + ":" + env.get("PATH"));
-    env.put("HADOOP_CONF_DIR", "snippet/conf/local");
+    env.put("HADOOP_CONF_DIR", "snippet/conf/" + mode);
     env.put("HADOOP_CLASSPATH", "hadoop-examples.jar");
     
     String versionOut = execute("hadoop version");
@@ -118,6 +119,11 @@ public class ExamplesIT {
       }
     }
     assertNotNull("Version not found", version);
+  }
+  
+  @Before
+  public void setUp() throws IOException {
+    assumeTrue(!example.getPath().endsWith(".ignore"));
     
     if (actualOutputDir.exists()) {
       Files.deleteRecursively(actualOutputDir);
@@ -170,7 +176,7 @@ public class ExamplesIT {
     }
   }
 
-  private String execute(String commandLine) throws ExecuteException, IOException {
+  private static String execute(String commandLine) throws ExecuteException, IOException {
     ByteArrayOutputStream stdout = new ByteArrayOutputStream();
     PumpStreamHandler psh = new PumpStreamHandler(stdout);
     CommandLine cl = CommandLine.parse("/bin/bash " + commandLine);

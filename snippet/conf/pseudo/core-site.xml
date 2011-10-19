@@ -5,14 +5,4 @@
     <name>fs.default.name</name>
     <value>hdfs://localhost/</value>
   </property>
-
-<property>
-  <name>fs.s3n.awsAccessKeyId</name>
-  <value>AKIAIXHFMCVOIPI6IRSQ</value>
-</property>
-
-<property>
-  <name>fs.s3n.awsSecretAccessKey</name>
-  <value>+rZvtHs4YyzZH1lYqW1wphzvaMoVxlAXkwhW7vkk</value>
-</property>
 </configuration>
