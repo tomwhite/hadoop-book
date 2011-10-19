@@ -35,7 +35,6 @@ import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.NotFileFilter;
 import org.apache.commons.io.filefilter.OrFileFilter;
 import org.apache.commons.io.filefilter.PrefixFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -55,7 +54,8 @@ public class ExamplesIT {
     new File(System.getProperty("hadoop.book.basedir",
         "/Users/tom/workspace/hadoop-book"));
   
-  private static final String mode = "local";
+  private static final String MODE_PROPERTY = "example.mode";
+  private static final String MODE_DEFAULT = "local";
   
   private static final String EXAMPLE_CHAPTERS_PROPERTY = "example.chapters";
   private static final String EXAMPLE_CHAPTERS_DEFAULT = "ch02,ch04,ch05,ch07,ch08";
@@ -73,7 +73,7 @@ public class ExamplesIT {
     int i = 0;
     for (String dirName : Splitter.on(',').split(exampleDirs)) {
       File dir = new File(new File(PROJECT_BASE_DIR, dirName),
-          "src/main/examples/" + mode);
+          "src/main/examples/local");
       if (!dir.exists()) {
         fail(dir + " does not exist");
       }
@@ -90,6 +90,7 @@ public class ExamplesIT {
   private File actualOutputDir = new File(PROJECT_BASE_DIR, "output");
   private static Map<String, String> env;
   private static String version;
+  private static String mode;
   
   public ExamplesIT(File example) {
     this.example = example;
@@ -98,6 +99,9 @@ public class ExamplesIT {
   @SuppressWarnings("unchecked")
   @BeforeClass
   public static void setUpClass() throws IOException {
+    mode = System.getProperty(MODE_PROPERTY, MODE_DEFAULT);
+    System.out.printf("mode=%s\n", mode);
+
     String hadoopHome = System.getenv("HADOOP_HOME");
     assertNotNull("Export the HADOOP_HOME environment variable " +
         "to run the snippet tests", hadoopHome);
@@ -107,6 +111,8 @@ public class ExamplesIT {
     env.put("HADOOP_CONF_DIR", "snippet/conf/" + mode);
     env.put("HADOOP_CLASSPATH", "hadoop-examples.jar");
     
+    System.out.printf("HADOOP_HOME=%s\n", hadoopHome);
+    
     String versionOut = execute("hadoop version");
     for (String line : Splitter.on("\n").split(versionOut)) {
       Matcher matcher = Pattern.compile("^Hadoop (.+)+$").matcher(line);
@@ -115,36 +121,51 @@ public class ExamplesIT {
       }
     }
     assertNotNull("Version not found", version);
+    System.out.printf("version=%s\n", version);
+    
   }
   
   @Before
   public void setUp() throws IOException {
     assumeTrue(!example.getPath().endsWith(".ignore"));
-    
-    if (actualOutputDir.exists()) {
-      Files.deleteRecursively(actualOutputDir);
-    }
+    execute(new File("src/test/resources/setup.sh").getAbsolutePath());
   }
   
   @Test
   public void test() throws Exception {
+    System.out.println("Running " + example);
     File inputFile;
     File expectedOutputDir;
 
-    // First look for data for the particular version
+    // First look for data for the particular version and mode
     File versionedExample = new File(example, version);
-    if (versionedExample.exists()) {
+    File modeExample = new File(example, mode);
+    File versionedModeExample = new File(versionedExample, mode);
+    if (versionedModeExample.exists()) {
+      inputFile = new File(versionedModeExample, "input.txt");
+      expectedOutputDir = new File(versionedModeExample, "output");
+      // if empty then skip
+      assumeTrue(inputFile.exists());
+    } else if (versionedExample.exists()) { // Then just for a particular version
       inputFile = new File(versionedExample, "input.txt");
       expectedOutputDir = new File(versionedExample, "output");
       // if empty then skip
       assumeTrue(inputFile.exists());
-    } else {    // Otherwise use the standard fallback
+    } else if (modeExample.exists()) { // Then just for a particular mode
+      inputFile = new File(modeExample, "input.txt");
+      expectedOutputDir = new File(modeExample, "output");
+      // if empty then skip
+      assumeTrue(inputFile.exists());
+    } else { // Otherwise use the standard fallback
       inputFile = new File(example, "input.txt");
       expectedOutputDir = new File(example, "output");
     }
+    System.out.println("Running input " + inputFile);
     
     String systemOut = execute(inputFile.getAbsolutePath());
     System.out.println(systemOut);
+    
+    execute(new File("src/test/resources/copyoutput.sh").getAbsolutePath());
     
     if (!expectedOutputDir.exists()) {
       FileUtils.copyDirectory(actualOutputDir, expectedOutputDir);
@@ -153,11 +174,12 @@ public class ExamplesIT {
     
     List<File> expectedParts = Lists.newArrayList(
         FileUtils.listFiles(expectedOutputDir, NOT_HIDDEN_FILE_FILTER,
-            TrueFileFilter.TRUE));
+            NOT_HIDDEN_FILE_FILTER));
     List<File> actualParts = Lists.newArrayList(
         FileUtils.listFiles(actualOutputDir, NOT_HIDDEN_FILE_FILTER,
-            TrueFileFilter.TRUE));
-    assertEquals(expectedParts.size(), actualParts.size());
+            NOT_HIDDEN_FILE_FILTER));
+    assertEquals("Number of parts (got " + actualParts + ")",
+        expectedParts.size(), actualParts.size());
     
     for (int i = 0; i < expectedParts.size(); i++) {
       File expectedFile = expectedParts.get(i);
@@ -165,11 +187,14 @@ public class ExamplesIT {
       if (expectedFile.getPath().endsWith(".gz")) {
         File expectedDecompressed = decompress(expectedFile);
         File actualDecompressed = decompress(actualFile);
-        FileAssert.assertEquals(expectedDecompressed, actualDecompressed);
+        FileAssert.assertEquals(expectedFile.toString(),
+            expectedDecompressed, actualDecompressed);
       } else {
-        FileAssert.assertEquals(expectedFile, actualFile);
+        FileAssert.assertEquals(expectedFile.toString(),
+            expectedFile, actualFile);
       }
     }
+    System.out.println("Completed " + example);
   }
 
   private static String execute(String commandLine) throws ExecuteException, IOException {
