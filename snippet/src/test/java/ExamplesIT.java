@@ -78,9 +78,11 @@ public class ExamplesIT {
         fail(dir + " does not exist");
       }
       for (File file : dir.listFiles()) {
-        data.add(new Object[] { file });
-        // so we can see which test corresponds to which file
-        System.out.printf("%s: %s\n", i++, file);
+        if (file.isDirectory()) {
+          data.add(new Object[] { file });
+          // so we can see which test corresponds to which file
+          System.out.printf("%s: %s\n", i++, file);
+        }
       }
     }
     return data;
@@ -134,32 +136,9 @@ public class ExamplesIT {
   @Test
   public void test() throws Exception {
     System.out.println("Running " + example);
-    File inputFile;
-    File expectedOutputDir;
-
-    // First look for data for the particular version and mode
-    File versionedExample = new File(example, version);
-    File modeExample = new File(example, mode);
-    File versionedModeExample = new File(versionedExample, mode);
-    if (versionedModeExample.exists()) {
-      inputFile = new File(versionedModeExample, "input.txt");
-      expectedOutputDir = new File(versionedModeExample, "output");
-      // if empty then skip
-      assumeTrue(inputFile.exists());
-    } else if (versionedExample.exists()) { // Then just for a particular version
-      inputFile = new File(versionedExample, "input.txt");
-      expectedOutputDir = new File(versionedExample, "output");
-      // if empty then skip
-      assumeTrue(inputFile.exists());
-    } else if (modeExample.exists()) { // Then just for a particular mode
-      inputFile = new File(modeExample, "input.txt");
-      expectedOutputDir = new File(modeExample, "output");
-      // if empty then skip
-      assumeTrue(inputFile.exists());
-    } else { // Otherwise use the standard fallback
-      inputFile = new File(example, "input.txt");
-      expectedOutputDir = new File(example, "output");
-    }
+    
+    File exampleDir = findBaseExampleDirectory(example);
+    File inputFile = new File(exampleDir, "input.txt");
     System.out.println("Running input " + inputFile);
     
     String systemOut = execute(inputFile.getAbsolutePath());
@@ -167,6 +146,7 @@ public class ExamplesIT {
     
     execute(new File("src/test/resources/copyoutput.sh").getAbsolutePath());
     
+    File expectedOutputDir = new File(exampleDir, "output");
     if (!expectedOutputDir.exists()) {
       FileUtils.copyDirectory(actualOutputDir, expectedOutputDir);
       fail(expectedOutputDir  + " does not exist - creating.");
@@ -195,6 +175,24 @@ public class ExamplesIT {
       }
     }
     System.out.println("Completed " + example);
+  }
+  
+  private File findBaseExampleDirectory(File example) {
+    // Look in base/<version>/<mode> then base/<version> then base/<mode>
+    File[] candidates = {
+        new File(new File(example, version), mode),
+        new File(example, version),
+        new File(example, mode),
+    };
+    for (File candidate : candidates) {
+      if (candidate.exists()) {
+        File inputFile = new File(candidate, "input.txt");
+        // if no input file then skip test
+        assumeTrue(inputFile.exists());
+        return candidate;
+      }
+    }
+    return example;
   }
 
   private static String execute(String commandLine) throws ExecuteException, IOException {
