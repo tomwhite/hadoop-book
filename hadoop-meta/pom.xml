@@ -229,9 +229,6 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>apache-23</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
