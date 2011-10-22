@@ -40,6 +40,10 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <artifactId>hadoop-test</artifactId>
           <version>0.20.2</version>
         </dependency>
+        <dependency>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </dependency>
       </dependencies>
       <build>
         <plugins>

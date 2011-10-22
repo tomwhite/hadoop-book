@@ -1,0 +1,7 @@
+hadoop jar $HADOOP_HOME/contrib/streaming/hadoop-*-streaming.jar \
+  -input input/ncdc/sample.txt \
+  -output output \
+  -mapper ch02/src/main/python/max_temperature_map.py \
+  -reducer ch02/src/main/python/max_temperature_reduce.py \
+  -file ch02/src/main/python/max_temperature_map.py \
+  -file ch02/src/main/python/max_temperature_reduce.py

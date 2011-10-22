@@ -73,7 +73,7 @@ public class ExamplesIT {
     int i = 0;
     for (String dirName : Splitter.on(',').split(exampleDirs)) {
       File dir = new File(new File(PROJECT_BASE_DIR, dirName),
-          "src/main/examples/local");
+          "src/main/examples");
       if (!dir.exists()) {
         fail(dir + " does not exist");
       }
