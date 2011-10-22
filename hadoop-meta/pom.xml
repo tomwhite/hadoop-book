@@ -29,11 +29,6 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
   <profiles>
     <profile>
       <id>apache-20</id>
-      <activation>
-        <property>
-          <name>profile.activated</name>
-        </property>
-      </activation>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
@@ -53,16 +48,16 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/ch07/**/MaxTemperatureWithMultipleInputs.java</exclude>
-                <exclude>**/ch07/**/PartitionByStationUsingMultipleOutputs.java</exclude>
-                <exclude>**/ch07/**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/ch08/**/JoinRecordWithStationName.java</exclude>
-                <exclude>**/ch08/**/LookupRecordByTemperature.java</exclude>
-                <exclude>**/ch08/**/LookupRecordsByTemperature.java</exclude>
-                <exclude>**/ch08/**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>**/ch08/**/MissingTemperatureFields.java</exclude>
-                <exclude>**/ch08/**/SortByTemperatureToMapFile.java</exclude>
-                <exclude>**/ch08/**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
+                <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
+                <exclude>**/JoinRecordWithStationName.java</exclude>
+                <exclude>**/LookupRecordByTemperature.java</exclude>
+                <exclude>**/LookupRecordsByTemperature.java</exclude>
+                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
+                <exclude>**/MissingTemperatureFields.java</exclude>
+                <exclude>**/SortByTemperatureToMapFile.java</exclude>
+                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -71,9 +66,6 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>apache-203</id>
-      <properties>
-        <property>profile.activated</property>
-      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
@@ -93,16 +85,16 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/ch07/**/MaxTemperatureWithMultipleInputs.java</exclude>
-                <exclude>**/ch07/**/PartitionByStationUsingMultipleOutputs.java</exclude>
-                <exclude>**/ch07/**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/ch08/**/JoinRecordWithStationName.java</exclude>
-                <exclude>**/ch08/**/LookupRecordByTemperature.java</exclude>
-                <exclude>**/ch08/**/LookupRecordsByTemperature.java</exclude>
-                <exclude>**/ch08/**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>**/ch08/**/MissingTemperatureFields.java</exclude>
-                <exclude>**/ch08/**/SortByTemperatureToMapFile.java</exclude>
-                <exclude>**/ch08/**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
+                <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
+                <exclude>**/JoinRecordWithStationName.java</exclude>
+                <exclude>**/LookupRecordByTemperature.java</exclude>
+                <exclude>**/LookupRecordsByTemperature.java</exclude>
+                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
+                <exclude>**/MissingTemperatureFields.java</exclude>
+                <exclude>**/SortByTemperatureToMapFile.java</exclude>
+                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -111,9 +103,6 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>apache-205</id>
-      <properties>
-        <property>profile.activated</property>
-      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
@@ -133,16 +122,16 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/ch07/**/MaxTemperatureWithMultipleInputs.java</exclude>
-                <exclude>**/ch07/**/PartitionByStationUsingMultipleOutputs.java</exclude>
-                <exclude>**/ch07/**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/ch08/**/JoinRecordWithStationName.java</exclude>
-                <exclude>**/ch08/**/LookupRecordByTemperature.java</exclude>
-                <exclude>**/ch08/**/LookupRecordsByTemperature.java</exclude>
-                <exclude>**/ch08/**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>**/ch08/**/MissingTemperatureFields.java</exclude>
-                <exclude>**/ch08/**/SortByTemperatureToMapFile.java</exclude>
-                <exclude>**/ch08/**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
+                <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
+                <exclude>**/JoinRecordWithStationName.java</exclude>
+                <exclude>**/LookupRecordByTemperature.java</exclude>
+                <exclude>**/LookupRecordsByTemperature.java</exclude>
+                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
+                <exclude>**/MissingTemperatureFields.java</exclude>
+                <exclude>**/SortByTemperatureToMapFile.java</exclude>
+                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -151,19 +140,16 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>cdh3</id>
-      <properties>
-        <property>profile.activated</property>
-      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-core</artifactId>
-          <version>0.20.2-cdh3u1</version>
+          <version>0.20.2-cdh3u2</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-test</artifactId>
-          <version>0.20.2-cdh3u1</version>
+          <version>0.20.2-cdh3u2</version>
         </dependency>
       </dependencies>
       <build>
@@ -173,12 +159,12 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/ch08/**/LookupRecordByTemperature.java</exclude>
-                <exclude>**/ch08/**/LookupRecordsByTemperature.java</exclude>
-                <exclude>**/ch08/**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>**/ch08/**/MissingTemperatureFields.java</exclude>
-                <exclude>**/ch08/**/SortByTemperatureToMapFile.java</exclude>
-                <exclude>**/ch08/**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>**/LookupRecordByTemperature.java</exclude>
+                <exclude>**/LookupRecordsByTemperature.java</exclude>
+                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
+                <exclude>**/MissingTemperatureFields.java</exclude>
+                <exclude>**/SortByTemperatureToMapFile.java</exclude>
+                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -187,9 +173,6 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>apache-21</id>
-      <properties>
-        <property>profile.activated</property>
-      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
@@ -243,10 +226,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     <profile>
       <id>apache-23</id>
       <activation>
-        <!-- Activated by default - see http://www.andrewspencer.net/2011/maven-profile-best-practices/ -->
-        <property>
-          <name>!profile.activated</name>
-        </property>
+        <activeByDefault>true</activeByDefault>
       </activation>
       <dependencies>
         <dependency>
@@ -287,11 +267,6 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>apache-trunk</id>
-      <activation>
-        <property>
-          <name>profile.activated</name>
-        </property>
-      </activation>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>

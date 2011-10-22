@@ -8,6 +8,11 @@
   <name>Hadoop: The Definitive Guide, Project</name>
   <url>http://hadoopbook.com</url>
   
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+  
   <dependencyManagement>
     <!-- Note that Hadoop dependencies are defined in hadoop-meta -->
     <dependencies>
