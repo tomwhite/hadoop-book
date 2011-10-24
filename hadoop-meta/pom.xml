@@ -40,6 +40,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <artifactId>hadoop-test</artifactId>
           <version>0.20.2</version>
         </dependency>
+        <!--  Required to run -->
         <dependency>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
@@ -81,6 +82,16 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <artifactId>hadoop-test</artifactId>
           <version>0.20.203.0</version>
         </dependency>
+        <!--  Required to run -->
+        <dependency>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-mapper-asl</artifactId>
+          <version>1.5.2</version>
+        </dependency>
       </dependencies>
       <build>
         <plugins>
@@ -117,6 +128,21 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-test</artifactId>
           <version>0.20.205.0</version>
+        </dependency>
+        <!--  Required to run -->
+        <dependency>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>com.sun.jersey</groupId>
+          <artifactId>jersey-core</artifactId>
+          <version>1.8</version>
+        </dependency>
+        <dependency>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-mapper-asl</artifactId>
+          <version>1.5.2</version>
         </dependency>
       </dependencies>
       <build>
@@ -155,6 +181,11 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <artifactId>hadoop-test</artifactId>
           <version>0.20.2-cdh3u2</version>
         </dependency>
+        <!--  Required to run -->
+        <dependency>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </dependency>
       </dependencies>
       <build>
         <plugins>
@@ -175,6 +206,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         </plugins>
       </build>
     </profile>
+    <!-- 
     <profile>
       <id>apache-21</id>
       <dependencies>
@@ -227,6 +259,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         </plugins>
       </build>
     </profile>
+     -->
     <profile>
       <id>apache-23</id>
       <dependencies>
