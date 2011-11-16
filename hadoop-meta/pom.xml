@@ -307,8 +307,6 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
               <testExcludes>
                 <!-- ClusterMapReduceTestCase is not published yet (HADOOP-7590), so exclude test -->
                 <exclude>**/MaxTemperatureDriverMiniTest.java</exclude>
-                <!-- Fails everywhere except 32-bit Linux -->
-                <exclude>**/MaxTemperatureWithMapOutputCompression.java</exclude>
               </testExcludes>
             </configuration>
           </plugin>
@@ -362,8 +360,6 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
               <testExcludes>
                 <!-- ClusterMapReduceTestCase is not published yet (HADOOP-7590), so exclude test -->
                 <exclude>**/MaxTemperatureDriverMiniTest.java</exclude>
-                <!-- Fails everywhere except 32-bit Linux -->
-                <exclude>**/MaxTemperatureWithMapOutputCompression.java</exclude>
               </testExcludes>
             </configuration>
           </plugin>
