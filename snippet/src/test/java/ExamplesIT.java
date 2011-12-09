@@ -115,7 +115,7 @@ public class ExamplesIT {
     
     System.out.printf("HADOOP_HOME=%s\n", hadoopHome);
     
-    String versionOut = execute("hadoop version");
+    String versionOut = execute(hadoopHome + "/bin/hadoop version");
     for (String line : Splitter.on("\n").split(versionOut)) {
       Matcher matcher = Pattern.compile("^Hadoop (.+)+$").matcher(line);
       if (matcher.matches()) {

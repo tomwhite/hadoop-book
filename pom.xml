@@ -24,7 +24,6 @@
     <module>ch14</module>
     <module>ch15</module>
     <module>ch16</module>
-    <module>experimental</module>
     <module>hadoop-examples</module>
     <module>pig-examples</module>
     <module>hive-examples</module>
