@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Check that the expected (or actual) snippets are in the manuscript. E.g.
-# bin/check_manuscript.py  ~/workspace/htdg2/ch11.xml expected/ch11/grunt/*
+# bin/check_manuscript.py  ~/book-workspace/htdg2/ch11.xml expected/ch11/grunt/*
 
 # TODO: ignore id elements in the XML in the book.
 # Need to use an XML parser for this.
