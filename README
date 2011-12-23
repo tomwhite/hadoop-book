@@ -24,7 +24,7 @@ You also need to install Maven.
 
 Then you can build the code with:
 
-% mvn package -DskipTests
+% mvn package -DskipTests -Papache-20
 
 You should then be able to run the examples from the book.
 
