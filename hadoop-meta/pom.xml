@@ -70,17 +70,17 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       </build>
     </profile>
     <profile>
-      <id>apache-205</id>
+      <id>apache-203</id>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-core</artifactId>
-          <version>0.20.205.0</version>
+          <version>0.20.203.0</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-test</artifactId>
-          <version>0.20.205.0</version>
+          <version>0.20.203.0</version>
         </dependency>
         <!--  Required to run -->
         <dependency>
@@ -217,34 +217,34 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common</artifactId>
-          <version>0.22.0-SNAPSHOT</version>
+          <version>0.22.0</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common-test</artifactId>
-          <version>0.22.0-SNAPSHOT</version>
+          <version>0.22.0</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdfs</artifactId>
-          <version>0.22.0-SNAPSHOT</version>
+          <version>0.22.0</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdfs-test</artifactId>
-          <version>0.22.0-SNAPSHOT</version>
+          <version>0.22.0</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-mapred</artifactId>
-          <version>0.22.0-SNAPSHOT</version>
+          <version>0.22.0</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-mapred-test</artifactId>
-          <version>0.22.0-SNAPSHOT</version>
+          <version>0.22.0</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
