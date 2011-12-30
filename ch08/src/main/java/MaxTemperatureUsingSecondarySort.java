@@ -30,7 +30,7 @@ public class MaxTemperatureUsingSecondarySort
       parser.parse(value);
       if (parser.isValidTemperature()) {
         /*[*/context.write(new IntPair(parser.getYearInt(),
-            + parser.getAirTemperature()), NullWritable.get());/*]*/
+            parser.getAirTemperature()), NullWritable.get());/*]*/
       }
     }
   }
