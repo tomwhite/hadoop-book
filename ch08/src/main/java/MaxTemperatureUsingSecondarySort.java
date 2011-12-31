@@ -51,6 +51,7 @@ public class MaxTemperatureUsingSecondarySort
 
     @Override
     public int getPartition(IntPair key, NullWritable value, int numPartitions) {
+      // multiply by 127 to perform some mixing
       return Math.abs(key.getFirst() * 127) % numPartitions;
     }
   }
