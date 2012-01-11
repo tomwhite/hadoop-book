@@ -4,10 +4,11 @@ testing that they are as expected.
 Example invocations:
 
 # First set the location of the Hadoop installation you are testing
+# You need to have an unpacked copy of Hadoop in this directory
 export HADOOP_HOME=~/dev/hadoop-1.0.0/
 
 # From the top level
-mvn verify -Papache-1.0.0
+mvn verify -Phadoop.version=1.0.0
 
 # From the snippet directory
 mvn verify

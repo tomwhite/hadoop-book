@@ -29,16 +29,25 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
   <profiles>
     <profile>
       <id>apache-20</id>
+      <activation>
+        <property>
+          <name>hadoop.version</name>
+          <value>0.20.2</value>
+        </property>
+      </activation>
+      <properties>
+        <hadoop.version>0.20.2</hadoop.version>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-core</artifactId>
-          <version>0.20.2</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-test</artifactId>
-          <version>0.20.2</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <!--  Required to run -->
         <dependency>
@@ -71,16 +80,25 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>apache-203</id>
+      <activation>
+        <property>
+          <name>hadoop.version</name>
+          <value>0.20.203.0</value>
+        </property>
+      </activation>
+      <properties>
+        <hadoop.version>0.20.203.0</hadoop.version>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-core</artifactId>
-          <version>0.20.203.0</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-test</artifactId>
-          <version>0.20.203.0</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <!--  Required to run -->
         <dependency>
@@ -123,16 +141,25 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>apache-1.0.0</id>
+      <activation>
+        <property>
+          <name>hadoop.version</name>
+          <value>1.0.0</value>
+        </property>
+      </activation>
+      <properties>
+        <hadoop.version>1.0.0</hadoop.version>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-core</artifactId>
-          <version>1.0.0</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-test</artifactId>
-          <version>1.0.0</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <!--  Required to run -->
         <dependency>
@@ -175,16 +202,25 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>cdh3</id>
+      <activation>
+        <property>
+          <name>hadoop.version</name>
+          <value>0.20.2-cdh3u2</value>
+        </property>
+      </activation>
+      <properties>
+        <hadoop.version>0.20.2-cdh3u2</hadoop.version>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-core</artifactId>
-          <version>0.20.2-cdh3u2</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-test</artifactId>
-          <version>0.20.2-cdh3u2</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <!--  Required to run -->
         <dependency>
@@ -213,38 +249,47 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>apache-22</id>
+      <activation>
+        <property>
+          <name>hadoop.version</name>
+          <value>0.22.0</value>
+        </property>
+      </activation>
+      <properties>
+        <hadoop.version>0.22.0</hadoop.version>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common</artifactId>
-          <version>0.22.0</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common-test</artifactId>
-          <version>0.22.0</version>
+          <version>${hadoop.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdfs</artifactId>
-          <version>0.22.0</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdfs-test</artifactId>
-          <version>0.22.0</version>
+          <version>${hadoop.version}</version>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-mapred</artifactId>
-          <version>0.22.0</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-mapred-test</artifactId>
-          <version>0.22.0</version>
+          <version>${hadoop.version}</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -266,45 +311,54 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>apache-23</id>
+      <activation>
+        <property>
+          <name>hadoop.version</name>
+          <value>0.23.0-SNAPSHOT</value>
+        </property>
+      </activation>
+      <properties>
+        <hadoop.version>0.23.0-SNAPSHOT</hadoop.version>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common</artifactId>
-          <version>0.23.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common</artifactId>
-          <version>0.23.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
           <type>test-jar</type>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdfs</artifactId>
-          <version>0.23.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdfs</artifactId>
-          <version>0.23.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
           <type>test-jar</type>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-mapreduce-client-common</artifactId>
-          <version>0.23.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-mapreduce-client-core</artifactId>
-          <version>0.23.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
-          <version>0.23.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
           <type>test-jar</type>
           <scope>test</scope>
         </dependency>
@@ -326,40 +380,49 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     </profile>
     <profile>
       <id>apache-trunk</id>
+      <activation>
+        <property>
+          <name>hadoop.version</name>
+          <value>0.24.0-SNAPSHOT</value>
+        </property>
+      </activation>
+      <properties>
+        <hadoop.version>0.24.0-SNAPSHOT</hadoop.version>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common</artifactId>
-          <version>0.24.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common</artifactId>
-          <version>0.24.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
           <type>test-jar</type>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdfs</artifactId>
-          <version>0.24.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-hdfs</artifactId>
-          <version>0.24.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
           <type>test-jar</type>
           <scope>test</scope>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-mapreduce-client-common</artifactId>
-          <version>0.24.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-mapreduce-client-core</artifactId>
-          <version>0.24.0-SNAPSHOT</version>
+          <version>${hadoop.version}</version>
         </dependency>
       </dependencies>
       <build>

@@ -20,7 +20,8 @@ import org.apache.hadoop.util.ToolRunner;
 
 public class AvroSpecificMaxTemperature extends Configured implements Tool {
   
-  public static class MaxTemperatureMapper extends AvroMapper<Utf8, Pair<Integer, WeatherRecord>> {
+  public static class MaxTemperatureMapper
+      extends AvroMapper<Utf8, Pair<Integer, WeatherRecord>> {
     private NcdcRecordParser parser = new NcdcRecordParser();
     private WeatherRecord record = new WeatherRecord();
     @Override
@@ -43,7 +44,8 @@ public class AvroSpecificMaxTemperature extends Configured implements Tool {
 
     @Override
     public void reduce(Integer key, Iterable<WeatherRecord> values,
-        AvroCollector<WeatherRecord> collector, Reporter reporter) throws IOException {
+        AvroCollector<WeatherRecord> collector, Reporter reporter)
+        throws IOException {
       WeatherRecord max = null;
       for (WeatherRecord value : values) {
         if (max == null || value.temperature > max.temperature) {
@@ -77,8 +79,8 @@ public class AvroSpecificMaxTemperature extends Configured implements Tool {
     FileOutputFormat.setOutputPath(conf, new Path(args[1]));
     
     AvroJob.setInputSchema(conf, Schema.create(Schema.Type.STRING));
-    AvroJob.setMapOutputSchema(conf,
-        Pair.getPairSchema(Schema.create(Schema.Type.INT), WeatherRecord.SCHEMA$));
+    AvroJob.setMapOutputSchema(conf, Pair.getPairSchema(
+        Schema.create(Schema.Type.INT), WeatherRecord.SCHEMA$));
     AvroJob.setOutputSchema(conf, WeatherRecord.SCHEMA$);
     conf.setInputFormat(AvroUtf8InputFormat.class);
 

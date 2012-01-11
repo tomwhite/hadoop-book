@@ -22,12 +22,14 @@ import org.apache.hadoop.util.ToolRunner;
 
 public class AvroGenericMaxTemperature extends Configured implements Tool {
   
-  private static final Schema SCHEMA = Schema.parse("{\"type\":\"record\", \"name\":\"WeatherRecord\", \"fields\":"
-      + "[{\"name\":\"year\", \"type\":\"int\"}, " +
+  private static final Schema SCHEMA = Schema.parse(
+      "{\"type\":\"record\", \"name\":\"WeatherRecord\", \"fields\":" +
+      "[{\"name\":\"year\", \"type\":\"int\"}, " +
       "{\"name\":\"temperature\", \"type\":\"int\", \"order\": \"ignore\"}, " +
       "{\"name\":\"stationId\", \"type\":\"string\", \"order\": \"ignore\"}]}");
   
-  private static GenericRecord newWeatherRecord(int year, int temperature, String stationId) {
+  private static GenericRecord newWeatherRecord(int year, int temperature,
+      String stationId) {
     GenericRecord value = new GenericData.Record(SCHEMA);
     value.put("year", year);
     value.put("temperature", temperature);
@@ -43,7 +45,8 @@ public class AvroGenericMaxTemperature extends Configured implements Tool {
     return value;
   }
   
-  public static class MaxTemperatureMapper extends AvroMapper<Utf8, Pair<Integer, GenericRecord>> {
+  public static class MaxTemperatureMapper extends AvroMapper<Utf8,
+      Pair<Integer, GenericRecord>> {
     private NcdcRecordParser parser = new NcdcRecordParser();
     @Override
     public void map(Utf8 line,
@@ -51,7 +54,8 @@ public class AvroGenericMaxTemperature extends Configured implements Tool {
         Reporter reporter) throws IOException {
       parser.parse(line.toString());
       if (parser.isValidTemperature()) {
-        GenericRecord record = newWeatherRecord(parser.getYearInt(), parser.getAirTemperature(), parser.getStationId());
+        GenericRecord record = newWeatherRecord(parser.getYearInt(),
+            parser.getAirTemperature(), parser.getStationId());
         Pair<Integer, GenericRecord> pair =
           new Pair<Integer, GenericRecord>(parser.getYearInt(), record);
         collector.collect(pair);
@@ -64,7 +68,8 @@ public class AvroGenericMaxTemperature extends Configured implements Tool {
 
     @Override
     public void reduce(Integer key, Iterable<GenericRecord> values,
-        AvroCollector<GenericRecord> collector, Reporter reporter) throws IOException {
+        AvroCollector<GenericRecord> collector, Reporter reporter)
+        throws IOException {
       GenericRecord max = null;
       for (GenericRecord value : values) {
         if (max == null) {
