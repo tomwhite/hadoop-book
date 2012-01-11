@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!-- mapred-site.xml -->
+<configuration>
+  <property>
+    <name>mapred.child.java.opts</name>
+    <value>-Xmx400m</value>
+    <!-- Not marked as final so jobs can include JVM debugging options -->
+  </property>
+</configuration>
