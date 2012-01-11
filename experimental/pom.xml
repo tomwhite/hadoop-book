@@ -23,5 +23,23 @@
       <artifactId>ch04</artifactId>
       <version>3.0</version>
     </dependency>
+    <dependency>
+      <groupId>com.cloudera.crunch</groupId>
+      <artifactId>crunch</artifactId>
+      <version>0.1.0</version>
+    </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <testExcludes>
+            <exclude>SplitTest.java</exclude>
+          </testExcludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
