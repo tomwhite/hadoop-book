@@ -4,10 +4,11 @@
 /lib
 /out
 /output*
-ch15/maxwidget
+ch*/maxwidget
 snippet/actual
 target
 /target
 .classpath
 .project
+.pydevproject
 .settings
