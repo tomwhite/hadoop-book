@@ -30,10 +30,10 @@ public class AvroProjection extends Configured implements Tool {
     JobConf conf = new JobConf(getConf(), getClass());
     conf.setJobName("Avro projection");
     
-    FileInputFormat.addInputPath(conf, new Path(args[0]));
-    FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+    FileInputFormat.addInputPath(conf, new Path(input));
+    FileOutputFormat.setOutputPath(conf, new Path(output));
     
-    Schema schema = Schema.parse(new File(schemaFile));
+    Schema schema = new Schema.Parser().parse(new File(schemaFile));
     AvroJob.setInputSchema(conf, schema);
     AvroJob.setMapOutputSchema(conf, schema);
     AvroJob.setOutputSchema(conf, schema);

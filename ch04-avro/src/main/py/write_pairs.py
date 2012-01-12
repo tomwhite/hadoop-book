@@ -14,7 +14,7 @@ if __name__ == '__main__':
   datum_writer = io.DatumWriter()
   schema_object = schema.parse("""\
 { "type": "record",
-  "name": "Pair",
+  "name": "StringPair",
   "doc": "A pair of strings.",
   "fields": [
     {"name": "left", "type": "string"},

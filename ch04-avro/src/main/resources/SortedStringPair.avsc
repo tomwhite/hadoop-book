@@ -1,6 +1,6 @@
 {
   "type": "record",
-  "name": "Pair",
+  "name": "StringPair",
   "doc": "A pair of strings, sorted by right field descending.",
   "fields": [
     {"name": "left", "type": "string", "order": "ignore"},

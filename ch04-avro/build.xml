@@ -1,9 +1,0 @@
-<project name="hadoop-book-avro" default="resolve"
-    xmlns:ivy="antlib:org.apache.ivy.ant"
-    xmlns:mvn="urn:maven-artifact-ant">
-    
-    <target name="resolve">
-        <ivy:retrieve />
-    </target>
-    
-</project>

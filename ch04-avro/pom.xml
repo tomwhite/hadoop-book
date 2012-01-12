@@ -17,14 +17,41 @@
       <groupId>org.apache.avro</groupId>
       <artifactId>avro</artifactId>
     </dependency>
-    <!-- From Avro 1.5.0 upwards -->
-    <!-- dependency>
+    <dependency>
       <groupId>org.apache.avro</groupId>
       <artifactId>avro-mapred</artifactId>
-    </dependency-->
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.avro</groupId>
+        <artifactId>avro-maven-plugin</artifactId>
+        <version>${avro.version}</version>
+        <executions>
+          <execution>
+            <id>schemas</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>schema</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>StringPair.avsc</include>
+                <include>WeatherRecord.avsc</include>
+              </includes>
+              <stringType>String</stringType>
+              <sourceDirectory>src/main/resources</sourceDirectory>
+              <outputDirectory>${project.build.directory}/generated-sources/java
+              </outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

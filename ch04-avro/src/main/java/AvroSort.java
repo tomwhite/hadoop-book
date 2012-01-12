@@ -54,7 +54,7 @@ public class AvroSort extends Configured implements Tool {
     FileInputFormat.addInputPath(conf, new Path(input));
     FileOutputFormat.setOutputPath(conf, new Path(output));
     
-    Schema schema = Schema.parse(new File(schemaFile));
+    Schema schema = new Schema.Parser().parse(new File(schemaFile));
     AvroJob.setInputSchema(conf, schema);
     // The intermediate schema is a Pair schema whose key is the input schema
     // and value is null
