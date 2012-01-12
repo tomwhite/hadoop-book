@@ -14,7 +14,7 @@
     
     <!-- Component versions are defined here -->
     <!-- Note that Hadoop dependencies are defined in hadoop-meta -->
-    <avro.version>1.6.1</avro.version>
+    <avro.version>1.5.4</avro.version>
     <pig.version>0.9.0</pig.version>
     <hive.version>0.8.0</hive.version>
     <hbase.version>0.90.4</hbase.version>
@@ -133,21 +133,25 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.8.1</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest-all</artifactId>
         <version>1.1</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-all</artifactId>
         <version>1.8.5</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>junit-addons</groupId>
         <artifactId>junit-addons</artifactId>
         <version>1.4</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>

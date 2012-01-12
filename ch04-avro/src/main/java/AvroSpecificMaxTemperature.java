@@ -30,9 +30,9 @@ public class AvroSpecificMaxTemperature extends Configured implements Tool {
         throws IOException {
       parser.parse(line.toString());
       if (parser.isValidTemperature()) {
-        record.setYear(parser.getYearInt());
-        record.setTemperature(parser.getAirTemperature());
-        record.setStationId(parser.getStationId());
+        record.year = parser.getYearInt();
+        record.temperature = parser.getAirTemperature();
+        record.stationId = new Utf8(parser.getStationId());
         collector.collect(
             new Pair<Integer, WeatherRecord>(parser.getYearInt(), record));
       }
@@ -48,7 +48,7 @@ public class AvroSpecificMaxTemperature extends Configured implements Tool {
         throws IOException {
       WeatherRecord max = null;
       for (WeatherRecord value : values) {
-        if (max == null || value.getTemperature() > max.getTemperature()) {
+        if (max == null || value.temperature > max.temperature) {
           max = newWeatherRecord(value);
         }
       }
@@ -56,9 +56,9 @@ public class AvroSpecificMaxTemperature extends Configured implements Tool {
     }
     private WeatherRecord newWeatherRecord(WeatherRecord value) {
       WeatherRecord record = new WeatherRecord();
-      record.setYear(value.getYear());
-      record.setTemperature(value.getTemperature());
-      record.setStationId(value.getStationId());
+      record.year = value.year;
+      record.temperature = value.temperature;
+      record.stationId = value.stationId;
       return record;
     }
   }

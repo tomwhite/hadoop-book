@@ -44,10 +44,31 @@
                 <include>StringPair.avsc</include>
                 <include>WeatherRecord.avsc</include>
               </includes>
-              <stringType>String</stringType>
+              <stringType>String</stringType> <!-- Avro 1.6.0 onwards -->
               <sourceDirectory>src/main/resources</sourceDirectory>
               <outputDirectory>${project.build.directory}/generated-sources/java
               </outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>job</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>src/main/assembly/job.xml</descriptor>
+              </descriptors>
+              <finalName>avro-examples</finalName>
+              <outputDirectory>${project.build.directory}/../..</outputDirectory>
+              <appendAssemblyId>false</appendAssemblyId>
             </configuration>
           </execution>
         </executions>

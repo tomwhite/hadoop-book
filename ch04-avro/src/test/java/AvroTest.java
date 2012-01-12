@@ -69,6 +69,7 @@ public class AvroTest {
   }
   
   @Test
+  @Ignore("Requires Avro 1.6.0 or later")
   public void testGenericString() throws IOException {
     Schema schema = new Schema.Parser().parse("{\"type\": \"string\", \"avro.java.string\": \"String\"}");
     
@@ -131,21 +132,23 @@ public class AvroTest {
     
 // vv AvroSpecificStringPair
     /*[*/StringPair datum = new StringPair();
-    datum.setLeft("L");
-    datum.setRight("R");/*]*/
+    datum.left = "L";
+    datum.right = "R";/*]*/
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
-    /*[*/DatumWriter<StringPair> writer = new SpecificDatumWriter<StringPair>(StringPair.class);/*]*/
+    /*[*/DatumWriter<StringPair> writer =
+      new SpecificDatumWriter<StringPair>(StringPair.class);/*]*/
     Encoder encoder = EncoderFactory.get().binaryEncoder(out, null);
     writer.write(datum, encoder);
     encoder.flush();
     out.close();
     
-    /*[*/DatumReader<StringPair> reader = new SpecificDatumReader<StringPair>(StringPair.class);/*]*/
+    /*[*/DatumReader<StringPair> reader =
+      new SpecificDatumReader<StringPair>(StringPair.class);/*]*/
     Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(), null);
     StringPair result = reader.read(null, decoder);
-    /*[*/assertThat((String) result.getLeft(), is("L"));
-    assertThat((String) result.getRight(), is("R"));/*]*/
+    assertThat(result./*[*/left/*]*/.toString(), is("L"));
+    assertThat(result./*[*/right/*]*/.toString(), is("R"));
 // ^^ AvroSpecificStringPair
   }
 

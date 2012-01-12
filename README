@@ -10,7 +10,7 @@ for the second edition at http://github.com/tomwhite/hadoop-book/tree/2e.
 
 This version of the code has been tested with:
  * Hadoop 1.0.0/0.22.0/0.23.0
- * Avro 1.4.1
+ * Avro 1.5.4
  * Pig 0.9.0
  * Hive 0.8.0
  * HBase 0.90.4
