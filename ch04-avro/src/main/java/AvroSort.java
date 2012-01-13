@@ -1,3 +1,6 @@
+// cc AvroSort A MapReduce program to sort an Avro data file
+
+// vv AvroSort
 import java.io.File;
 import java.io.IOException;
 
@@ -19,18 +22,21 @@ import org.apache.hadoop.util.ToolRunner;
 
 public class AvroSort extends Configured implements Tool {
 
-  static class SortMapper<K> extends AvroMapper<K, Pair<K, Void>> {
-    public void map(K datum, AvroCollector<Pair<K, Void>> collector,
+  static class SortMapper<K> extends AvroMapper<K, Pair<K, K>> {
+    public void map(K datum, AvroCollector<Pair<K, K>> collector,
         Reporter reporter) throws IOException {
-      collector.collect(new Pair<K ,Void>(datum, null, null, null));
-    };
+      collector.collect(new Pair<K, K>(datum, null, datum, null));
+    }
   }
 
-  static class SortReducer<K> extends AvroReducer<K, Void, K> {
-    public void reduce(K key, Iterable<Void> values, AvroCollector<K> collector,
+  static class SortReducer<K> extends AvroReducer<K, K, K> {
+    public void reduce(K key, Iterable<K> values,
+        AvroCollector<K> collector,
         Reporter reporter) throws IOException {
-      collector.collect(key);
-    };
+      for (K value : values) {
+        collector.collect(value);
+      }
+    }
   }
 
   @Override
@@ -56,10 +62,7 @@ public class AvroSort extends Configured implements Tool {
     
     Schema schema = new Schema.Parser().parse(new File(schemaFile));
     AvroJob.setInputSchema(conf, schema);
-    // The intermediate schema is a Pair schema whose key is the input schema
-    // and value is null
-    Schema intermediateSchema = Pair.getPairSchema(schema,
-        Schema.create(Schema.Type.NULL));
+    Schema intermediateSchema = Pair.getPairSchema(schema, schema);
     AvroJob.setMapOutputSchema(conf, intermediateSchema);
     AvroJob.setOutputSchema(conf, schema);
     
@@ -74,5 +77,5 @@ public class AvroSort extends Configured implements Tool {
     int exitCode = ToolRunner.run(new AvroSort(), args);
     System.exit(exitCode);
   }
-
 }
+// ^^ AvroSort

@@ -105,6 +105,7 @@ public class AvroGenericMaxTemperature extends Configured implements Tool {
     AvroJob.setMapOutputSchema(conf,
         Pair.getPairSchema(Schema.create(Schema.Type.INT), SCHEMA));
     AvroJob.setOutputSchema(conf, SCHEMA);
+    
     conf.setInputFormat(AvroUtf8InputFormat.class);
 
     AvroJob.setMapperClass(conf, MaxTemperatureMapper.class);

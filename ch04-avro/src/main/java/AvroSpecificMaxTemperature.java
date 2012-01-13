@@ -82,6 +82,7 @@ public class AvroSpecificMaxTemperature extends Configured implements Tool {
     AvroJob.setMapOutputSchema(conf, Pair.getPairSchema(
         Schema.create(Schema.Type.INT), WeatherRecord.SCHEMA$));
     AvroJob.setOutputSchema(conf, WeatherRecord.SCHEMA$);
+    
     conf.setInputFormat(AvroUtf8InputFormat.class);
 
     AvroJob.setMapperClass(conf, MaxTemperatureMapper.class);
