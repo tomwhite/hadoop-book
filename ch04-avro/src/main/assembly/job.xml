@@ -9,9 +9,14 @@
 	<dependencySets>
 		<dependencySet>
 		  <useTransitiveFiltering>true</useTransitiveFiltering>
-			<unpack>false</unpack>
+			<unpack>true</unpack>
+			<unpackOptions>
+			  <excludes>
+			    <exclude>META-INF/LICENSE</exclude> <!-- Exclude to avoid clash with directory of the same name -->
+			  </excludes>
+			</unpackOptions>
 			<scope>runtime</scope>
-			<outputDirectory>lib</outputDirectory>
+			<outputDirectory>/</outputDirectory>
 			<useProjectArtifact>false</useProjectArtifact>
 		  <excludes>
 		  	<exclude>org.apache.hadoop:*</exclude>

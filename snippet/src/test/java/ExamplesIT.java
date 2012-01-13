@@ -58,7 +58,7 @@ public class ExamplesIT {
   private static final String MODE_DEFAULT = "local";
   
   private static final String EXAMPLE_CHAPTERS_PROPERTY = "example.chapters";
-  private static final String EXAMPLE_CHAPTERS_DEFAULT = "ch02,ch04,ch05,ch07,ch08";
+  private static final String EXAMPLE_CHAPTERS_DEFAULT = "ch02,ch04,ch04-avro,ch05,ch07,ch08";
 
   private static final IOFileFilter HIDDEN_FILE_FILTER =
     new OrFileFilter(HiddenFileFilter.HIDDEN, new PrefixFileFilter("_"));
@@ -111,7 +111,7 @@ public class ExamplesIT {
     env.put("HADOOP_HOME", hadoopHome);
     env.put("PATH", env.get("HADOOP_HOME") + "/bin" + ":" + env.get("PATH"));
     env.put("HADOOP_CONF_DIR", "snippet/conf/" + mode);
-    env.put("HADOOP_CLASSPATH", "hadoop-examples.jar");
+    env.put("HADOOP_CLASSPATH", "hadoop-examples.jar:avro-examples.jar");
     
     System.out.printf("HADOOP_HOME=%s\n", hadoopHome);
     
@@ -169,6 +169,11 @@ public class ExamplesIT {
         File actualDecompressed = decompress(actualFile);
         FileAssert.assertEquals(expectedFile.toString(),
             expectedDecompressed, actualDecompressed);
+      } else if (expectedFile.getPath().endsWith(".avro")) {
+        // Avro files have a random sync marker
+        // so just check lengths for the moment
+        assertEquals("Avro file length", expectedFile.length(),
+            actualFile.length());
       } else {
         FileAssert.assertEquals(expectedFile.toString(),
             expectedFile, actualFile);
