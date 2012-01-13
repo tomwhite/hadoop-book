@@ -12,6 +12,7 @@
   <packaging>pom</packaging>
   <version>3.0</version>
   <name>Hadoop Examples JAR</name>
+  <!-- Packages all the Hadoop examples into a single JAR -->
   <dependencies>
     <dependency>
       <groupId>com.hadoopbook</groupId>
@@ -56,7 +57,7 @@
         <version>2.2.1</version>
         <configuration>
           <descriptors>
-            <descriptor>../book/src/assembly/assembly.xml</descriptor>
+            <descriptor>../book/src/main/assembly/jar.xml</descriptor>
           </descriptors>
           <finalName>hadoop-examples</finalName>
           <outputDirectory>${project.build.directory}/../..</outputDirectory>

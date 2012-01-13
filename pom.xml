@@ -25,11 +25,6 @@
     <module>ch15</module>
     <module>ch16</module>
     <module>hadoop-examples</module>
-    <module>pig-examples</module>
-    <module>hive-examples</module>
-    <module>hbase-examples</module>
-    <module>zookeeper-examples</module>
-    <module>sqoop-examples</module>
     <module>snippet</module>
   </modules>
 </project>
