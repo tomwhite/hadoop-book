@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<ivy-module version="1.0">
-  <info organisation="oreilly" module="htdg" />
-  <dependencies>
-    <dependency org="org.hamcrest" name="hamcrest-all" rev="1.1" />
-    <dependency org="junit" name="junit" rev="4.8.1" />
-    <dependency org="org.mockito" name="mockito-all" rev="1.8.5" />
-  </dependencies>
-</ivy-module>

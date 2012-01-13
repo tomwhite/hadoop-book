@@ -1,9 +1,0 @@
-<FindBugsFilter>
-     <Match classregex="MaxTemperatureUsingSecondarySort.*Comparator">
-       <BugCode name="Se" />
-     </Match>
-     
-     <Match class="CoherencyModelTest">
-       <BugCode name="OBL" />
-     </Match>
-</FindBugsFilter>
