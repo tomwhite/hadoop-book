@@ -216,6 +216,12 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-core</artifactId>
           <version>${hadoop.version}</version>
+          <exclusions>
+            <exclusion>
+              <groupId>org.codehaus.jackson</groupId>
+              <artifactId>jackson-core-asl</artifactId>
+            </exclusion>
+          </exclusions>
         </dependency>
         <dependency>
           <groupId>org.apache.hadoop</groupId>
@@ -226,6 +232,11 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         <dependency>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>org.codehaus.jackson</groupId>
+          <artifactId>jackson-core-asl</artifactId>
+          <version>1.7.3</version> <!-- To match that in Avro -->
         </dependency>
       </dependencies>
       <build>
