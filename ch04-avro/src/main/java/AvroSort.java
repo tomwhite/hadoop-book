@@ -1,6 +1,5 @@
 // cc AvroSort A MapReduce program to sort an Avro data file
 
-// vv AvroSort
 import java.io.File;
 import java.io.IOException;
 
@@ -20,6 +19,7 @@ import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
+//vv AvroSort
 public class AvroSort extends Configured implements Tool {
 
   static class SortMapper<K> extends AvroMapper<K, Pair<K, K>> {

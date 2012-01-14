@@ -26,8 +26,8 @@ public class AvroSpecificMaxTemperature extends Configured implements Tool {
     private WeatherRecord record = new WeatherRecord();
     @Override
     public void map(Utf8 line,
-        AvroCollector<Pair<Integer, WeatherRecord>> collector, Reporter reporter)
-        throws IOException {
+        AvroCollector<Pair<Integer, WeatherRecord>> collector,
+        Reporter reporter) throws IOException {
       parser.parse(line.toString());
       if (parser.isValidTemperature()) {
         record.year = parser.getYearInt();
@@ -44,8 +44,8 @@ public class AvroSpecificMaxTemperature extends Configured implements Tool {
 
     @Override
     public void reduce(Integer key, Iterable<WeatherRecord> values,
-        AvroCollector<WeatherRecord> collector, Reporter reporter)
-        throws IOException {
+        AvroCollector<WeatherRecord> collector,
+        Reporter reporter) throws IOException {
       WeatherRecord max = null;
       for (WeatherRecord value : values) {
         if (max == null || value.temperature > max.temperature) {
