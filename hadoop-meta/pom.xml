@@ -143,8 +143,8 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       <id>apache-1.0.0</id>
       <activation>
         <property>
-          <!-- This is the default profile -->
-          <name>!hadoop.version</name>
+          <name>hadoop.version</name>
+          <value>1.0.0</value>
         </property>
       </activation>
       <properties>

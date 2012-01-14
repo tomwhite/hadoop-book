@@ -7,7 +7,10 @@ Example invocations:
 # You need to have an unpacked copy of Hadoop in this directory
 export HADOOP_HOME=~/dev/hadoop-1.0.0/
 
-# From the top level or the snippet module directory
+# From the top level
+mvn verify -Phadoop.version=1.0.0
+
+# From the snippet directory
 mvn verify
 
 # Run against a pseudo cluster (you need to start it first)
