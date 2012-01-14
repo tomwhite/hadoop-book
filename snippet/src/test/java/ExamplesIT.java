@@ -111,6 +111,7 @@ public class ExamplesIT {
     env.put("HADOOP_HOME", hadoopHome);
     env.put("PATH", env.get("HADOOP_HOME") + "/bin" + ":" + env.get("PATH"));
     env.put("HADOOP_CONF_DIR", "snippet/conf/" + mode);
+    env.put("HADOOP_USER_CLASSPATH_FIRST", "true");
     env.put("HADOOP_CLASSPATH", "hadoop-examples.jar:avro-examples.jar");
     
     System.out.printf("HADOOP_HOME=%s\n", hadoopHome);
