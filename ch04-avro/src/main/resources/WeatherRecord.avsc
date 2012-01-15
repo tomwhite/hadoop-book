@@ -1,6 +1,7 @@
 {
   "type": "record",
   "name": "WeatherRecord",
+  "namespace": "specific",
   "doc": "A weather reading.",
   "fields": [
     {"name": "year", "type": "int"},

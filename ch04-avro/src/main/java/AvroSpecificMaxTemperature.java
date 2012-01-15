@@ -18,6 +18,8 @@ import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
+import specific.WeatherRecord;
+
 public class AvroSpecificMaxTemperature extends Configured implements Tool {
   
   public static class MaxTemperatureMapper
@@ -54,15 +56,33 @@ public class AvroSpecificMaxTemperature extends Configured implements Tool {
       }
       collector.collect(max);
     }
-    private WeatherRecord newWeatherRecord(WeatherRecord value) {
-      WeatherRecord record = new WeatherRecord();
-      record.year = value.year;
-      record.temperature = value.temperature;
-      record.stationId = value.stationId;
-      return record;
+  }
+
+  public static class MaxTemperatureCombiner extends
+      AvroReducer<Integer, WeatherRecord, Pair<Integer, WeatherRecord>> {
+    
+    @Override
+    public void reduce(Integer key, Iterable<WeatherRecord> values,
+        AvroCollector<Pair<Integer, WeatherRecord>> collector,
+        Reporter reporter) throws IOException {
+      WeatherRecord max = null;
+      for (WeatherRecord value : values) {
+        if (max == null || value.temperature > max.temperature) {
+          max = newWeatherRecord(value);
+        }
+      }
+      collector.collect(new Pair<Integer, WeatherRecord>(key, max));
     }
   }
 
+  private static WeatherRecord newWeatherRecord(WeatherRecord value) {
+    WeatherRecord record = new WeatherRecord();
+    record.year = value.year;
+    record.temperature = value.temperature;
+    record.stationId = value.stationId;
+    return record;
+  }
+  
   @Override
   public int run(String[] args) throws Exception {
     if (args.length != 2) {
@@ -86,6 +106,7 @@ public class AvroSpecificMaxTemperature extends Configured implements Tool {
     conf.setInputFormat(AvroUtf8InputFormat.class);
 
     AvroJob.setMapperClass(conf, MaxTemperatureMapper.class);
+    AvroJob.setCombinerClass(conf, MaxTemperatureCombiner.class);
     AvroJob.setReducerClass(conf, MaxTemperatureReducer.class);
 
     JobClient.runJob(conf);
