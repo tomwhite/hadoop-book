@@ -27,6 +27,13 @@ DUMP B;
 DESCRIBE B;
 -- ^^ udfs_schema
 
+-- vv udfs_dynamic_invoker
+DEFINE trim InvokeForString('org.apache.commons.lang.StringUtils.trim', 'String');
+B = FOREACH A GENERATE trim(fruit);
+DUMP B;
+-- ^^ udfs_dynamic_invoker
+DESCRIBE B;
+
 -- vv udfs_load
 records = LOAD 'input/ncdc/micro/sample.txt'
   USING com.hadoopbook.pig.CutLoadFunc('16-19,88-92,93-93')

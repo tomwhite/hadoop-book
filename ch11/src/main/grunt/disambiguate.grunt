@@ -1,0 +1,4 @@
+A = LOAD 'input/pig/join/A' AS (id:int, name:chararray);
+B = LOAD 'input/pig/join/B' AS (name:chararray, id:int);
+C = JOIN A by id, B by id;
+D = FOREACH C GENERATE A::name;

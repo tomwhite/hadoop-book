@@ -2,3 +2,7 @@
 -- vv set_debug_on
 set debug on
 -- ^^ set_debug_on
+-- == set_default_parallel
+-- vv set_default_parallel
+set default_parallel 30
+-- ^^ set_default_parallel
