@@ -5,9 +5,16 @@ bin=`cd "$bin"; pwd`
 
 actual="$bin"/../actual
 
-$bin/check_manuscript.py  ~/book-workspace/htdg3/ch02.xml $actual/ch02/*
-$bin/check_manuscript.py  ~/book-workspace/htdg3/ch04.xml $actual/ch04/*
-$bin/check_manuscript.py  ~/book-workspace/htdg3/ch05.xml $actual/ch05/*
-$bin/check_manuscript.py  ~/book-workspace/htdg3/ch07.xml $actual/ch07/*
+for ch in ch02 ch04 ch05 ch07 ch08
+do
+  # remove any id attributes from program listings
+  sed '/<programlisting/s/ id=".*"//' ~/book-workspace/htdg3/$ch.xml > /tmp/$ch.xml
+  $bin/check_manuscript.py  /tmp/$ch.xml $actual/$ch/*
+done
+
+# Avro check
+sed '/<programlisting/s/ id=".*"//' ~/book-workspace/htdg3/ch04.xml > /tmp/ch04-avro.xml
+$bin/check_manuscript.py  /tmp/ch04-avro.xml $actual/ch04-avro/*
+
+# Common check
 $bin/check_manuscript.py  ~/book-workspace/htdg3/ch07.xml $actual/common/*
-$bin/check_manuscript.py  ~/book-workspace/htdg3/ch08.xml $actual/ch08/*

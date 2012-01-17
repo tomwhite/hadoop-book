@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
 # Check that the expected (or actual) snippets are in the manuscript. E.g.
-# bin/check_manuscript.py  ~/book-workspace/htdg2/ch11.xml expected/ch11/grunt/*
+# bin/check_manuscript.py  ~/book-workspace/htdg3/ch11.xml expected/ch11/grunt/*
 
-# TODO: ignore id elements in the XML in the book.
-# Need to use an XML parser for this.
 import sys
 
 manuscript = open(sys.argv[1], 'r').read()
 
 for snippet_file in sys.argv[2:]:
-  index = manuscript.find(open(snippet_file, 'r').read())
+  lines = open(snippet_file, 'r').readlines()
+  snippet = "".join(lines[1:]).strip() # remove first line (comment) and strip spaces
+  index = manuscript.find(snippet)
   if index == -1:
     print "Snippet not found", snippet_file
