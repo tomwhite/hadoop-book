@@ -1,0 +1,4 @@
+DEFINE max_by_group(X, group_key, max_field) RETURNS Y {
+  A = GROUP $X by $group_key;
+  $Y = FOREACH A GENERATE group, MAX($X.$max_field);
+};
