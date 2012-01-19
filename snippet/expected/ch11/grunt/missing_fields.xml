@@ -4,7 +4,7 @@
 (4,Coat)
 (3)
 (1,Scarf)
-<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">B = FILTER A BY SIZE(*) &gt; 1;</userinput>
+<prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">B = FILTER A BY SIZE(TOTUPLE(*)) &gt; 1;</userinput>
 <prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP B;</userinput>
 (2,Tie)
 (4,Coat)

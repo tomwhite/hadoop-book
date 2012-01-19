@@ -7,8 +7,8 @@
 (w,y,1)
 <prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">C = UNION A, B;</userinput>
 <prompt moreinfo="none">grunt&gt; </prompt><userinput moreinfo="none">DUMP C;</userinput>
-(z,x,8)
-(w,y,1)
 (2,3)
 (1,2)
-(2,4)</screen>
+(2,4)
+(z,x,8)
+(w,y,1)</screen>
