@@ -1,0 +1,48 @@
+-- a demonstration of the different effects of FLATTEN
+
+C = LOAD 'input/pig/types/C'
+  AS (f0:chararray, f1:chararray);
+  
+D = FOREACH C GENERATE TOTUPLE(TOTUPLE(f0), TOTUPLE(f1));
+-- D is
+-- (((a),(pomegranate)))
+-- (((b),(apple)))
+DUMP D
+
+F = FOREACH D GENERATE FLATTEN($0);
+-- F is
+-- ((a),(pomegranate))
+-- ((b),(apple))
+-- One level of nesting removed
+DUMP F
+
+
+B = FOREACH C GENERATE TOBAG(f0, f1);
+-- B is
+-- ({(a),(pomegranate)})
+-- ({(b),(apple)})
+DUMP B
+
+F = FOREACH B GENERATE FLATTEN($0);
+-- F is
+-- (a)
+-- (pomegranate)
+-- (b)
+-- (apple)
+-- Tuples in bags are turned into tuples
+DUMP F
+
+B = FOREACH C GENERATE f0, TOBAG(f1, f1);
+-- B is
+-- (a,{(pomegranate),(pomegranate)})
+-- (b,{(apple),(apple)})
+DUMP B
+
+F = FOREACH B GENERATE $0, FLATTEN($1);
+-- F is
+-- (a,pomegranate)
+-- (a,pomegranate)
+-- (b,apple)
+-- (b,apple)
+-- Tuples in bags can be added to elements at the top level
+DUMP F
