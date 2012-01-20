@@ -26,7 +26,7 @@ for f in ch11/src/main/grunt/*.grunt; do
             -e 's|^\(&gt;&gt; \)\(.*\)|<prompt moreinfo="none">\1</prompt><userinput moreinfo="none">\2</userinput>|' \
       > $out
   cat $out
-  python "$bin"/phragmite_pig.py $out $actual/ch11/grunt
+  python "$bin"/phragmite_pig.py $out $actual/ch11
   rm $out
 done
 
