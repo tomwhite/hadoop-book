@@ -81,7 +81,7 @@
               <descriptors>
                 <descriptor>../book/src/main/assembly/oozie-workflow-application.xml</descriptor>
               </descriptors>
-              <finalName>oozie-examples</finalName>
+              <finalName>.</finalName>
               <appendAssemblyId>false</appendAssemblyId>
             </configuration>
           </execution>

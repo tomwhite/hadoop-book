@@ -13,6 +13,10 @@
           <value>OldMaxTemperature$OldMaxTemperatureMapper</value>
         </property>
         <property>
+          <name>mapred.combiner.class</name>
+          <value>OldMaxTemperature$OldMaxTemperatureReducer</value>
+        </property>
+        <property>
           <name>mapred.reducer.class</name>
           <value>OldMaxTemperature$OldMaxTemperatureReducer</value>
         </property>
