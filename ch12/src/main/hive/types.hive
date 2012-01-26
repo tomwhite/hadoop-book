@@ -1,4 +1,6 @@
--- echo -e '1\x022\x01a\x031\x02b\x032\x01a\x021\x021.0' > /Users/tom/workspace/hadoop-book/input/hive/types/complex.txt
+! echo; # == complex_types;
+
+DROP TABLE IF EXISTS complex;
 
 CREATE TABLE complex (
   col1 ARRAY<INT>,
@@ -6,7 +8,11 @@ CREATE TABLE complex (
   col3 STRUCT<a:STRING, b:INT, c:DOUBLE>
 );
 
-LOAD DATA LOCAL INPATH '/Users/tom/workspace/hadoop-book/input/hive/types/complex.txt'
+LOAD DATA LOCAL INPATH '/Users/tom/book-workspace/hadoop-book/input/hive/types/complex.txt'
 OVERWRITE INTO TABLE complex;
 
+! echo; # vv complex_types;
 SELECT col1[0], col2['b'], col3.c FROM complex;
+! echo; # ^^ complex_types;
+
+

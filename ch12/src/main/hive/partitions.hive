@@ -1,3 +1,5 @@
+! echo; # == partitions;
+
 CREATE TABLE logs (ts BIGINT, line STRING)
 PARTITIONED BY (dt STRING, country STRING);
 
@@ -25,7 +27,9 @@ LOAD DATA LOCAL INPATH 'input/hive/partitions/file6'
 INTO TABLE logs
 PARTITION (dt='2001-01-02', country='US');
 
+! echo; # vv partitions;
 SHOW PARTITIONS logs;
+! echo; # ^^ partitions;
 
 SELECT ts, dt, line
 FROM logs

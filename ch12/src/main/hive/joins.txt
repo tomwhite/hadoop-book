@@ -4,10 +4,10 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
 CREATE TABLE things (id INT, name STRING)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
 
-LOAD DATA LOCAL INPATH '/Users/tom/workspace/hadoop-book/input/hive/joins/sales.txt'
+LOAD DATA LOCAL INPATH '/Users/tom/book-workspace/hadoop-book/input/hive/joins/sales.txt'
 OVERWRITE INTO TABLE sales;
 
-LOAD DATA LOCAL INPATH '/Users/tom/workspace/hadoop-book/input/hive/joins/things.txt'
+LOAD DATA LOCAL INPATH '/Users/tom/book-workspace/hadoop-book/input/hive/joins/things.txt'
 OVERWRITE INTO TABLE things;
 
 SELECT * FROM sales;

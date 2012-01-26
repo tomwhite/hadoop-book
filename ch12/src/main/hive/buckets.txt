@@ -1,14 +1,14 @@
-echo -e '0\x01Nat' > /Users/tom/workspace/hadoop-book/input/hive/tables/users.txt
-echo -e '2\x01Joe' >> /Users/tom/workspace/hadoop-book/input/hive/tables/users.txt
-echo -e '3\x01Kay' >> /Users/tom/workspace/hadoop-book/input/hive/tables/users.txt
-echo -e '4\x01Ann' >> /Users/tom/workspace/hadoop-book/input/hive/tables/users.txt
+echo -e '0\x01Nat' > /Users/tom/book-workspace/hadoop-book/input/hive/tables/users.txt
+echo -e '2\x01Joe' >> /Users/tom/book-workspace/hadoop-book/input/hive/tables/users.txt
+echo -e '3\x01Kay' >> /Users/tom/book-workspace/hadoop-book/input/hive/tables/users.txt
+echo -e '4\x01Ann' >> /Users/tom/book-workspace/hadoop-book/input/hive/tables/users.txt
 
 drop table users;
 drop table bucketed_users;
 
 CREATE TABLE users (id INT, name STRING);
 
-LOAD DATA LOCAL INPATH '/Users/tom/workspace/hadoop-book/input/hive/tables/users.txt'
+LOAD DATA LOCAL INPATH '/Users/tom/book-workspace/hadoop-book/input/hive/tables/users.txt'
 OVERWRITE INTO TABLE users;
 
 dfs -cat /user/hive/warehouse/users/users.txt;

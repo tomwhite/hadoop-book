@@ -5,7 +5,7 @@ bin=`cd "$bin"; pwd`
 
 actual="$bin"/../actual
 
-for ch in ch02 ch04 ch05 ch07 ch08 ch11
+for ch in ch02 ch04 ch05 ch07 ch08 ch11 ch12
 do
   # remove any id attributes from program listings
   sed '/<programlisting/s/ id=".*"//' ~/book-workspace/htdg3/$ch.xml > /tmp/$ch.xml

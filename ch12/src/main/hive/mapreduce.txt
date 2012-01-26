@@ -1,5 +1,5 @@
-ADD FILE /Users/tom/workspace/hadoop-book/ch12/src/main/python/is_good_quality.py; 
-ADD FILE /Users/tom/workspace/hadoop-book/ch12/src/main/python/max_temperature_reduce.py;
+ADD FILE /Users/tom/book-workspace/hadoop-book/ch12/src/main/python/is_good_quality.py; 
+ADD FILE /Users/tom/book-workspace/hadoop-book/ch12/src/main/python/max_temperature_reduce.py;
 
 FROM records2
 SELECT TRANSFORM(year, temperature, quality)

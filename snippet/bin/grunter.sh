@@ -10,8 +10,8 @@ actual="$bin"/../actual
 
 cd "$bin"/../..
 
-rm -rf $actual/ch11/grunt
-mkdir -p $actual/ch11/grunt
+rm -rf $actual/ch11
+mkdir -p $actual/ch11
 
 for f in ch11/src/main/grunt/*.grunt; do
   out=$f.output.txt
