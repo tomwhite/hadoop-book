@@ -1,0 +1,8 @@
+Commands used to create some of the binary files:
+
+echo -e '0\x01Nat' > tables/users.txt
+echo -e '2\x01Joe' >> tables/users.txt
+echo -e '3\x01Kay' >> tables/users.txt
+echo -e '4\x01Ann' >> tables/users.txt
+
+echo -e '1\x022\x01a\x031\x02b\x032\x01a\x021\x021.0' > types/complex.txt

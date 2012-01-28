@@ -1,0 +1,16 @@
+! echo; # == select_stations;
+
+DROP TABLE IF EXISTS stations;
+
+CREATE TABLE stations (usaf STRING, wban STRING, name STRING)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.RegexSerDe'
+WITH SERDEPROPERTIES (
+  "input.regex" = "(\\d{6}) (\\d{5}) (.{29}) .*"
+);
+
+LOAD DATA LOCAL INPATH "input/ncdc/metadata/stations-fixed-width.txt"
+INTO TABLE stations;
+
+! echo; # vv select_stations;
+SELECT * FROM stations LIMIT 4;
+! echo; # ^^ select_stations;

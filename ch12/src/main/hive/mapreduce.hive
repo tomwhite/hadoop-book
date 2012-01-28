@@ -1,10 +1,23 @@
-ADD FILE /Users/tom/book-workspace/hadoop-book/ch12/src/main/python/is_good_quality.py; 
-ADD FILE /Users/tom/book-workspace/hadoop-book/ch12/src/main/python/max_temperature_reduce.py;
+! echo; # == mapreduce_is_good_quality;
 
+DROP TABLE IF EXISTS records2;
+
+CREATE TABLE records2 (station STRING, year STRING, temperature INT, quality INT)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t';
+
+LOAD DATA LOCAL INPATH 'input/ncdc/micro-tab/sample2.txt'
+OVERWRITE INTO TABLE records2;
+
+! echo; # vv mapreduce_is_good_quality;
+ADD FILE /Users/tom/book-workspace/hadoop-book/ch12/src/main/python/is_good_quality.py; 
 FROM records2
 SELECT TRANSFORM(year, temperature, quality)
 USING 'is_good_quality.py'
 AS year, temperature;
+! echo; # ^^ mapreduce_is_good_quality;
+
+ADD FILE ch12/src/main/python/max_temperature_reduce.py;
 
 FROM (
   FROM records2
@@ -23,4 +36,3 @@ FROM (
 SELECT TRANSFORM(year, temperature)
 USING 'max_temperature_reduce.py'
 AS year, temperature;
-

@@ -10,7 +10,7 @@ actual="$bin"/../actual
 
 cd "$bin"/../..
 
-rm -rf $actual/ch12
+#rm -rf $actual/ch12
 mkdir -p $actual/ch12
 
 for f in ch12/src/main/hive/*.hive; do
@@ -25,6 +25,9 @@ for f in ch12/src/main/hive/*.hive; do
           -e 's|	|    |g' \
           -e 's|^\(hive&gt; \)\(.*\)|<prompt moreinfo="none">\1</prompt><userinput moreinfo="none">\2</userinput>|' \
           -e 's|^\(    &gt; \)\(.*\)|<prompt moreinfo="none">\1</prompt><userinput moreinfo="none">\2</userinput>|' \
+          -e 's|Hank    |Hank   |g' \
+          -e 's|0    NULL    NULL|0    NULL NULL|' \
+          -e 's|NULL    NULL    |NULL   NULL |' \
     > $out
    
   cat $out

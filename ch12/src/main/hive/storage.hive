@@ -1,0 +1,20 @@
+! echo; # == compressed_users;
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (id INT, name STRING);
+
+LOAD DATA LOCAL INPATH 'input/hive/tables/users.txt'
+OVERWRITE INTO TABLE users;
+
+DROP TABLE IF EXISTS compressed_users;
+
+! echo; # vv compressed_users;
+CREATE TABLE compressed_users (id INT, name STRING)
+STORED AS SEQUENCEFILE;
+SET hive.exec.compress.output=true;
+SET mapred.output.compress=true;
+SET mapred.output.compression.codec=org.apache.hadoop.io.compress.GzipCodec;
+INSERT OVERWRITE TABLE compressed_users
+SELECT * FROM users;
+! echo; # ^^ compressed_users;

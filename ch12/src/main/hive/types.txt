@@ -1,1 +1,0 @@
-echo -e '1\x022\x01a\x031\x02b\x032\x01a\x021\x021.0' > /Users/tom/book-workspace/hadoop-book/input/hive/types/complex.txt

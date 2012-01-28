@@ -1,0 +1,46 @@
+! echo; # == select_users;
+! echo; # == sample_1_in_4;
+! echo; # == sample_1_in_2;
+
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (id INT, name STRING);
+
+LOAD DATA LOCAL INPATH 'input/hive/tables/users.txt'
+OVERWRITE INTO TABLE users;
+
+dfs -cat /user/hive/warehouse/users/users.txt;
+
+DROP TABLE IF EXISTS bucketed_users;
+
+CREATE TABLE bucketed_users (id INT, name STRING)
+CLUSTERED BY (id) INTO 4 BUCKETS;
+
+DROP TABLE bucketed_users;
+
+CREATE TABLE bucketed_users (id INT, name STRING)
+CLUSTERED BY (id) SORTED BY (id) INTO 4 BUCKETS;
+
+! echo; # vv select_users;
+SELECT * FROM users;
+! echo; # ^^ select_users;
+
+SET hive.enforce.bucketing=true;
+
+INSERT OVERWRITE TABLE bucketed_users
+SELECT * FROM users;
+
+dfs -ls /user/hive/warehouse/bucketed_users;
+
+! echo; # vv sample_1_in_4;
+SELECT * FROM bucketed_users
+TABLESAMPLE(BUCKET 1 OUT OF 4 ON id);
+! echo; # ^^ sample_1_in_4;
+
+! echo; # vv sample_1_in_2;
+SELECT * FROM bucketed_users
+TABLESAMPLE(BUCKET 1 OUT OF 2 ON id);
+! echo; # ^^ sample_1_in_2;
+
+SELECT * FROM users
+TABLESAMPLE(BUCKET 1 OUT OF 4 ON rand());

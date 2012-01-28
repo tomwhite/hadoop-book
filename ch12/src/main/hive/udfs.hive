@@ -1,0 +1,52 @@
+! echo; # == select_arrays;
+! echo; # == select_explode_arrays;
+! echo; # == select_strip;
+! echo; # == select_case_insensitive_strip;
+! echo; # == select_maximum;
+
+DROP TABLE IF EXISTS arrays;
+
+CREATE TABLE arrays (x ARRAY<STRING>)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\001'
+  COLLECTION ITEMS TERMINATED BY '\002';
+  
+LOAD DATA LOCAL INPATH 'input/hive/udfs/arrays.txt'
+OVERWRITE INTO TABLE arrays;
+  
+! echo; # vv select_arrays;
+SELECT * FROM arrays;
+! echo; # ^^ select_arrays;
+
+! echo; # vv select_explode_arrays;
+SELECT explode(x) AS y FROM arrays;
+! echo; # ^^ select_explode_arrays;
+
+DROP TABLE IF EXISTS dummy;
+CREATE TABLE dummy (value STRING);
+LOAD DATA LOCAL INPATH 'input/hive/dummy.txt'
+OVERWRITE INTO TABLE dummy;
+
+ADD JAR hive-examples.jar;
+CREATE TEMPORARY FUNCTION strip AS 'com.hadoopbook.hive.Strip';
+
+! echo; # vv select_strip;
+SELECT strip('  bee  ') FROM dummy;
+SELECT strip('banana', 'ab') FROM dummy;
+! echo; # ^^ select_strip;
+
+! echo; # vv select_case_insensitive_strip;
+SELECT STRIP('  bee  ') FROM dummy;
+! echo; # ^^ select_case_insensitive_strip;
+
+DROP TABLE IF EXISTS records;
+CREATE TABLE records (year STRING, temperature INT, quality INT)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t';
+LOAD DATA LOCAL INPATH 'input/ncdc/micro-tab/sample.txt'
+OVERWRITE INTO TABLE records;
+
+! echo; # vv select_maximum;
+CREATE TEMPORARY FUNCTION maximum AS 'com.hadoopbook.hive.Maximum';
+SELECT maximum(temperature) FROM records;
+! echo; # ^^ select_maximum;

@@ -1,0 +1,15 @@
+! echo; # == define_function;
+! echo; # == set_value;
+! echo; # == set_show_value;
+
+! echo; # vv define_function;
+DESCRIBE FUNCTION length;
+! echo; # ^^ define_function;
+
+! echo; # vv set_value;
+SET hive.enforce.bucketing=true;
+! echo; # ^^ set_value;
+
+! echo; # vv set_show_value;
+SET hive.enforce.bucketing;
+! echo; # ^^ set_show_value;
