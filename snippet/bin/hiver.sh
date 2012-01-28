@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Usage:
+# hiver.sh
+# hiver.sh -hiveconf fs.default.name=file:/// -hiveconf mapred.job.tracker=local
 
 set -x
 set -e
@@ -15,7 +19,7 @@ mkdir -p $actual/ch12
 
 for f in ch12/src/main/hive/*.hive; do
   out=$f.output.txt
-  hive -hiveconf fs.default.name=file:/// -hiveconf mapred.job.tracker=local -S < $f 2> /dev/null \
+  hive "$@" -S < $f 2> /dev/null \
     | grep -v '^hive> $' \
     | grep -v '^$' \
     | sed -e 's|&|\&amp;|g' \

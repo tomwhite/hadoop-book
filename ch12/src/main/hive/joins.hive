@@ -3,7 +3,6 @@
 ! echo; # == left_outer_join;
 ! echo; # == right_outer_join;
 ! echo; # == full_outer_join;
-! echo; # == select_things_in_sales;
 ! echo; # == semi_join;
 ! echo; # == map_join;
 
@@ -45,12 +44,6 @@ FROM sales RIGHT OUTER JOIN things ON (sales.id = things.id);
 SELECT sales.*, things.*
 FROM sales FULL OUTER JOIN things ON (sales.id = things.id);
 ! echo; # ^^ full_outer_join;
-
-! echo; # vv select_things_in_sales;
-SELECT *
-FROM things
-WHERE things.id IN (SELECT id from sales);
-! echo; # ^^ select_things_in_sales;
 
 ! echo; # vv semi_join;
 SELECT *

@@ -32,6 +32,8 @@ SELECT * FROM users;
 
 dfs -ls /user/hive/warehouse/bucketed_users;
 
+dfs -cat /user/hive/warehouse/bucketed_users/000000_0;
+
 ! echo; # vv sample_1_in_4;
 SELECT * FROM bucketed_users
 TABLESAMPLE(BUCKET 1 OUT OF 4 ON id);
