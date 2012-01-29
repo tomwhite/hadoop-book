@@ -1,5 +1,5 @@
 /*.jar
-/*.log
+*.log
 /build
 /lib
 /out
@@ -12,3 +12,4 @@ target
 .project
 .pydevproject
 .settings
+metastore_db

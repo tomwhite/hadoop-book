@@ -1,0 +1,32 @@
+DROP TABLE IF EXISTS dummy;
+CREATE TABLE dummy (value STRING);
+LOAD DATA LOCAL INPATH 'input/hive/dummy.txt'
+OVERWRITE INTO TABLE dummy;
+
+SELECT CAST('X' AS INT) from dummy;
+ 
+SELECT 2 + TRUE FROM dummy;
+
+SELECT 2 + CAST(TRUE AS INT) FROM dummy;
+
+SELECT 2 + '2' FROM dummy;
+
+SELECT concat('Truth: ', TRUE) FROM simple;
+
+DROP TABLE IF EXISTS simple;
+CREATE TABLE simple (
+  col1 TIMESTAMP
+);
+
+INSERT OVERWRITE TABLE simple
+  SELECT '2012-01-02 03:04:05.123456789' FROM dummy;
+
+SELECT 2 + col1 FROM simple;
+
+SELECT 2L + col1 FROM simple;
+
+SELECT 2.0 + col1 FROM simple;
+
+SELECT 2 + CAST(col1 AS BIGINT) FROM simple;
+
+SELECT concat('Date: ', col1) FROM simple;

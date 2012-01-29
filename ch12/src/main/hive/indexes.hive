@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS users_extended;
+
+CREATE TABLE users_extended (id INT, name STRING, gender STRING);
+
+LOAD DATA LOCAL INPATH 'input/hive/tables/users_extended.txt'
+OVERWRITE INTO TABLE users_extended;
+
+DROP INDEX IF EXISTS users_index;
+
+CREATE INDEX users_index
+ON TABLE users_extended (gender)
+AS 'BITMAP' WITH DEFERRED REBUILD;
+ALTER INDEX users_index ON users_extended REBUILD;
+
+SELECT * FROM users_extended WHERE gender = 'F';
