@@ -16,6 +16,7 @@ This version of the code has been tested with:
  * HBase 0.90.4
  * ZooKeeper 3.4.2
  * Sqoop 1.4.0-incubating
+ * MRUnit 0.8.0-incubating
 
 Before running the examples you need to install Hadoop, Pig, Hive, HBase,
 ZooKeeper, and Sqoop (as appropriate) as explained in the book.
