@@ -62,16 +62,16 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
-                <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
-                <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/JoinRecordWithStationName.java</exclude>
-                <exclude>**/LookupRecordByTemperature.java</exclude>
-                <exclude>**/LookupRecordsByTemperature.java</exclude>
-                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>**/MissingTemperatureFields.java</exclude>
-                <exclude>**/SortByTemperatureToMapFile.java</exclude>
-                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>MaxTemperatureWithMultipleInputs.java</exclude>
+                <exclude>PartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>PartitionByStationYearUsingMultipleOutputs.java</exclude>
+                <exclude>JoinRecordWithStationName.java</exclude>
+                <exclude>LookupRecordByTemperature.java</exclude>
+                <exclude>LookupRecordsByTemperature.java</exclude>
+                <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
+                <exclude>MissingTemperatureFields.java</exclude>
+                <exclude>SortByTemperatureToMapFile.java</exclude>
+                <exclude>SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -123,16 +123,16 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
-                <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
-                <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/JoinRecordWithStationName.java</exclude>
-                <exclude>**/LookupRecordByTemperature.java</exclude>
-                <exclude>**/LookupRecordsByTemperature.java</exclude>
-                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>**/MissingTemperatureFields.java</exclude>
-                <exclude>**/SortByTemperatureToMapFile.java</exclude>
-                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>MaxTemperatureWithMultipleInputs.java</exclude>
+                <exclude>PartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>PartitionByStationYearUsingMultipleOutputs.java</exclude>
+                <exclude>JoinRecordWithStationName.java</exclude>
+                <exclude>LookupRecordByTemperature.java</exclude>
+                <exclude>LookupRecordsByTemperature.java</exclude>
+                <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
+                <exclude>MissingTemperatureFields.java</exclude>
+                <exclude>SortByTemperatureToMapFile.java</exclude>
+                <exclude>SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -184,16 +184,16 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/MaxTemperatureWithMultipleInputs.java</exclude>
-                <exclude>**/PartitionByStationUsingMultipleOutputs.java</exclude>
-                <exclude>**/PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>**/JoinRecordWithStationName.java</exclude>
-                <exclude>**/LookupRecordByTemperature.java</exclude>
-                <exclude>**/LookupRecordsByTemperature.java</exclude>
-                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>**/MissingTemperatureFields.java</exclude>
-                <exclude>**/SortByTemperatureToMapFile.java</exclude>
-                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>MaxTemperatureWithMultipleInputs.java</exclude>
+                <exclude>PartitionByStationUsingMultipleOutputs.java</exclude>
+                <exclude>PartitionByStationYearUsingMultipleOutputs.java</exclude>
+                <exclude>JoinRecordWithStationName.java</exclude>
+                <exclude>LookupRecordByTemperature.java</exclude>
+                <exclude>LookupRecordsByTemperature.java</exclude>
+                <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
+                <exclude>MissingTemperatureFields.java</exclude>
+                <exclude>SortByTemperatureToMapFile.java</exclude>
+                <exclude>SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -246,12 +246,12 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>**/LookupRecordByTemperature.java</exclude>
-                <exclude>**/LookupRecordsByTemperature.java</exclude>
-                <exclude>**/MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>**/MissingTemperatureFields.java</exclude>
-                <exclude>**/SortByTemperatureToMapFile.java</exclude>
-                <exclude>**/SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
+                <exclude>LookupRecordByTemperature.java</exclude>
+                <exclude>LookupRecordsByTemperature.java</exclude>
+                <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
+                <exclude>MissingTemperatureFields.java</exclude>
+                <exclude>SortByTemperatureToMapFile.java</exclude>
+                <exclude>SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
             </configuration>
           </plugin>
@@ -311,9 +311,9 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <testExcludes>
-                <exclude>**/CoherencyModelTest.java</exclude>
-                <exclude>**/ShowFileStatusTest.java</exclude>
-                <exclude>**/MaxTemperatureDriverMiniTest.java</exclude> <!-- Failing -->
+                <exclude>CoherencyModelTest.java</exclude>
+                <exclude>ShowFileStatusTest.java</exclude>
+                <exclude>MaxTemperatureDriverMiniTest.java</exclude> <!-- Failing -->
               </testExcludes>
             </configuration>
           </plugin>
@@ -382,7 +382,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <configuration>
               <testExcludes>
                 <!-- ClusterMapReduceTestCase is not published yet (HADOOP-7590), so exclude test -->
-                <exclude>**/MaxTemperatureDriverMiniTest.java</exclude>
+                <exclude>MaxTemperatureDriverMiniTest.java</exclude>
               </testExcludes>
             </configuration>
           </plugin>
@@ -444,7 +444,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <configuration>
               <testExcludes>
                 <!-- ClusterMapReduceTestCase is not published yet (HADOOP-7590), so exclude test -->
-                <exclude>**/MaxTemperatureDriverMiniTest.java</exclude>
+                <exclude>MaxTemperatureDriverMiniTest.java</exclude>
               </testExcludes>
             </configuration>
           </plugin>

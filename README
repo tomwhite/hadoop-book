@@ -25,7 +25,7 @@ You also need to install Maven.
 
 Then you can build the code with:
 
-% mvn package -DskipTests -Phadoop.version=1.0.0
+% mvn package -DskipTests -Dhadoop.version=1.0.0
 
 You should then be able to run the examples from the book.
 
