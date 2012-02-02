@@ -70,6 +70,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>LookupRecordsByTemperature.java</exclude>
                 <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
                 <exclude>MissingTemperatureFields.java</exclude>
+                <exclude>NewMissingTemperatureFields.java</exclude>
                 <exclude>SortByTemperatureToMapFile.java</exclude>
                 <exclude>SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
@@ -130,7 +131,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>LookupRecordByTemperature.java</exclude>
                 <exclude>LookupRecordsByTemperature.java</exclude>
                 <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>MissingTemperatureFields.java</exclude>
+                <exclude>NewMissingTemperatureFields.java</exclude>
                 <exclude>SortByTemperatureToMapFile.java</exclude>
                 <exclude>SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
@@ -191,7 +192,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>LookupRecordByTemperature.java</exclude>
                 <exclude>LookupRecordsByTemperature.java</exclude>
                 <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>MissingTemperatureFields.java</exclude>
+                <exclude>NewMissingTemperatureFields.java</exclude>
                 <exclude>SortByTemperatureToMapFile.java</exclude>
                 <exclude>SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
@@ -249,7 +250,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>LookupRecordByTemperature.java</exclude>
                 <exclude>LookupRecordsByTemperature.java</exclude>
                 <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>MissingTemperatureFields.java</exclude>
+                <exclude>NewMissingTemperatureFields.java</exclude>
                 <exclude>SortByTemperatureToMapFile.java</exclude>
                 <exclude>SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
@@ -310,11 +311,24 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
+              <excludes>
+                <exclude>MissingTemperatureFields.java</exclude> <!-- Task.Counter missing -->
+              </excludes>
               <testExcludes>
                 <exclude>CoherencyModelTest.java</exclude>
                 <exclude>ShowFileStatusTest.java</exclude>
                 <exclude>MaxTemperatureDriverMiniTest.java</exclude> <!-- Failing -->
               </testExcludes>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <!-- Exclude ch5 tests until MRUnit works with 0.22+ -->
+                <exclude>v*/*.java</exclude>
+              </excludes>
             </configuration>
           </plugin>
         </plugins>
@@ -380,10 +394,23 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
+              <excludes>
+                <exclude>MissingTemperatureFields.java</exclude> <!-- Task.Counter missing -->
+              </excludes>
               <testExcludes>
                 <!-- ClusterMapReduceTestCase is not published yet (HADOOP-7590), so exclude test -->
                 <exclude>MaxTemperatureDriverMiniTest.java</exclude>
               </testExcludes>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <!-- Exclude ch5 tests until MRUnit works with 0.22+ -->
+                <exclude>v*/*.java</exclude>
+              </excludes>
             </configuration>
           </plugin>
         </plugins>
@@ -442,10 +469,23 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
+              <excludes>
+                <exclude>MissingTemperatureFields.java</exclude> <!-- Task.Counter missing -->
+              </excludes>
               <testExcludes>
                 <!-- ClusterMapReduceTestCase is not published yet (HADOOP-7590), so exclude test -->
                 <exclude>MaxTemperatureDriverMiniTest.java</exclude>
               </testExcludes>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <!-- Exclude ch5 tests until MRUnit works with 0.22+ -->
+                <exclude>v*/*.java</exclude>
+              </excludes>
             </configuration>
           </plugin>
         </plugins>

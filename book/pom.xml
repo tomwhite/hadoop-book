@@ -152,6 +152,12 @@
         <artifactId>mrunit</artifactId>
         <version>0.8.0-incubating</version>
         <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-core</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>

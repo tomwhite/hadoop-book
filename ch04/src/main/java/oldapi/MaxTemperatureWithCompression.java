@@ -30,9 +30,8 @@ public class MaxTemperatureWithCompression {
     conf.setOutputKeyClass(Text.class);
     conf.setOutputValueClass(IntWritable.class);
     
-    conf.setBoolean("mapred.output.compress", true);
-    conf.setClass("mapred.output.compression.codec", GzipCodec.class,
-        CompressionCodec.class);
+    /*[*/FileOutputFormat.setCompressOutput(conf, true);
+    FileOutputFormat.setOutputCompressorClass(conf, GzipCodec.class);/*]*/
 
     conf.setMapperClass(MaxTemperatureMapper.class);
     conf.setCombinerClass(MaxTemperatureReducer.class);

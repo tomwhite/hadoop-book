@@ -12,8 +12,8 @@ public class MissingTemperatureFields extends Configured implements Tool {
       JobBuilder.printUsage(this, "<job ID>");
       return -1;
     }
-    JobClient jobClient = new JobClient(new JobConf(getConf()));
     String jobID = args[0];
+    JobClient jobClient = new JobClient(new JobConf(getConf()));
     RunningJob job = jobClient.getJob(JobID.forName(jobID));
     if (job == null) {
       System.err.printf("No job with ID %s found.\n", jobID);

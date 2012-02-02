@@ -1,3 +1,4 @@
+// == OldMaxTemperatureWithMapOutputCompression
 package oldapi;
 
 import java.io.IOException;
@@ -29,8 +30,10 @@ public class MaxTemperatureWithMapOutputCompression {
     conf.setOutputKeyClass(Text.class);
     conf.setOutputValueClass(IntWritable.class);
     
+    // vv OldMaxTemperatureWithMapOutputCompression
     conf.setCompressMapOutput(true);
     conf.setMapOutputCompressorClass(GzipCodec.class);
+    // ^^ OldMaxTemperatureWithMapOutputCompression
 
     conf.setMapperClass(MaxTemperatureMapper.class);
     conf.setCombinerClass(MaxTemperatureReducer.class);
