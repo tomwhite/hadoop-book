@@ -49,7 +49,7 @@ public class MaxTemperatureByStationNameUsingDistributedCacheFileApi
       if (localPaths.length == 0) {
         throw new FileNotFoundException("Distributed cache file not found.");
       }
-      File localFile = new File(localPaths[0].toUri());
+      File localFile = new File(localPaths[0].toString());
       metadata.initialize(localFile);
     }
  // ^^ MaxTemperatureByStationNameUsingDistributedCacheFileApi
