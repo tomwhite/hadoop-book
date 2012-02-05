@@ -1,5 +1,4 @@
 package v7;
-// cc MaxTemperatureMapperV7 Reusing the Text and IntWritable output objects
 import java.io.IOException;
 
 import org.apache.hadoop.io.IntWritable;
@@ -9,7 +8,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import v5.NcdcRecordParser;
 
-// vv MaxTemperatureMapperV7
 public class MaxTemperatureMapper
   extends Mapper<LongWritable, Text, Text, IntWritable> {
 
@@ -36,4 +34,3 @@ public class MaxTemperatureMapper
     }
   }
 }
-// ^^ MaxTemperatureMapperV7
