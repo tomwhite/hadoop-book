@@ -1,6 +1,7 @@
 // cc SortByTemperatureUsingTotalOrderPartitioner A MapReduce program for sorting a SequenceFile with IntWritable keys using the TotalOrderPartitioner to globally sort the data
 import java.net.URI;
 
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.filecache.DistributedCache;
 import org.apache.hadoop.fs.Path;
@@ -43,12 +44,12 @@ public class SortByTemperatureUsingTotalOrderPartitioner extends Configured
     InputSampler.writePartitionFile(job, sampler);
 
     // Add to DistributedCache
-    String partitionFile =
-      TotalOrderPartitioner.getPartitionFile(job.getConfiguration());
+    Configuration conf = job.getConfiguration();
+    String partitionFile =TotalOrderPartitioner.getPartitionFile(conf);
     URI partitionUri = new URI(partitionFile + "#" +
         TotalOrderPartitioner.DEFAULT_PATH);
-    job.addCacheFile(partitionUri);
-    job.createSymlink();
+    DistributedCache.addCacheFile(partitionUri, conf);
+    DistributedCache.createSymlink(conf);
 
     return job.waitForCompletion(true) ? 0 : 1;
   }
