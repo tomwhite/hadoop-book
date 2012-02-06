@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-last_key, max_val = nil, 0
+last_key, max_val = nil, -1000000
 STDIN.each_line do |line|
   key, val = line.split("\t")
   if last_key && last_key != key
