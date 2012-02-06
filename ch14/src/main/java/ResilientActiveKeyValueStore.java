@@ -28,6 +28,7 @@ public class ResilientActiveKeyValueStore extends ConnectionWatcher {
         } else {
           zk.setData(path, value.getBytes(CHARSET), stat.getVersion());
         }
+        return;
       } catch (KeeperException.SessionExpiredException e) {
         throw e;
       } catch (KeeperException e) {
