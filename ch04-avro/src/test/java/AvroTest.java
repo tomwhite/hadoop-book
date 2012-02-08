@@ -303,6 +303,33 @@ public class AvroTest {
   }
   
   @Test
+  public void testSchemaResolutionWithAliases() throws IOException {
+    Schema schema = new Schema.Parser().parse(getClass().getResourceAsStream("StringPair.avsc"));
+    Schema newSchema = new Schema.Parser().parse(getClass().getResourceAsStream("AliasedStringPair.avsc"));
+
+    ByteArrayOutputStream out = new ByteArrayOutputStream();
+    
+    DatumWriter<GenericRecord> writer = new GenericDatumWriter<GenericRecord>(schema);
+    Encoder encoder = EncoderFactory.get().binaryEncoder(out, null /* reuse */);
+    GenericRecord datum = new GenericData.Record(schema);
+    datum.put("left", "L");
+    datum.put("right", "R");
+    writer.write(datum, encoder);
+    encoder.flush();
+    
+    DatumReader<GenericRecord> reader =
+      new GenericDatumReader<GenericRecord>(schema, newSchema);
+    Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(), null);
+    GenericRecord result = reader.read(null, decoder);
+    assertThat(result.get("first").toString(), is("L"));
+    assertThat(result.get("second").toString(), is("R"));
+
+    // old field names don't work
+    assertThat(result.get("left"), is((Object) null));
+    assertThat(result.get("right"), is((Object) null));
+  }
+  
+  @Test
   public void testSchemaResolutionWithNull() throws IOException {
     Schema schema = new Schema.Parser().parse(getClass().getResourceAsStream("StringPair.avsc"));
     Schema newSchema = new Schema.Parser().parse(getClass().getResourceAsStream("NewStringPairWithNull.avsc"));

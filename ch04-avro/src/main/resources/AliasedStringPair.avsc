@@ -1,0 +1,9 @@
+{
+  "type": "record",
+  "name": "StringPair",
+  "doc": "A pair of strings with aliased field names.",
+  "fields": [
+    {"name": "first", "type": "string", "aliases": ["left"]},
+    {"name": "second", "type": "string", "aliases": ["right"]}
+  ]
+}
