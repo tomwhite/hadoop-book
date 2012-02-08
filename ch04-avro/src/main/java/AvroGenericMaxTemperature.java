@@ -1,6 +1,5 @@
 // cc AvroGenericMaxTemperature MapReduce program to find the maximum temperature, creating Avro output
 
-// vv AvroGenericMaxTemperature
 import java.io.IOException;
 
 import org.apache.avro.Schema;
@@ -23,6 +22,7 @@ import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
+//vv AvroGenericMaxTemperature
 public class AvroGenericMaxTemperature extends Configured implements Tool {
   
   private static final Schema SCHEMA = new Schema.Parser().parse(
