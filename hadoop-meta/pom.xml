@@ -80,15 +80,15 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       </build>
     </profile>
     <profile>
-      <id>apache-203</id>
+      <id>apache-1.0.1</id>
       <activation>
         <property>
           <name>hadoop.version</name>
-          <value>0.20.203.0</value>
+          <value>1.0.1</value>
         </property>
       </activation>
       <properties>
-        <hadoop.version>0.20.203.0</hadoop.version>
+        <hadoop.version>1.0.1</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
@@ -124,77 +124,11 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
               <excludes>
-                <exclude>MaxTemperatureWithMultipleInputs.java</exclude>
-                <exclude>PartitionByStationUsingMultipleOutputs.java</exclude>
-                <exclude>PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>JoinRecordWithStationName.java</exclude>
                 <exclude>LookupRecordByTemperature.java</exclude>
                 <exclude>LookupRecordsByTemperature.java</exclude>
                 <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
                 <exclude>NewMissingTemperatureFields.java</exclude>
                 <exclude>SortByTemperatureToMapFile.java</exclude>
-                <exclude>SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
-              </excludes>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>apache-1.0.0</id>
-      <activation>
-        <property>
-          <name>hadoop.version</name>
-          <value>1.0.0</value>
-        </property>
-      </activation>
-      <properties>
-        <hadoop.version>1.0.0</hadoop.version>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-core</artifactId>
-          <version>${hadoop.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-test</artifactId>
-          <version>${hadoop.version}</version>
-        </dependency>
-        <!--  Required to run -->
-        <dependency>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </dependency>
-        <dependency>
-          <groupId>com.sun.jersey</groupId>
-          <artifactId>jersey-core</artifactId>
-          <version>1.8</version>
-        </dependency>
-        <dependency>
-          <groupId>org.codehaus.jackson</groupId>
-          <artifactId>jackson-mapper-asl</artifactId>
-          <version>1.5.2</version>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <excludes>
-                <exclude>MaxTemperatureWithMultipleInputs.java</exclude>
-                <exclude>PartitionByStationUsingMultipleOutputs.java</exclude>
-                <exclude>PartitionByStationYearUsingMultipleOutputs.java</exclude>
-                <exclude>JoinRecordWithStationName.java</exclude>
-                <exclude>LookupRecordByTemperature.java</exclude>
-                <exclude>LookupRecordsByTemperature.java</exclude>
-                <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>NewMissingTemperatureFields.java</exclude>
-                <exclude>SortByTemperatureToMapFile.java</exclude>
-                <exclude>SortByTemperatureUsingTotalOrderPartitioner.java</exclude>
               </excludes>
             </configuration>
           </plugin>
