@@ -80,15 +80,15 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       </build>
     </profile>
     <profile>
-      <id>apache-1.0.1</id>
+      <id>apache-1.0.2</id>
       <activation>
         <property>
           <name>hadoop.version</name>
-          <value>1.0.1</value>
+          <value>1.0.2</value>
         </property>
       </activation>
       <properties>
-        <hadoop.version>1.0.1</hadoop.version>
+        <hadoop.version>1.0.2</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
@@ -140,11 +140,11 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       <activation>
         <property>
           <name>hadoop.version</name>
-          <value>0.20.2-cdh3u1</value>
+          <value>0.20.2-cdh3u3</value>
         </property>
       </activation>
       <properties>
-        <hadoop.version>0.20.2-cdh3u1</hadoop.version>
+        <hadoop.version>0.20.2-cdh3u3</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
@@ -273,11 +273,80 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       <activation>
         <property>
           <name>hadoop.version</name>
-          <value>0.23.0-SNAPSHOT</value>
+          <value>0.23.1</value>
         </property>
       </activation>
       <properties>
-        <hadoop.version>0.23.0-SNAPSHOT</hadoop.version>
+        <hadoop.version>0.23.1</hadoop.version>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-common</artifactId>
+          <version>${hadoop.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-common</artifactId>
+          <version>${hadoop.version}</version>
+          <type>test-jar</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-hdfs</artifactId>
+          <version>${hadoop.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-hdfs</artifactId>
+          <version>${hadoop.version}</version>
+          <type>test-jar</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-mapreduce-client-common</artifactId>
+          <version>${hadoop.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-mapreduce-client-core</artifactId>
+          <version>${hadoop.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
+          <version>${hadoop.version}</version>
+          <type>test-jar</type>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <excludes>
+                <!-- Exclude ch5 tests until MRUnit works with 0.22+ -->
+                <exclude>v*/*.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>apache-trunk</id>
+      <activation>
+        <property>
+          <name>hadoop.version</name>
+          <value>3.0.0-SNAPSHOT</value>
+        </property>
+      </activation>
+      <properties>
+        <hadoop.version>3.0.0-SNAPSHOT</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
@@ -328,87 +397,8 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-              <excludes>
-                <exclude>MissingTemperatureFields.java</exclude> <!-- Task.Counter missing -->
-              </excludes>
               <testExcludes>
-                <!-- ClusterMapReduceTestCase is not published yet (HADOOP-7590), so exclude test -->
-                <exclude>MaxTemperatureDriverMiniTest.java</exclude>
-              </testExcludes>
-            </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <excludes>
-                <!-- Exclude ch5 tests until MRUnit works with 0.22+ -->
-                <exclude>v*/*.java</exclude>
-              </excludes>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>apache-trunk</id>
-      <activation>
-        <property>
-          <name>hadoop.version</name>
-          <value>0.24.0-SNAPSHOT</value>
-        </property>
-      </activation>
-      <properties>
-        <hadoop.version>0.24.0-SNAPSHOT</hadoop.version>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-common</artifactId>
-          <version>${hadoop.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-common</artifactId>
-          <version>${hadoop.version}</version>
-          <type>test-jar</type>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-hdfs</artifactId>
-          <version>${hadoop.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-hdfs</artifactId>
-          <version>${hadoop.version}</version>
-          <type>test-jar</type>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-mapreduce-client-common</artifactId>
-          <version>${hadoop.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-mapreduce-client-core</artifactId>
-          <version>${hadoop.version}</version>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <excludes>
-                <exclude>MissingTemperatureFields.java</exclude> <!-- Task.Counter missing -->
-              </excludes>
-              <testExcludes>
-                <!-- ClusterMapReduceTestCase is not published yet (HADOOP-7590), so exclude test -->
-                <exclude>MaxTemperatureDriverMiniTest.java</exclude>
+                <exclude>CoherencyModelTest.java</exclude> <!-- sync() was removed -->
               </testExcludes>
             </configuration>
           </plugin>
