@@ -279,7 +279,8 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
               <testExcludes>
                 <exclude>CoherencyModelTest.java</exclude>
                 <exclude>ShowFileStatusTest.java</exclude>
-                <exclude>MaxTemperatureDriverMiniTest.java</exclude> <!-- Failing -->
+                <exclude>v1/MaxTemperatureReducerTest.java</exclude> <!-- Class cast problem in MRUnit -->
+                <exclude>v3/MaxTemperatureDriverMiniTest.java</exclude> <!-- Failing -->
               </testExcludes>
             </configuration>
           </plugin>
