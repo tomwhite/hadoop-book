@@ -9,7 +9,7 @@ for the first edition at http://github.com/tomwhite/hadoop-book/tree/1e, and
 for the second edition at http://github.com/tomwhite/hadoop-book/tree/2e.
 
 This version of the code has been tested with:
- * Hadoop 1.0.4/0.22.0/0.23.0/2.0.2-alpha
+ * Hadoop 1.1.1/0.22.0/0.23.0/2.0.2-alpha
  * Avro 1.5.4
  * Pig 0.9.1
  * Hive 0.8.0
@@ -25,7 +25,7 @@ You also need to install Maven.
 
 Then you can build the code with:
 
-% mvn package -DskipTests -Dhadoop.version=1.0.4
+% mvn package -DskipTests -Dhadoop.version=1.1.1
 
 (Note that only the Hadoop version numbers specified in hadoop-meta/pom.xml
 can be used here, not any version of Hadoop.)
