@@ -233,11 +233,11 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       <activation>
         <property>
           <name>hadoop.version</name>
-          <value>0.23.6</value>
+          <value>0.23.7</value>
         </property>
       </activation>
       <properties>
-        <hadoop.version>0.23.6</hadoop.version>
+        <hadoop.version>0.23.7</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
