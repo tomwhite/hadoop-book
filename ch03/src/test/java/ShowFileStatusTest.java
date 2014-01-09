@@ -49,7 +49,8 @@ public class ShowFileStatusTest {
     assertThat(stat.getModificationTime(),
         is(lessThanOrEqualTo(System.currentTimeMillis())));
     assertThat(stat.getReplication(), is((short) 1));
-    assertThat(stat.getBlockSize(), is(64 * 1024 * 1024L));
+    assertThat(stat.getBlockSize(),
+        anyOf(is(64 * 1024 * 1024L), is(128 * 1024 * 1024L)));
     assertThat(stat.getOwner(), is(System.getProperty("user.name")));
     assertThat(stat.getGroup(), is("supergroup"));
     assertThat(stat.getPermission().toString(), is("rw-r--r--"));
