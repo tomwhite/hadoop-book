@@ -25,10 +25,21 @@ You also need to install Maven.
 
 Then you can build the code with:
 
-% mvn package -DskipTests -Dhadoop.version=1.2.1
+% mvn package -DskipTests
 
-(Note that only the Hadoop version numbers specified in hadoop-meta/pom.xml
-can be used here, not any version of Hadoop.)
+By default Hadoop 1.2.1 is used. This can be changed by specifying the hadoop.version
+property, e.g.
+
+% mvn package -DskipTests -Dhadoop.version=1.2.0
+
+There are also profiles for different Hadoop major versions,
+specified in hadoop-meta/pom.xml. For example, to use Hadoop 2:
+
+% mvn package -DskipTests -P apache-2
+
+Again, you can specify hadoop.version to use a particular Hadoop 2 version:
+
+% mvn package -DskipTests -P apache-2 -Dhadoop.version=2.1.1-beta
 
 You should then be able to run the examples from the book.
 
