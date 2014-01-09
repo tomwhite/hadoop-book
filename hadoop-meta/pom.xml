@@ -32,11 +32,11 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       <activation>
         <property>
           <name>hadoop.version</name>
-          <value>1.1.1</value>
+          <value>1.1.2</value>
         </property>
       </activation>
       <properties>
-        <hadoop.version>1.1.1</hadoop.version>
+        <hadoop.version>1.1.2</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
@@ -233,11 +233,11 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       <activation>
         <property>
           <name>hadoop.version</name>
-          <value>0.23.4</value>
+          <value>0.23.8</value>
         </property>
       </activation>
       <properties>
-        <hadoop.version>0.23.4</hadoop.version>
+        <hadoop.version>0.23.8</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
@@ -335,11 +335,11 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       <activation>
         <property>
           <name>hadoop.version</name>
-          <value>2.0.2-alpha</value>
+          <value>2.0.3-alpha</value>
         </property>
       </activation>
       <properties>
-        <hadoop.version>2.0.2-alpha</hadoop.version>
+        <hadoop.version>2.0.3-alpha</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
