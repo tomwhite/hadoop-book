@@ -32,11 +32,11 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       <activation>
         <property>
           <name>hadoop.version</name>
-          <value>1.1.2</value>
+          <value>1.2.1</value>
         </property>
       </activation>
       <properties>
-        <hadoop.version>1.1.2</hadoop.version>
+        <hadoop.version>1.2.1</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
