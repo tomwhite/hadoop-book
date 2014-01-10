@@ -31,7 +31,9 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
     <profile>
       <id>apache-1</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
+        <property>
+          <name>!hadoop.distro</name>
+        </property>
       </activation>
       <properties>
         <hadoop.version>1.2.1</hadoop.version>
@@ -91,6 +93,12 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
 
     <profile>
       <id>cdh3</id>
+      <activation>
+        <property>
+          <name>hadoop.distro</name>
+          <value>cdh3</value>
+        </property>
+      </activation>
       <properties>
         <hadoop.version>0.20.2-cdh3u5</hadoop.version>
       </properties>
@@ -151,6 +159,12 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
 
     <profile>
       <id>apache-22</id>
+      <activation>
+        <property>
+          <name>hadoop.distro</name>
+          <value>apache-22</value>
+        </property>
+      </activation>
       <properties>
         <hadoop.version>0.22.0</hadoop.version>
       </properties>
@@ -219,6 +233,12 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
 
     <profile>
       <id>apache-23</id>
+      <activation>
+        <property>
+          <name>hadoop.distro</name>
+          <value>apache-23</value>
+        </property>
+      </activation>
       <properties>
         <hadoop.version>0.23.10</hadoop.version>
       </properties>
@@ -316,6 +336,12 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
 
     <profile>
       <id>apache-2</id>
+      <activation>
+        <property>
+          <name>hadoop.distro</name>
+          <value>apache-2</value>
+        </property>
+      </activation>
       <properties>
         <hadoop.version>2.2.0</hadoop.version>
       </properties>
@@ -413,6 +439,12 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
 
     <profile>
       <id>cdh4</id>
+      <activation>
+        <property>
+          <name>hadoop.distro</name>
+          <value>cdh4</value>
+        </property>
+      </activation>
       <properties>
         <hadoop.version>2.0.0-cdh4.5.0</hadoop.version>
       </properties>
@@ -513,6 +545,12 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
 
     <profile>
       <id>apache-trunk</id>
+      <activation>
+        <property>
+          <name>hadoop.distro</name>
+          <value>apache-truck</value>
+        </property>
+      </activation>
       <properties>
         <hadoop.version>3.0.0-SNAPSHOT</hadoop.version>
       </properties>
