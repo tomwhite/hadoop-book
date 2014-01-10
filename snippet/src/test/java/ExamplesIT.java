@@ -92,6 +92,7 @@ public class ExamplesIT {
   private File actualOutputDir = new File(PROJECT_BASE_DIR, "output");
   private static Map<String, String> env;
   private static String version;
+  private static String majorVersion;
   private static String mode;
   
   public ExamplesIT(File example) {
@@ -125,7 +126,20 @@ public class ExamplesIT {
     }
     assertNotNull("Version not found", version);
     System.out.printf("version=%s\n", version);
-    
+
+    majorVersion = version.substring(0, version.indexOf('.'));
+    // Treat 0.2x as Hadoop 1 or 2 for the purposes of these tests
+    if ("0".equals(majorVersion)) {
+      if (version.startsWith("0.20")) {
+        majorVersion = "1";
+      } else if (version.startsWith("0.21") || version.startsWith("0.22") ||
+          version.startsWith("0.23")) {
+        majorVersion = "2";
+      }
+    }
+    assertNotNull("Major version not found", majorVersion);
+    System.out.printf("majorVersion=%s\n", majorVersion);
+
   }
   
   @Before
@@ -184,10 +198,13 @@ public class ExamplesIT {
   }
   
   private File findBaseExampleDirectory(File example) {
-    // Look in base/<version>/<mode> then base/<version> then base/<mode>
+    // Look in base/<version>/<mode> then base/<version> then base/<major-version>/<mode>
+    // then base/<major-version> then base/<mode>
     File[] candidates = {
         new File(new File(example, version), mode),
         new File(example, version),
+        new File(new File(example, majorVersion), mode),
+        new File(example, majorVersion),
         new File(example, mode),
     };
     for (File candidate : candidates) {
