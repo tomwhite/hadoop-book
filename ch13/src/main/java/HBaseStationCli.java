@@ -20,7 +20,7 @@ public class HBaseStationCli extends Configured implements Tool {
   public Map<String, String> getStationInfo(HTable table, String stationId)
       throws IOException {
     Get get = new Get(Bytes.toBytes(stationId));
-    get.addColumn(INFO_COLUMNFAMILY);
+    get.addFamily(INFO_COLUMNFAMILY);
     Result res = table.get(get);
     if (res == null) {
       return null;

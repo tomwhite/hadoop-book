@@ -13,7 +13,7 @@ This version of the code has been tested with:
  * Avro 1.5.4
  * Pig 0.9.1
  * Hive 0.8.0
- * HBase 0.90.4
+ * HBase 0.90.4/0.94.15
  * ZooKeeper 3.4.2
  * Sqoop 1.4.0-incubating
  * MRUnit 0.8.0-incubating
