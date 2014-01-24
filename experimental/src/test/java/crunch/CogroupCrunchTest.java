@@ -1,6 +1,6 @@
 package crunch;
-import static com.cloudera.crunch.type.writable.Writables.strings;
-import static com.cloudera.crunch.type.writable.Writables.tableOf;
+import static org.apache.crunch.types.writable.Writables.strings;
+import static org.apache.crunch.types.writable.Writables.tableOf;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -9,15 +9,15 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-import com.cloudera.crunch.DoFn;
-import com.cloudera.crunch.Emitter;
-import com.cloudera.crunch.PCollection;
-import com.cloudera.crunch.PTable;
-import com.cloudera.crunch.Pair;
-import com.cloudera.crunch.Pipeline;
-import com.cloudera.crunch.impl.mr.MRPipeline;
-import com.cloudera.crunch.lib.Cogroup;
-import com.cloudera.crunch.lib.Join;
+import org.apache.crunch.DoFn;
+import org.apache.crunch.Emitter;
+import org.apache.crunch.PCollection;
+import org.apache.crunch.PTable;
+import org.apache.crunch.Pair;
+import org.apache.crunch.Pipeline;
+import org.apache.crunch.impl.mr.MRPipeline;
+import org.apache.crunch.lib.Cogroup;
+import org.apache.crunch.lib.Join;
 import com.google.common.base.Splitter;
 
 public class CogroupCrunchTest implements Serializable {

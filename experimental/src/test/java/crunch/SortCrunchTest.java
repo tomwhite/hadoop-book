@@ -1,9 +1,9 @@
 package crunch;
-import static com.cloudera.crunch.lib.Sort.ColumnOrder.by;
-import static com.cloudera.crunch.lib.Sort.Order.ASCENDING;
-import static com.cloudera.crunch.lib.Sort.Order.DESCENDING;
-import static com.cloudera.crunch.type.writable.Writables.ints;
-import static com.cloudera.crunch.type.writable.Writables.pairs;
+import static org.apache.crunch.lib.Sort.ColumnOrder.by;
+import static org.apache.crunch.lib.Sort.Order.ASCENDING;
+import static org.apache.crunch.lib.Sort.Order.DESCENDING;
+import static org.apache.crunch.types.writable.Writables.ints;
+import static org.apache.crunch.types.writable.Writables.pairs;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -11,13 +11,13 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-import com.cloudera.crunch.DoFn;
-import com.cloudera.crunch.Emitter;
-import com.cloudera.crunch.PCollection;
-import com.cloudera.crunch.Pair;
-import com.cloudera.crunch.Pipeline;
-import com.cloudera.crunch.impl.mr.MRPipeline;
-import com.cloudera.crunch.lib.Sort;
+import org.apache.crunch.DoFn;
+import org.apache.crunch.Emitter;
+import org.apache.crunch.PCollection;
+import org.apache.crunch.Pair;
+import org.apache.crunch.Pipeline;
+import org.apache.crunch.impl.mr.MRPipeline;
+import org.apache.crunch.lib.Sort;
 import com.google.common.base.Splitter;
 
 public class SortCrunchTest implements Serializable {

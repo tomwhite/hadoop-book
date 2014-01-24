@@ -24,9 +24,9 @@
       <version>3.0</version>
     </dependency>
     <dependency>
-      <groupId>com.cloudera.crunch</groupId>
-      <artifactId>crunch</artifactId>
-      <version>0.1.0</version>
+      <groupId>org.apache.crunch</groupId>
+      <artifactId>crunch-core</artifactId>
+      <version>0.9.0-hadoop2</version>
     </dependency>
   </dependencies>
   <build>

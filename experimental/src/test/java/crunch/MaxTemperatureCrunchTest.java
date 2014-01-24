@@ -1,20 +1,20 @@
 package crunch;
-import static com.cloudera.crunch.type.writable.Writables.ints;
-import static com.cloudera.crunch.type.writable.Writables.strings;
-import static com.cloudera.crunch.type.writable.Writables.tableOf;
+import static org.apache.crunch.types.writable.Writables.ints;
+import static org.apache.crunch.types.writable.Writables.strings;
+import static org.apache.crunch.types.writable.Writables.tableOf;
 
 import java.io.IOException;
 
+import org.apache.crunch.fn.Aggregators;
 import org.junit.Test;
 
-import com.cloudera.crunch.CombineFn;
-import com.cloudera.crunch.DoFn;
-import com.cloudera.crunch.Emitter;
-import com.cloudera.crunch.PCollection;
-import com.cloudera.crunch.PTable;
-import com.cloudera.crunch.Pair;
-import com.cloudera.crunch.Pipeline;
-import com.cloudera.crunch.impl.mr.MRPipeline;
+import org.apache.crunch.DoFn;
+import org.apache.crunch.Emitter;
+import org.apache.crunch.PCollection;
+import org.apache.crunch.PTable;
+import org.apache.crunch.Pair;
+import org.apache.crunch.Pipeline;
+import org.apache.crunch.impl.mr.MRPipeline;
 
 public class MaxTemperatureCrunchTest {
   
@@ -28,7 +28,7 @@ public class MaxTemperatureCrunchTest {
     PTable<String, Integer> maxTemps = records
       .parallelDo(toYearTempPairsFn(), tableOf(strings(), ints()))
       .groupByKey()
-      .combineValues(CombineFn.<String> MAX_INTS());
+      .combineValues(Aggregators.MAX_INTS());
     
     pipeline.writeTextFile(maxTemps, "output");
     pipeline.run();

@@ -1,7 +1,7 @@
 package crunch;
-import com.cloudera.crunch.DoFn;
-import com.cloudera.crunch.Emitter;
-import com.cloudera.crunch.Pair;
+import org.apache.crunch.DoFn;
+import org.apache.crunch.Emitter;
+import org.apache.crunch.Pair;
 
 public class ToYearTempPairsFn extends DoFn<String, Pair<String, Integer>> {
 
