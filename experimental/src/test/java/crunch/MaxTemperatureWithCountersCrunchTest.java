@@ -40,10 +40,10 @@ public class MaxTemperatureWithCountersCrunchTest {
     if (result.succeeded()) {
       for (StageResult stageResult : result.getStageResults()) {
         System.out.println(stageResult.getStageName());
-        // TODO: point out that we haven't used the MR API
-        System.out.println(Temperature.MISSING + ": " +
+        // TODO: point out that we haven't used the MR API, which is good
+        System.out.println("Missing: " +
             stageResult.getCounterValue(Temperature.MISSING));
-        System.out.println(Temperature.MALFORMED + ": " +
+        System.out.println("Malformed: " +
             stageResult.getCounterValue(Temperature.MALFORMED));
       }
     }
