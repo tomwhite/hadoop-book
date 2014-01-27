@@ -28,7 +28,7 @@ public class MaxTemperatureWithCompressionCrunchTest {
     Configuration conf = new Configuration();
     conf.setBoolean("mapreduce.output.fileoutputformat.compress", true);
     conf.setClass("mapreduce.output.fileoutputformat.compress.codec", GzipCodec.class, CompressionCodec.class);
-    
+
     Pipeline pipeline = new MRPipeline(MaxTemperatureWithCompressionCrunchTest.class, conf);
     PCollection<String> records = pipeline.readTextFile("input/ncdc/sample.txt");
     
