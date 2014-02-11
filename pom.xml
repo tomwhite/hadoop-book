@@ -26,5 +26,6 @@
     <module>ch16</module>
     <module>hadoop-examples</module>
     <module>snippet</module>
+    <module>experimental</module>
   </modules>
 </project>
