@@ -79,11 +79,6 @@
           <descriptors>
             <descriptor>src/main/assembly/hadoop-job.xml</descriptor>
           </descriptors>
-          <archive>
-            <manifest>
-              <mainClass>crunch.MaxTemperatureCrunch</mainClass>
-            </manifest>
-          </archive>
         </configuration>
         <executions>
           <execution>
