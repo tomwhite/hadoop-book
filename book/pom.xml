@@ -15,6 +15,7 @@
     <!-- Component versions are defined here -->
     <!-- Note that Hadoop dependencies are defined in hadoop-meta -->
     <avro.version>1.5.4</avro.version>
+    <crunch.version>0.9.0-hadoop2</crunch.version>
     <pig.version>0.9.1</pig.version>
     <hive.version>0.8.0</hive.version>
     <hbase.version>0.94.15</hbase.version>
@@ -85,6 +86,11 @@
         <groupId>org.apache.pig</groupId>
         <artifactId>pig</artifactId>
         <version>${pig.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.crunch</groupId>
+        <artifactId>crunch-core</artifactId>
+        <version>${crunch.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.zookeeper</groupId>
