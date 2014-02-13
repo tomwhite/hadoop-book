@@ -10,16 +10,15 @@ import org.apache.crunch.Pair;
 import org.apache.crunch.Pipeline;
 import org.apache.crunch.fn.Aggregators;
 import org.apache.crunch.impl.mr.MRPipeline;
-import org.junit.Test;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
+import org.apache.crunch.io.To;
 
 import static org.apache.crunch.types.avro.Avros.*;
 
-// TODO: consider what is transient - need to write about it
-public class MaxTemperatureAvroCrunchTest implements Serializable {
+// Crunch version of ch04 AvroGenericMaxTemperature
+public class AvroGenericMaxTemperatureCrunch implements Serializable {
 
   private static final Schema SCHEMA = new Schema.Parser().parse(
       "{" +
@@ -33,11 +32,15 @@ public class MaxTemperatureAvroCrunchTest implements Serializable {
           "  ]" +
           "}"
   );
-  
-  @Test
-  public void test() throws IOException {
-    Pipeline pipeline = new MRPipeline(MaxTemperatureAvroCrunchTest.class);
-    PCollection<String> records = pipeline.readTextFile("input/ncdc/sample.txt");
+
+  public static void main(String[] args) throws Exception {
+    if (args.length != 2) {
+      System.err.println("Usage: AvroGenericMaxTemperatureCrunch <input> <output>");
+      System.exit(-1);
+    }
+
+    Pipeline pipeline = new MRPipeline(AvroGenericMaxTemperatureCrunch.class);
+    PCollection<String> records = pipeline.readTextFile(args[0]);
     
     PTable<Integer, GenericData.Record> maxTemps = records
       .parallelDo(toYearRecordPairsFn(), tableOf(ints(), generics(SCHEMA)))
@@ -71,7 +74,7 @@ public class MaxTemperatureAvroCrunchTest implements Serializable {
         }
       });
     
-    pipeline.writeTextFile(maxTemps, "output");
+    pipeline.write(maxTemps, To.avroFile(args[1]));
     pipeline.run();
   }
 
