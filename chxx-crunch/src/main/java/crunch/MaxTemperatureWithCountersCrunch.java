@@ -10,41 +10,48 @@ import org.apache.crunch.PipelineResult;
 import org.apache.crunch.PipelineResult.StageResult;
 import org.apache.crunch.fn.Aggregators;
 import org.apache.crunch.impl.mr.MRPipeline;
-import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 
-public class MaxTemperatureWithCountersCrunchTest {
+// Crunch version of ch08 MaxTemperatureWithCountersCrunch and MissingTemperatureFields
+// Note that both are naturally combined into a single program.
+public class MaxTemperatureWithCountersCrunch {
   
   enum Temperature {
     MISSING,
     MALFORMED
   }
-  
-  @Test
-  public void test() throws IOException {
-    Pipeline pipeline = new MRPipeline(MaxTemperatureWithCountersCrunchTest.class);
-    PCollection<String> records = pipeline.readTextFile("input/ncdc/all");
+
+  public static void main(String[] args) throws Exception {
+    if (args.length != 2) {
+      System.err.println("Usage: MaxTemperatureWithCountersCrunch <input path> <output path>");
+      System.exit(-1);
+    }
+
+    Pipeline pipeline = new MRPipeline(MaxTemperatureWithCountersCrunch.class);
+    PCollection<String> records = pipeline.readTextFile(args[0]);
+    long total = records.getSize();
     
     PTable<String, Integer> maxTemps = records
       .parallelDo(toYearTempPairsFn(), tableOf(strings(), ints()))
       .groupByKey()
       .combineValues(Aggregators.MAX_INTS());
     
-    pipeline.writeTextFile(maxTemps, "output");
+    pipeline.writeTextFile(maxTemps, args[1]);
     PipelineResult result = pipeline.run();
     if (result.succeeded()) {
       for (StageResult stageResult : result.getStageResults()) {
         System.out.println(stageResult.getStageName());
-        // TODO: point out that we haven't used the MR API, which is good
-        System.out.println("Missing: " +
-            stageResult.getCounterValue(Temperature.MISSING));
-        System.out.println("Malformed: " +
-            stageResult.getCounterValue(Temperature.MALFORMED));
+        // TODO: point out that we haven't used the MR API for counters (avoids compat issues)
+        long missing = stageResult.getCounterValue(Temperature.MISSING);
+        long malformed = stageResult.getCounterValue(Temperature.MALFORMED);
+        System.out.println("Missing: " + missing);
+        System.out.println("Malformed: " + malformed);
+        System.out.println("Total: " + total);
+        System.out.printf("Records with missing temperature fields: %.2f%%\n",
+            100.0 * missing / total);
       }
     }
   }
@@ -63,6 +70,9 @@ public class MaxTemperatureWithCountersCrunchTest {
         } else if (parser.isMissingTemperature()) {
           increment(Temperature.MISSING);
         }
+
+        // dynamic counter
+        increment("TemperatureQuality", parser.getQuality(), 1);
       }
     };
   }
