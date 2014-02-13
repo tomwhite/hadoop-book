@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import org.apache.hadoop.io.Text;
 
+// Serializable copy of MetOfficeRecordParser
 public class MetOfficeRecordParser implements Serializable {
   
   private String year;

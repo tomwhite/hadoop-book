@@ -3,6 +3,7 @@ package crunch;
 import java.io.Serializable;
 import org.apache.hadoop.io.Text;
 
+// Serializable copy of NcdcStationMetadataParser
 public class NcdcStationMetadataParser implements Serializable {
   
   private String stationId;

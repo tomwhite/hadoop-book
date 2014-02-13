@@ -1,6 +1,5 @@
 package crunch;
 
-import java.io.IOException;
 import org.apache.crunch.DoFn;
 import org.apache.crunch.Emitter;
 import org.apache.crunch.PCollection;
@@ -9,19 +8,21 @@ import org.apache.crunch.Pair;
 import org.apache.crunch.Pipeline;
 import org.apache.crunch.impl.mr.MRPipeline;
 import org.apache.crunch.lib.Join;
-import org.junit.Test;
 
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 
-public class JoinRecordWithStationNameCrunchTest {
+// Crunch version of ch08 JoinRecordWithStationName
+public class JoinRecordWithStationNameCrunch {
 
-  @Test
-  public void test() throws IOException {
-    Pipeline pipeline = new MRPipeline(MaxTemperatureAvroCrunchTest.class);
-    PCollection<String> records = pipeline.readTextFile("input/ncdc/sample.txt");
-    PCollection<String> stations = pipeline.readTextFile
-        ("input/ncdc/metadata/stations-fixed-width.txt");
+  public static void main(String[] args) throws Exception {
+    if (args.length != 3) {
+      System.err.println("Usage: JoinRecordWithStationNameCrunch <ncdc input> <station input> <output>");
+      System.exit(-1);
+    }
+    Pipeline pipeline = new MRPipeline(JoinRecordWithStationNameCrunch.class);
+    PCollection<String> records = pipeline.readTextFile(args[0]);
+    PCollection<String> stations = pipeline.readTextFile(args[1]);
     PTable<String, String> stationIdToRecord = records
         .parallelDo(toStationIdRecordPairsFn(), tableOf(strings(), strings()));
     PTable<String, String> stationIdToName = stations
@@ -30,7 +31,7 @@ public class JoinRecordWithStationNameCrunchTest {
     PTable<String, Pair<String, String>> joined =
         Join.join(stationIdToRecord, stationIdToName);
 
-    pipeline.writeTextFile(joined, "output");
+    pipeline.writeTextFile(joined, args[2]);
     pipeline.run();
   }
 

@@ -1,6 +1,5 @@
 package crunch;
 
-import java.io.IOException;
 import org.apache.crunch.DoFn;
 import org.apache.crunch.Emitter;
 import org.apache.crunch.PCollection;
@@ -12,22 +11,23 @@ import org.apache.crunch.impl.mr.MRPipeline;
 import org.apache.crunch.lib.join.JoinStrategy;
 import org.apache.crunch.lib.join.JoinType;
 import org.apache.crunch.lib.join.MapsideJoinStrategy;
-import org.junit.Test;
 
 import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 
-// cf. MaxTemperatureByStationNameUsingDistributedCacheFile
-public class MaxTemperatureByStationNameCrunchTest {
-  
-  @Test
-  public void test() throws IOException {
-    Pipeline pipeline = new MRPipeline(MaxTemperatureByStationNameCrunchTest.class);
+// Crunch version of ch08 MaxTemperatureByStationNameUsingDistributedCacheFile
+public class MaxTemperatureByStationNameCrunch {
 
-    PCollection<String> records = pipeline.readTextFile("input/ncdc/all");
-    PCollection<String> stations = pipeline.readTextFile
-        ("input/ncdc/metadata/stations-fixed-width.txt");
+  public static void main(String[] args) throws Exception {
+    if (args.length != 3) {
+      System.err.println("Usage: MaxTemperatureByStationNameCrunch <ncdc input> <station input> <output>");
+      System.exit(-1);
+    }
+    Pipeline pipeline = new MRPipeline(MaxTemperatureByStationNameCrunch.class);
+
+    PCollection<String> records = pipeline.readTextFile(args[0]);
+    PCollection<String> stations = pipeline.readTextFile(args[1]);
 
     PTable<String, Integer> maxTemps = records
         .parallelDo(toStationIdTempPairsFn(), tableOf(strings(), ints()))
@@ -40,7 +40,7 @@ public class MaxTemperatureByStationNameCrunchTest {
         new MapsideJoinStrategy<String, Integer, String>();
     PTable<String, Pair<Integer, String>> joined =
         mapsideJoin.join(maxTemps, stationIdToName, JoinType.INNER_JOIN);
-    pipeline.writeTextFile(joined, "output");
+    pipeline.writeTextFile(joined, args[2]);
     pipeline.run();
   }
 

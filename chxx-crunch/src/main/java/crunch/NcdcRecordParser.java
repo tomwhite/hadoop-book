@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.hadoop.io.Text;
 
+// Serializable copy of NcdcRecordParser
 public class NcdcRecordParser implements Serializable {
   
   private static final int MISSING_TEMPERATURE = 9999;

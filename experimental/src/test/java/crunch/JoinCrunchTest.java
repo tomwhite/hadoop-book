@@ -29,20 +29,20 @@ public class JoinCrunchTest implements Serializable {
     PTable<String, String> aTable = a.parallelDo(new DoFn<String, Pair<String, String>>() {
     @Override
     public void process(String input, Emitter<Pair<String, String>> emitter) {
-      Iterator<String> split = Splitter.on('\t').split(input).iterator();
-      emitter.emit(Pair.of(split.next(), split.next()));
-    }
-  }, tableOf(strings(),strings()));
+        Iterator<String> split = Splitter.on('\t').split(input).iterator();
+        emitter.emit(Pair.of(split.next(), split.next()));
+      }
+    }, tableOf(strings(),strings()));
 
     PTable<String, String> bTable = b.parallelDo(new DoFn<String, Pair<String, String>>() {
     @Override
     public void process(String input, Emitter<Pair<String, String>> emitter) {
-      Iterator<String> split = Splitter.on('\t').split(input).iterator();
-      String l = split.next();
-      String r = split.next();
-      emitter.emit(Pair.of(r, l));
-    }
-  }, tableOf(strings(),strings()));
+        Iterator<String> split = Splitter.on('\t').split(input).iterator();
+        String l = split.next();
+        String r = split.next();
+        emitter.emit(Pair.of(r, l));
+      }
+    }, tableOf(strings(),strings()));
     
     PTable<String, Pair<String, String>> join = Join.join(aTable, bTable);
     
