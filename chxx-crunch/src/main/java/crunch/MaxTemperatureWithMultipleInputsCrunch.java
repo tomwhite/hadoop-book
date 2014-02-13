@@ -7,24 +7,26 @@ import org.apache.crunch.Pair;
 import org.apache.crunch.Pipeline;
 import org.apache.crunch.fn.Aggregators;
 import org.apache.crunch.impl.mr.MRPipeline;
-import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 
+// Crunch version of ch07 MaxTemperatureWithMultipleInputsCrunch
 // TODO: sanity check output
-public class MaxTemperatureWithMultipleInputsCrunchTest {
-  
-  @Test
-  public void test() throws IOException {
-    Pipeline pipeline = new MRPipeline(MaxTemperatureWithMultipleInputsCrunchTest.class);
+public class MaxTemperatureWithMultipleInputsCrunch {
 
-    PTable<String, Integer> ncdc = pipeline.readTextFile("input/ncdc/all")
+  public static void main(String[] args) throws Exception {
+    if (args.length != 3) {
+      System.err.println("Usage: MaxTemperatureWithMultipleInputsCrunch <ncdc input> <metoffice input> <output>");
+      System.exit(-1);
+    }
+
+    Pipeline pipeline = new MRPipeline(MaxTemperatureWithMultipleInputsCrunch.class);
+
+    PTable<String, Integer> ncdc = pipeline.readTextFile(args[0])
         .parallelDo(toYearTempPairsFn(), tableOf(strings(), ints()));
-    PTable<String, Integer> metOffice = pipeline.readTextFile("input/metoffice")
+    PTable<String, Integer> metOffice = pipeline.readTextFile(args[1])
         .parallelDo(metOfficeToYearTempPairsFn(), tableOf(strings(), ints()));
 
     PTable<String, Integer> maxTemps = ncdc
@@ -32,7 +34,7 @@ public class MaxTemperatureWithMultipleInputsCrunchTest {
       .groupByKey()
       .combineValues(Aggregators.MAX_INTS());
     
-    pipeline.writeTextFile(maxTemps, "output");
+    pipeline.writeTextFile(maxTemps, args[2]);
     pipeline.run();
   }
 
