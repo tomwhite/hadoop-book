@@ -1,0 +1,11 @@
+www.A.com	www.B.com
+www.A.com	www.C.com
+www.A.com	www.D.com
+www.A.com	www.E.com
+www.B.com	www.D.com
+www.B.com	www.E.com
+www.C.com	www.D.com
+www.D.com	www.B.com
+www.E.com	www.A.com
+www.F.com	www.B.com
+www.F.com	www.C.com
