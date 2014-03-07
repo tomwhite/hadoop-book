@@ -5,10 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.io.FileUtils;
-import org.apache.crunch.CombineFn;
 import org.apache.crunch.DoFn;
 import org.apache.crunch.Emitter;
 import org.apache.crunch.FilterFn;
@@ -20,13 +18,9 @@ import org.apache.crunch.Pair;
 import org.apache.crunch.Pipeline;
 import org.apache.crunch.PipelineExecution;
 import org.apache.crunch.PipelineResult;
-import org.apache.crunch.Target;
-import org.apache.crunch.fn.Aggregators;
 import org.apache.crunch.fn.IdentityFn;
 import org.apache.crunch.impl.mr.MRPipeline;
-import org.apache.crunch.io.To;
 import org.apache.crunch.test.TemporaryPath;
-import org.apache.crunch.types.writable.Writables;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
@@ -163,36 +157,6 @@ public class RunSemanticsTest implements Serializable {
     assertEquals(1, run2.getStageResults().size());
 
     pipeline.done();
-  }
-
-  @Test
-  public void testCheckpoint() throws Exception {
-
-    String inputPath = tmpDir.copyResourceFileName("set1.txt");
-    Thread.sleep(2000);
-
-    PipelineResult result1 = runCheckpointedPipeline(
-        new MRPipeline(RunSemanticsTest.class), inputPath);
-    assertEquals(2, result1.getStageResults().size());
-
-    PipelineResult result2 = runCheckpointedPipeline(
-        new MRPipeline(RunSemanticsTest.class), inputPath);
-    assertEquals(1, result2.getStageResults().size());
-
-  }
-
-  private PipelineResult runCheckpointedPipeline(Pipeline pipeline,
-      String inputPath) throws Exception {
-    PCollection<String> lines = pipeline.readTextFile(inputPath);
-    PTable<String, Long> counts = lines.count();
-    PTable<Long, String> inverseCounts = counts.parallelDo(
-        new InversePairFn<String, Long>(), tableOf(longs(), strings()));
-    inverseCounts.write(To.sequenceFile(tmpDir.getFileName("checkpoint")), Target.WriteMode.CHECKPOINT);
-    PTable<Long, Integer> hist = inverseCounts
-        .groupByKey()
-        .mapValues(new CountValuesFn<String>(), ints());
-    hist.write(To.textFile(tmpDir.getFileName("hist")), Target.WriteMode.OVERWRITE);
-    return pipeline.done();
   }
 
   @Test
