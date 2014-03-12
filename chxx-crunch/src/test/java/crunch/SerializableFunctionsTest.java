@@ -32,4 +32,14 @@ public class SerializableFunctionsTest { // not serializable
       .materialize().iterator();
     pipeline.done();
   }
+
+  @Test
+  public void testInitialize() throws IOException {
+    String inputPath = tmpDir.copyResourceFileName("set1.txt");
+    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    PCollection<String> lines = pipeline.readTextFile(inputPath);
+    PCollection<String> filter = lines.filter(new PatternFilterFn());
+    lines.filter(new PatternFilterFn()).materialize().iterator();
+    pipeline.done();
+  }
 }
