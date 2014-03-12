@@ -1,6 +1,8 @@
 package crunch;
 
+import com.google.common.collect.Lists;
 import java.io.IOException;
+import java.util.List;
 import org.apache.crunch.CrunchRuntimeException;
 import org.apache.crunch.DoFn;
 import org.apache.crunch.Emitter;
@@ -12,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.apache.crunch.types.writable.Writables.strings;
+import static org.junit.Assert.assertEquals;
 
 public class SerializableFunctionsTest { // not serializable
 
@@ -35,11 +38,12 @@ public class SerializableFunctionsTest { // not serializable
 
   @Test
   public void testInitialize() throws IOException {
+    List<String> expectedContent = Lists.newArrayList("b", "c", "a", "e");
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
     Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
-    PCollection<String> filter = lines.filter(new PatternFilterFn());
-    lines.filter(new PatternFilterFn()).materialize().iterator();
+    Iterable<String> materialized = lines.filter(new PatternFilterFn()).materialize();
+    assertEquals(expectedContent, Lists.newArrayList(materialized));
     pipeline.done();
   }
 }
