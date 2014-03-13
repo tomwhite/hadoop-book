@@ -1,6 +1,8 @@
 package crunch;
 
+import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
+import com.google.common.io.Files;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -34,8 +36,9 @@ import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-public class RunSemanticsTest implements Serializable {
+public class PipelineExecutionTest implements Serializable {
 
   @Rule
   public transient TemporaryPath tmpDir = new TemporaryPath();
@@ -44,10 +47,74 @@ public class RunSemanticsTest implements Serializable {
   public transient TestName name = new TestName();
 
   @Test
+  public void testAsyncRunFuture() throws Exception {
+    String inputPath = tmpDir.copyResourceFileName("set1.txt");
+
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    PCollection<String> lines = pipeline.readTextFile(inputPath);
+    PTable<String,String> table = lines.by(new MapFn<String, String>() {
+      @Override
+      public String map(String s) {
+        return s;
+      }
+    }, strings());
+    pipeline.writeTextFile(table, tmpDir.getFileName("out"));
+
+    PipelineExecution execution = pipeline.runAsync();
+    // do other things here
+    PipelineResult result = execution.get(); // blocks
+
+    assertTrue(result.succeeded());
+    pipeline.done();
+  }
+
+  @Test
+  public void testInspectPlan() throws Exception {
+    String inputPath = tmpDir.copyResourceFileName("set1.txt");
+    String outputPath = tmpDir.getFileName("out");
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    PCollection<String> lines = pipeline.readTextFile(inputPath);
+    PCollection<String> lower = lines.parallelDo(new ToLowerFn(), strings());
+    PTable<String, Long> counts = lower.count();
+    PTable<Long, String> inverseCounts = counts.parallelDo(
+        new InversePairFn<String, Long>(), tableOf(longs(), strings()));
+    PTable<Long, Integer> hist = inverseCounts
+        .groupByKey()
+        .mapValues(new CountValuesFn<String>(), ints());
+    hist.write(To.textFile(outputPath));
+    PipelineExecution execution = pipeline.runAsync();
+    String dot = execution.getPlanDotFile();
+    Files.write(dot, new File("pipeline.dot"), Charsets.UTF_8);
+    execution.waitUntilDone();
+    pipeline.done();
+  }
+
+  @Test
+  public void testInspectPlanSynchronous() throws Exception {
+    String inputPath = tmpDir.copyResourceFileName("set1.txt");
+    String outputPath = tmpDir.getFileName("out");
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    PCollection<String> lines = pipeline.readTextFile(inputPath);
+    PCollection<String> lower = lines.parallelDo(new ToLowerFn(), strings());
+    PTable<String, Long> counts = lower.count();
+    PTable<Long, String> inverseCounts = counts.parallelDo(
+        new InversePairFn<String, Long>(), tableOf(longs(), strings()));
+    PTable<Long, Integer> hist = inverseCounts
+        .groupByKey()
+        .mapValues(new CountValuesFn<String>(), ints());
+    hist.write(To.textFile(outputPath));
+    PipelineResult result = pipeline.done();
+    String dot = pipeline.getConfiguration().get("crunch.planner.dotfile");
+    Files.write(dot, new File("pipeline.dot"), Charsets.UTF_8);
+
+    assertTrue(result.succeeded());
+  }
+
+  @Test
   public void testCallingRunTwiceOnlyRunsOneJob() throws IOException {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String,String> table = lines.by(new MapFn<String, String>() {
       @Override
@@ -72,7 +139,7 @@ public class RunSemanticsTest implements Serializable {
     List<String> expectedContent = Lists.newArrayList("b", "c", "a", "e");
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PCollection<String> lower = lines.parallelDo(new ToLowerFn(), strings());
 
@@ -95,7 +162,7 @@ public class RunSemanticsTest implements Serializable {
     List<String> expectedContent = Lists.newArrayList("b", "c", "a", "e");
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PCollection<String> lower = lines.parallelDo(new ToLowerFn(), strings());
 
@@ -118,7 +185,7 @@ public class RunSemanticsTest implements Serializable {
   @Ignore
   public void testIterativeAlgorithm() throws IOException {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     int targetLength = 1;
     PObject<Long> length = lines.length();
@@ -141,7 +208,7 @@ public class RunSemanticsTest implements Serializable {
   public void testInterruptPipeline() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
     String outputPath = tmpDir.getFileName("out");
-    final Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    final Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String, Long> counts = lines.count();
     PTable<Long, String> inverseCounts = counts.parallelDo(
@@ -169,7 +236,7 @@ public class RunSemanticsTest implements Serializable {
   public void testKillPipeline() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
     String outputPath = tmpDir.getFileName("out");
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String, Long> counts = lines.count();
     PTable<Long, String> inverseCounts = counts.parallelDo(
@@ -189,7 +256,7 @@ public class RunSemanticsTest implements Serializable {
   public void testCancelPipeline() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
     String outputPath = tmpDir.getFileName("out");
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String, Long> counts = lines.count();
     PTable<Long, String> inverseCounts = counts.parallelDo(
@@ -209,7 +276,7 @@ public class RunSemanticsTest implements Serializable {
   public void testNewTarget() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String, Long> counts = lines.count();
     PTable<Long, String> inverseCounts = counts.parallelDo(
@@ -234,7 +301,7 @@ public class RunSemanticsTest implements Serializable {
   public void testComplexPipeline() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String, String> table = lines.by(new MapFn<String, String>() {
       @Override
@@ -283,7 +350,7 @@ public class RunSemanticsTest implements Serializable {
   public void testParallelDoFusion() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PCollection<String> t1 = lines.parallelDo("t1", IdentityFn.<String>getInstance(),
         strings());
@@ -304,7 +371,7 @@ public class RunSemanticsTest implements Serializable {
   public void testSiblingFusion() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PCollection<String> t1 = lines.parallelDo("t1", IdentityFn.<String>getInstance(),
         strings());

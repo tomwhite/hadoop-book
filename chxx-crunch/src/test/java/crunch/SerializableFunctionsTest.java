@@ -24,7 +24,7 @@ public class SerializableFunctionsTest { // not serializable
   @Test(expected = CrunchRuntimeException.class)
   public void testInnerClassIsNotSerializable() throws IOException {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(SerializableFunctionsTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     lines.parallelDo(new DoFn<String, String>() {
           @Override
@@ -40,7 +40,7 @@ public class SerializableFunctionsTest { // not serializable
   public void testInitialize() throws IOException {
     List<String> expectedContent = Lists.newArrayList("b", "c", "a", "e");
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
-    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    Pipeline pipeline = new MRPipeline(SerializableFunctionsTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     Iterable<String> materialized = lines.filter(new PatternFilterFn()).materialize();
     assertEquals(expectedContent, Lists.newArrayList(materialized));
