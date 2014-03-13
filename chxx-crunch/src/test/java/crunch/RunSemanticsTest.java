@@ -18,8 +18,10 @@ import org.apache.crunch.Pair;
 import org.apache.crunch.Pipeline;
 import org.apache.crunch.PipelineExecution;
 import org.apache.crunch.PipelineResult;
+import org.apache.crunch.Target;
 import org.apache.crunch.fn.IdentityFn;
 import org.apache.crunch.impl.mr.MRPipeline;
+import org.apache.crunch.io.To;
 import org.apache.crunch.test.TemporaryPath;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -31,6 +33,7 @@ import static org.apache.crunch.types.writable.Writables.longs;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class RunSemanticsTest implements Serializable {
 
@@ -132,6 +135,74 @@ public class RunSemanticsTest implements Serializable {
     }
     System.out.println("Final length: " + length.getValue());
     pipeline.done();
+  }
+
+  @Test
+  public void testInterruptPipeline() throws Exception {
+    String inputPath = tmpDir.copyResourceFileName("set1.txt");
+    String outputPath = tmpDir.getFileName("out");
+    final Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    PCollection<String> lines = pipeline.readTextFile(inputPath);
+    PTable<String, Long> counts = lines.count();
+    PTable<Long, String> inverseCounts = counts.parallelDo(
+        new InversePairFn<String, Long>(), tableOf(longs(), strings()));
+    PTable<Long, Integer> hist = inverseCounts
+        .groupByKey()
+        .mapValues(new CountValuesFn<String>(), ints());
+    hist.write(To.textFile(outputPath), Target.WriteMode.OVERWRITE);
+
+    Thread thread = new Thread(new Runnable() {
+      @Override
+      public void run() {
+        PipelineResult result = pipeline.run();
+        assertFalse(result.succeeded());
+      }
+    });
+    thread.start();
+    Thread.sleep(100);
+    thread.interrupt();
+    thread.join();
+    // note that MR jobs are *not* cancelled
+  }
+
+  @Test
+  public void testKillPipeline() throws Exception {
+    String inputPath = tmpDir.copyResourceFileName("set1.txt");
+    String outputPath = tmpDir.getFileName("out");
+    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    PCollection<String> lines = pipeline.readTextFile(inputPath);
+    PTable<String, Long> counts = lines.count();
+    PTable<Long, String> inverseCounts = counts.parallelDo(
+        new InversePairFn<String, Long>(), tableOf(longs(), strings()));
+    PTable<Long, Integer> hist = inverseCounts
+        .groupByKey()
+        .mapValues(new CountValuesFn<String>(), ints());
+    hist.write(To.textFile(outputPath), Target.WriteMode.OVERWRITE);
+
+    PipelineExecution execution = pipeline.runAsync();
+    execution.kill();
+    execution.waitUntilDone();
+    assertEquals(PipelineExecution.Status.KILLED, execution.getStatus());
+  }
+
+  @Test
+  public void testCancelPipeline() throws Exception {
+    String inputPath = tmpDir.copyResourceFileName("set1.txt");
+    String outputPath = tmpDir.getFileName("out");
+    Pipeline pipeline = new MRPipeline(RunSemanticsTest.class);
+    PCollection<String> lines = pipeline.readTextFile(inputPath);
+    PTable<String, Long> counts = lines.count();
+    PTable<Long, String> inverseCounts = counts.parallelDo(
+        new InversePairFn<String, Long>(), tableOf(longs(), strings()));
+    PTable<Long, Integer> hist = inverseCounts
+        .groupByKey()
+        .mapValues(new CountValuesFn<String>(), ints());
+    hist.write(To.textFile(outputPath), Target.WriteMode.OVERWRITE);
+
+    PipelineExecution execution = pipeline.runAsync();
+    execution.cancel(true);
+    execution.waitUntilDone();
+    assertEquals(PipelineExecution.Status.KILLED, execution.getStatus());
   }
 
   @Test
