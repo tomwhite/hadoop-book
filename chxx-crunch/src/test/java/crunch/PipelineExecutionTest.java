@@ -74,19 +74,21 @@ public class PipelineExecutionTest implements Serializable {
     String outputPath = tmpDir.getFileName("out");
     Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
-    PCollection<String> lower = lines.parallelDo(new ToLowerFn(), strings());
+    PCollection<String> lower = lines.parallelDo("lower", new ToLowerFn(), strings());
     PTable<String, Long> counts = lower.count();
-    PTable<Long, String> inverseCounts = counts.parallelDo(
+    PTable<Long, String> inverseCounts = counts.parallelDo("inverse",
         new InversePairFn<String, Long>(), tableOf(longs(), strings()));
     PTable<Long, Integer> hist = inverseCounts
         .groupByKey()
-        .mapValues(new CountValuesFn<String>(), ints());
+        .mapValues("count values", new CountValuesFn<String>(), ints());
     hist.write(To.textFile(outputPath));
     PipelineExecution execution = pipeline.runAsync();
     String dot = execution.getPlanDotFile();
     Files.write(dot, new File("pipeline.dot"), Charsets.UTF_8);
     execution.waitUntilDone();
     pipeline.done();
+
+    Files.copy(new File("pipeline.dot"), new File(name.getMethodName() + ".dot"));
   }
 
   @Test
@@ -95,19 +97,21 @@ public class PipelineExecutionTest implements Serializable {
     String outputPath = tmpDir.getFileName("out");
     Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
-    PCollection<String> lower = lines.parallelDo(new ToLowerFn(), strings());
+    PCollection<String> lower = lines.parallelDo("lower", new ToLowerFn(), strings());
     PTable<String, Long> counts = lower.count();
-    PTable<Long, String> inverseCounts = counts.parallelDo(
+    PTable<Long, String> inverseCounts = counts.parallelDo("inverse",
         new InversePairFn<String, Long>(), tableOf(longs(), strings()));
     PTable<Long, Integer> hist = inverseCounts
         .groupByKey()
-        .mapValues(new CountValuesFn<String>(), ints());
+        .mapValues("count values", new CountValuesFn<String>(), ints());
     hist.write(To.textFile(outputPath));
     PipelineResult result = pipeline.done();
     String dot = pipeline.getConfiguration().get("crunch.planner.dotfile");
     Files.write(dot, new File("pipeline.dot"), Charsets.UTF_8);
 
     assertTrue(result.succeeded());
+
+    Files.copy(new File("pipeline.dot"), new File(name.getMethodName() + ".dot"));
   }
 
   @Test
