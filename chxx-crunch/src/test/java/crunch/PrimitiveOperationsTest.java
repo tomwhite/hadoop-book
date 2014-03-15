@@ -1,6 +1,7 @@
 package crunch;
 
 import com.google.common.collect.Iterables;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import org.apache.crunch.DoFn;
@@ -11,8 +12,12 @@ import org.apache.crunch.PCollection;
 import org.apache.crunch.PGroupedTable;
 import org.apache.crunch.PTable;
 import org.apache.crunch.Pair;
+import org.apache.crunch.Pipeline;
 import org.apache.crunch.fn.Aggregators;
 import org.apache.crunch.impl.mem.MemPipeline;
+import org.apache.crunch.impl.mr.MRPipeline;
+import org.apache.crunch.test.TemporaryPath;
+import org.junit.Rule;
 import org.junit.Test;
 
 import static org.apache.crunch.types.writable.Writables.doubles;
@@ -20,7 +25,10 @@ import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.junit.Assert.assertEquals;
 
-public class PrimitiveOperationsTest {
+public class PrimitiveOperationsTest implements Serializable {
+
+  @Rule
+  public transient TemporaryPath tmpDir = new TemporaryPath();
 
   @Test
   public void testPCollectionUnion() throws Exception {
@@ -56,7 +64,12 @@ public class PrimitiveOperationsTest {
 
   @Test
   public void testGrouping() throws Exception {
-    PCollection<String> a = MemPipeline.typedCollectionOf(strings(), "cherry", "apple", "banana");
+    String inputPath = tmpDir.copyResourceFileName("fruit.txt");
+    Pipeline pipeline = new MRPipeline(PrimitiveOperationsTest.class);
+
+    PCollection<String> a = pipeline.readTextFile(inputPath);
+    assertEquals("{cherry,apple,banana}", dump(a));
+
     PTable<Integer,String> b = a.by(new MapFn<String, Integer>() {
       @Override
       public Integer map(String input) {
@@ -66,12 +79,12 @@ public class PrimitiveOperationsTest {
     assertEquals("{(6,cherry),(5,apple),(6,banana)}", dump(b));
 
     PGroupedTable<Integer, String> c = b.groupByKey();
-    assertEquals("{(5,[apple]),(6,[cherry,banana])}", dump(c));
+    assertEquals("{(5,[apple]),(6,[banana,cherry])}", dump(c));
 
     c = b.groupByKey(); // since value iterator is single use
 
     PTable<Integer, String> d = c.combineValues(Aggregators.STRING_CONCAT(";", false));
-    assertEquals("{(5,apple),(6,cherry;banana)}", dump(d));
+    assertEquals("{(5,apple),(6,banana;cherry)}", dump(d));
 
     c = b.groupByKey();
 
@@ -84,7 +97,7 @@ public class PrimitiveOperationsTest {
     assertEquals("{(5,1),(6,2)}", dump(e));
 
     PTable<Integer, String> f = c.ungroup();
-    assertEquals("{(6,cherry),(5,apple),(6,banana)}", dump(f));
+    assertEquals("{(5,apple),(6,banana),(6,cherry)}", dump(f));
 
   }
 
@@ -182,24 +195,20 @@ public class PrimitiveOperationsTest {
   }
 
   private <K, V> String dump(PGroupedTable<K, V> groupedTable) {
-    StringBuilder sb = new StringBuilder("{");
-    for (Iterator<Pair<K, Iterable<V>>> i = groupedTable.materialize().iterator(); i.hasNext(); ) {
-      Pair<K, Iterable<V>> pair = i.next();
-      sb.append("(").append(pair.first()).append(",");
-      sb.append("[");
-      for (Iterator<V> j = pair.second().iterator(); j.hasNext(); ) {
-        sb.append(j.next());
-        if (j.hasNext()) {
-          sb.append(",");
+    return dump(groupedTable.mapValues(new MapFn<Iterable<V>, String>() {
+      @Override
+      public String map(Iterable<V> input) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (Iterator<V> i = input.iterator(); i.hasNext(); ) {
+          sb.append(i.next());
+          if (i.hasNext()) {
+            sb.append(",");
+          }
         }
+        sb.append("]");
+        return sb.toString();
       }
-      sb.append("]");
-      sb.append(")");
-      if (i.hasNext()) {
-        sb.append(",");
-      }
-    }
-    sb.append("}");
-    return sb.toString();
+    }, strings()));
   }
 }
