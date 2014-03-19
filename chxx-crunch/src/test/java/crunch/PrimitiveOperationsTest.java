@@ -163,21 +163,21 @@ public class PrimitiveOperationsTest implements Serializable {
 
   @Test
   public void testPCollectionStats() throws Exception {
-    PCollection<String> a = MemPipeline.typedCollectionOf(strings(), "cherry", "apple",
-        "banana", "apple");
+    PCollection<String> a = MemPipeline.typedCollectionOf(strings(),
+        "cherry", "apple", "banana", "banana");
 
     assertEquals((Long) 4L, a.length().getValue());
     assertEquals("apple", a.min().getValue());
     assertEquals("cherry", a.max().getValue());
 
     PTable<String, Long> b = a.count();
-    assertEquals("{(apple,2),(banana,1),(cherry,1)}", dump(b));
+    assertEquals("{(apple,1),(banana,2),(cherry,1)}", dump(b));
 
     PTable<String, Long> c = b.top(1);
-    assertEquals("{(apple,2)}", dump(c));
+    assertEquals("{(banana,2)}", dump(c));
 
     PTable<String, Long> d = b.bottom(2);
-    assertEquals("{(banana,1),(cherry,1)}", dump(d));
+    assertEquals("{(apple,1),(cherry,1)}", dump(d));
   }
 
   @Test
