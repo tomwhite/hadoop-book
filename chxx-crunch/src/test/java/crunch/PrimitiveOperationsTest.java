@@ -4,6 +4,7 @@ import com.google.common.collect.Iterables;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
+import org.apache.crunch.CombineFn;
 import org.apache.crunch.DoFn;
 import org.apache.crunch.Emitter;
 import org.apache.crunch.FilterFn;
@@ -23,6 +24,7 @@ import org.junit.Test;
 import static org.apache.crunch.types.writable.Writables.doubles;
 import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
+import static org.apache.crunch.types.writable.Writables.tableOf;
 import static org.junit.Assert.assertEquals;
 
 public class PrimitiveOperationsTest implements Serializable {
@@ -51,6 +53,18 @@ public class PrimitiveOperationsTest implements Serializable {
   }
 
   @Test
+  public void testPCollectionParallelDoMap() throws Exception {
+    PCollection<String> a = MemPipeline.collectionOf("cherry", "apple", "banana");
+    PCollection<Integer> b = a.parallelDo(new MapFn<String, Integer>() {
+      @Override
+      public Integer map(String input) {
+        return input.length();
+      }
+    }, ints());
+    assertEquals("{6,5,6}", dump(b));
+  }
+
+  @Test
   public void testPCollectionFilter() throws Exception {
     PCollection<String> a = MemPipeline.collectionOf("cherry", "apple", "banana");
     PCollection<String> b = a.filter(new FilterFn<String>() {
@@ -63,6 +77,18 @@ public class PrimitiveOperationsTest implements Serializable {
   }
 
   @Test
+  public void testPCollectionParallelDoExtractKey() throws Exception {
+    PCollection<String> a = MemPipeline.collectionOf("cherry", "apple", "banana");
+    PTable<Integer, String> b = a.parallelDo(new DoFn<String, Pair<Integer, String>>() {
+      @Override
+      public void process(String input, Emitter<Pair<Integer, String>> emitter) {
+        emitter.emit(Pair.of(input.length(), input));
+      }
+    }, tableOf(ints(), strings()));
+    assertEquals("{(6,cherry),(5,apple),(6,banana)}", dump(b));
+  }
+
+  @Test
   public void testGrouping() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("fruit.txt");
     Pipeline pipeline = new MRPipeline(PrimitiveOperationsTest.class);
@@ -70,7 +96,7 @@ public class PrimitiveOperationsTest implements Serializable {
     PCollection<String> a = pipeline.readTextFile(inputPath);
     assertEquals("{cherry,apple,banana}", dump(a));
 
-    PTable<Integer,String> b = a.by(new MapFn<String, Integer>() {
+    PTable<Integer, String> b = a.by(new MapFn<String, Integer>() {
       @Override
       public Integer map(String input) {
         return input.length();
@@ -81,23 +107,42 @@ public class PrimitiveOperationsTest implements Serializable {
     PGroupedTable<Integer, String> c = b.groupByKey();
     assertEquals("{(5,[apple]),(6,[banana,cherry])}", dump(c));
 
+    c = b.groupByKey(2);
+    assertEquals("{(5,[apple]),(6,[banana,cherry])}", dump(c));
+
     c = b.groupByKey(); // since value iterator is single use
 
-    PTable<Integer, String> d = c.combineValues(Aggregators.STRING_CONCAT(";", false));
+    PTable<Integer, String> d = c.combineValues(new CombineFn<Integer, String>() {
+      @Override
+      public void process(Pair<Integer, Iterable<String>> input,
+          Emitter<Pair<Integer, String>> emitter) {
+        StringBuilder sb = new StringBuilder();
+        for (Iterator i = input.second().iterator(); i.hasNext(); ) {
+          sb.append(i.next());
+          if (i.hasNext()) { sb.append(";"); }
+        }
+        emitter.emit(Pair.of(input.first(), sb.toString()));
+      }
+    });
     assertEquals("{(5,apple),(6,banana;cherry)}", dump(d));
+
+    c = b.groupByKey(); // since value iterator is single use
+
+    PTable<Integer, String> e = c.combineValues(Aggregators.STRING_CONCAT(";", false));
+    assertEquals("{(5,apple),(6,banana;cherry)}", dump(e));
 
     c = b.groupByKey();
 
-    PTable<Integer, Integer> e = c.mapValues(new MapFn<Iterable<String>, Integer>() {
+    PTable<Integer, Integer> f = c.mapValues(new MapFn<Iterable<String>, Integer>() {
       @Override
       public Integer map(Iterable<String> input) {
         return Iterables.size(input);
       }
     }, ints());
-    assertEquals("{(5,1),(6,2)}", dump(e));
+    assertEquals("{(5,1),(6,2)}", dump(f));
 
-    PTable<Integer, String> f = c.ungroup();
-    assertEquals("{(5,apple),(6,banana),(6,cherry)}", dump(f));
+    PTable<Integer, String> g = c.ungroup();
+    assertEquals("{(5,apple),(6,banana),(6,cherry)}", dump(g));
 
   }
 
@@ -137,7 +182,8 @@ public class PrimitiveOperationsTest implements Serializable {
 
   @Test
   public void testPTable() throws Exception {
-    PCollection<String> a = MemPipeline.typedCollectionOf(strings(), "cherry", "apple", "banana");
+    PCollection<String> a = MemPipeline.typedCollectionOf(strings(), "cherry", "apple",
+        "banana");
     PTable<Integer,String> b = a.by(new MapFn<String, Integer>() {
       @Override
       public Integer map(String input) {
