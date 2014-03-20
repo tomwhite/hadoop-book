@@ -7,13 +7,13 @@ import java.util.Map;
 import org.apache.crunch.PCollection;
 import org.apache.crunch.PTable;
 import org.apache.crunch.Pipeline;
-import org.apache.crunch.Source;
 import org.apache.crunch.TableSource;
 import org.apache.crunch.impl.mem.MemPipeline;
 import org.apache.crunch.impl.mr.MRPipeline;
 import org.apache.crunch.io.From;
 import org.apache.crunch.test.TemporaryPath;
 import org.apache.crunch.types.avro.Avros;
+import org.apache.crunch.types.writable.Writables;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.junit.Ignore;
@@ -30,7 +30,7 @@ public class SourcesAndTargetsTest {
 
   @Test
   public void testReadTextFile() throws IOException {
-    List<String> expectedContent = Lists.newArrayList("2", "3", "1", "5");
+    List<String> expectedContent = Lists.newArrayList("2", "3", "1", "3");
     String inputPath = tmpDir.copyResourceFileName("ints.txt");
     Pipeline pipeline = MemPipeline.getInstance();
     PCollection<String> lines = pipeline.readTextFile(inputPath);
@@ -41,7 +41,7 @@ public class SourcesAndTargetsTest {
 
   @Test
   public void testReadFromTextFile() throws IOException {
-    List<String> expectedContent = Lists.newArrayList("2", "3", "1", "5");
+    List<String> expectedContent = Lists.newArrayList("2", "3", "1", "3");
     String inputPath = tmpDir.copyResourceFileName("ints.txt");
     Pipeline pipeline = MemPipeline.getInstance();
     PCollection<String> lines = pipeline.read(From.textFile(inputPath));
@@ -52,13 +52,12 @@ public class SourcesAndTargetsTest {
 
   @Test
   public void testReadFromTextFileAsAvro() throws IOException {
-    List<String> expectedContent = Lists.newArrayList("2", "3", "1", "5");
+    List<String> expectedContent = Lists.newArrayList("2", "3", "1", "3");
     String inputPath = tmpDir.copyResourceFileName("ints.txt");
     Pipeline pipeline = MemPipeline.getInstance();
     PCollection<String> lines = pipeline.read(From.textFile(inputPath, Avros.strings()));
     Iterable<String> materialized = lines.materialize();
     assertEquals(expectedContent, Lists.newArrayList(materialized));
-
     pipeline.done();
   }
 
@@ -67,14 +66,27 @@ public class SourcesAndTargetsTest {
   public void testReadValuesFromSequenceFile() throws IOException {
     String inputPath = tmpDir.copyResourceFileName("numbers.seq");
     Pipeline pipeline = new MRPipeline(SourcesAndTargetsTest.class);
-    PCollection<Text> lines = pipeline.read(From.sequenceFile(inputPath, Text.class));
-    Iterable<Text> materialized = lines.materialize();
-    assertTrue(Lists.newArrayList(materialized).contains(new Text("One, two, buckle my shoe")));
+    PCollection<String> lines = pipeline.read(From.sequenceFile(inputPath,
+        Writables.strings()));
+    Iterable<String> materialized = lines.materialize();
+    assertTrue(Lists.newArrayList(materialized).contains("One, two, buckle my shoe"));
     pipeline.done();
   }
 
   @Test
   public void testReadPTableFromSequenceFile() throws IOException {
+    String inputPath = tmpDir.copyResourceFileName("numbers.seq");
+    Pipeline pipeline = new MRPipeline(SourcesAndTargetsTest.class);
+    TableSource<Integer, String> source =
+        From.sequenceFile(inputPath, Writables.ints(), Writables.strings());
+    PTable<Integer, String> table = pipeline.read(source);
+    Map<Integer, String> map = table.materializeToMap();
+    assertEquals("Nine, ten, a big fat hen", map.get(1));
+    pipeline.done();
+  }
+
+  @Test
+  public void testReadPTableFromSequenceFileAsWritables() throws IOException {
     String inputPath = tmpDir.copyResourceFileName("numbers.seq");
     Pipeline pipeline = new MRPipeline(SourcesAndTargetsTest.class);
     TableSource<IntWritable, Text> source =
