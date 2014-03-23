@@ -16,19 +16,25 @@ import org.junit.Test;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.junit.Assert.assertEquals;
 
-public class SerializableFunctionsTest {
+public class NonSerializableOuterClass {
 
   @Rule
   public transient TemporaryPath tmpDir = new TemporaryPath();
 
-  @Test
-  public void testInitialize() throws IOException {
+  @Test(expected = CrunchRuntimeException.class)
+  public void runPipeline() throws IOException {
     List<String> expectedContent = Lists.newArrayList("b", "c", "a", "e");
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
-    Pipeline pipeline = new MRPipeline(SerializableFunctionsTest.class);
+    Pipeline pipeline = new MRPipeline(NonSerializableOuterClass.class);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
-    Iterable<String> materialized = lines.filter(new PatternFilterFn()).materialize();
-    assertEquals(expectedContent, Lists.newArrayList(materialized));
+    PCollection<String> lower = lines.parallelDo(new DoFn<String, String>() {
+      @Override
+      public void process(String input, Emitter<String> emitter) {
+        emitter.emit(input.toLowerCase());
+      }
+    }, strings());
+    assertEquals(expectedContent, Lists.newArrayList(lower.materialize()));
     pipeline.done();
   }
+
 }

@@ -81,7 +81,7 @@ public class PipelineExecutionTest implements Serializable {
     PTable<Long, Integer> hist = inverseCounts
         .groupByKey()
         .mapValues("count values", new CountValuesFn<String>(), ints());
-    hist.write(To.textFile(outputPath));
+    hist.write(To.textFile(outputPath), Target.WriteMode.OVERWRITE);
     PipelineExecution execution = pipeline.runAsync();
     String dot = execution.getPlanDotFile();
     Files.write(dot, new File("pipeline.dot"), Charsets.UTF_8);

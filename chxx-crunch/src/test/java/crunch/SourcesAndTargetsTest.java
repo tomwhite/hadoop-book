@@ -4,13 +4,17 @@ import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import org.apache.crunch.CrunchRuntimeException;
+import org.apache.crunch.MapFn;
 import org.apache.crunch.PCollection;
 import org.apache.crunch.PTable;
 import org.apache.crunch.Pipeline;
 import org.apache.crunch.TableSource;
+import org.apache.crunch.Target;
 import org.apache.crunch.impl.mem.MemPipeline;
 import org.apache.crunch.impl.mr.MRPipeline;
 import org.apache.crunch.io.From;
+import org.apache.crunch.io.To;
 import org.apache.crunch.test.TemporaryPath;
 import org.apache.crunch.types.avro.Avros;
 import org.apache.crunch.types.writable.Writables;
@@ -107,5 +111,30 @@ public class SourcesAndTargetsTest {
 //    assertEquals((Long) 10L, records.length().getValue());
 //    pipeline.done();
 //  }
+
+  @Test(expected = CrunchRuntimeException.class)
+  public void testWriteWritablesToAvroFileFails() throws IOException {
+    String inputPath = tmpDir.copyResourceFileName("ints.txt");
+    String outputPath = tmpDir.getFileName("out");
+    Pipeline pipeline = new MRPipeline(SourcesAndTargetsTest.class);
+    PCollection<String> lines = pipeline.read(From.textFile(inputPath));
+    lines.write(To.avroFile(outputPath));
+    pipeline.done();
+  }
+
+  @Test
+  public void testWritePTableToAvroFile() throws IOException {
+    String inputPath = tmpDir.copyResourceFileName("ints.txt");
+    Pipeline pipeline = MemPipeline.getInstance();
+    PCollection<String> lines = pipeline.read(From.textFile(inputPath, Avros.strings()));
+    PTable<Integer, String> table = lines.by(new MapFn<String, Integer>() {
+      @Override
+      public Integer map(String input) {
+        return input.length();
+      }
+    }, Avros.ints());
+    table.write(To.textFile("/tmp/out"), Target.WriteMode.OVERWRITE);
+    pipeline.done();
+  }
 
 }
