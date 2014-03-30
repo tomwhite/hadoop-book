@@ -50,7 +50,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testAsyncRunFuture() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String,String> table = lines.by(new MapFn<String, String>() {
       @Override
@@ -61,7 +61,7 @@ public class PipelineExecutionTest implements Serializable {
     pipeline.writeTextFile(table, tmpDir.getFileName("out"));
 
     PipelineExecution execution = pipeline.runAsync();
-    // do other things here
+    // meanwhile, do other things here
     PipelineResult result = execution.get(); // blocks
 
     assertTrue(result.succeeded());
@@ -72,7 +72,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testInspectPlan() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
     String outputPath = tmpDir.getFileName("out");
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PCollection<String> lower = lines.parallelDo("lower", new ToLowerFn(), strings());
     PTable<String, Long> counts = lower.count();
@@ -95,7 +95,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testInspectPlanSynchronous() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
     String outputPath = tmpDir.getFileName("out");
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PCollection<String> lower = lines.parallelDo("lower", new ToLowerFn(), strings());
     PTable<String, Long> counts = lower.count();
@@ -118,7 +118,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testCallingRunTwiceOnlyRunsOneJob() throws IOException {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String,String> table = lines.by(new MapFn<String, String>() {
       @Override
@@ -139,57 +139,10 @@ public class PipelineExecutionTest implements Serializable {
   }
 
   @Test
-  public void testMaterializeCallsRunImplicitly() throws IOException {
-    List<String> expectedContent = Lists.newArrayList("b", "c", "a", "e");
-    String inputPath = tmpDir.copyResourceFileName("set1.txt");
-
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
-    PCollection<String> lines = pipeline.readTextFile(inputPath);
-    PCollection<String> lower = lines.parallelDo(new ToLowerFn(), strings());
-
-    System.out.println("About to materialize...");
-    // the MR job is not run until we get an iterator
-    Iterable<String> materialized = lower.materialize();
-    System.out.println("About to iterate...");
-    for (String s : materialized) { // pipeline is run
-      System.out.println(s);
-    }
-    assertEquals(expectedContent, Lists.newArrayList(materialized));
-
-    System.out.println("About to call done()");
-    PipelineResult result = pipeline.done();
-    assertEquals(0, result.getStageResults().size());
-  }
-
-  @Test
-  public void testPObjectCallsRunImplicitly() throws IOException {
-    List<String> expectedContent = Lists.newArrayList("b", "c", "a", "e");
-    String inputPath = tmpDir.copyResourceFileName("set1.txt");
-
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
-    PCollection<String> lines = pipeline.readTextFile(inputPath);
-    PCollection<String> lower = lines.parallelDo(new ToLowerFn(), strings());
-
-    System.out.println("About to get as a PObject of Collection...");
-    // the MR job is not run until we call getValue on the PObject
-    PObject<Collection<String>> po = lower.asCollection();
-    System.out.println("About to call getValue...");
-    for (String s : po.getValue()) { // pipeline is run
-      System.out.println(s);
-    }
-    // the MR job is run now (even though we haven't explicitly called run()
-    assertEquals(expectedContent, po.getValue());
-
-    System.out.println("About to call done()");
-    PipelineResult result = pipeline.done();
-    assertEquals(0, result.getStageResults().size());
-  }
-
-  @Test
   @Ignore
   public void testIterativeAlgorithm() throws IOException {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     int targetLength = 1;
     PObject<Long> length = lines.length();
@@ -212,7 +165,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testInterruptPipeline() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
     String outputPath = tmpDir.getFileName("out");
-    final Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    final Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String, Long> counts = lines.count();
     PTable<Long, String> inverseCounts = counts.parallelDo(
@@ -240,7 +193,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testKillPipeline() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
     String outputPath = tmpDir.getFileName("out");
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String, Long> counts = lines.count();
     PTable<Long, String> inverseCounts = counts.parallelDo(
@@ -260,7 +213,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testCancelPipeline() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
     String outputPath = tmpDir.getFileName("out");
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String, Long> counts = lines.count();
     PTable<Long, String> inverseCounts = counts.parallelDo(
@@ -280,7 +233,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testNewTarget() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String, Long> counts = lines.count();
     PTable<Long, String> inverseCounts = counts.parallelDo(
@@ -305,7 +258,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testComplexPipeline() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PTable<String, String> table = lines.by(new MapFn<String, String>() {
       @Override
@@ -354,7 +307,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testParallelDoFusion() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PCollection<String> t1 = lines.parallelDo("t1", IdentityFn.<String>getInstance(),
         strings());
@@ -375,7 +328,7 @@ public class PipelineExecutionTest implements Serializable {
   public void testSiblingFusion() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
 
-    Pipeline pipeline = new MRPipeline(PipelineExecutionTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PCollection<String> t1 = lines.parallelDo("t1", IdentityFn.<String>getInstance(),
         strings());

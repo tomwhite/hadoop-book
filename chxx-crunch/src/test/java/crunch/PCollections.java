@@ -6,6 +6,8 @@ import org.apache.crunch.PCollection;
 import org.apache.crunch.PGroupedTable;
 import org.apache.crunch.PTable;
 import org.apache.crunch.Pair;
+import org.apache.crunch.types.PTableType;
+import org.apache.crunch.types.PTypeFamily;
 
 import static org.apache.crunch.types.writable.Writables.strings;
 
@@ -52,5 +54,11 @@ public class PCollections {
         return sb.toString();
       }
     }, strings()));
+  }
+
+  public static <K, V> PTable<V, K> invert(PTable<K, V> table) {
+    PTypeFamily tf = table.getTypeFamily();
+    PTableType<V, K> type = tf.tableOf(table.getValueType(), table.getKeyType());
+    return table.parallelDo(new InversePairFn<K, V>(), type);
   }
 }

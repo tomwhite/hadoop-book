@@ -14,6 +14,7 @@ import org.apache.crunch.PTable;
 import org.apache.crunch.Pair;
 import org.apache.crunch.Pipeline;
 import org.apache.crunch.impl.mr.MRPipeline;
+import org.apache.crunch.io.To;
 
 // Crunch version of ch02 MaxTemperature
 public class MaxTemperatureCrunch {
@@ -32,9 +33,9 @@ public class MaxTemperatureCrunch {
     PTable<String, Integer> maxTemps = yearTemperatures
       .groupByKey()
       .combineValues(Aggregators.MAX_INTS());
-    
-    pipeline.writeTextFile(maxTemps, args[1]);
-    PipelineResult result = pipeline.run();
+
+    maxTemps.write(To.textFile(args[1]));
+    PipelineResult result = pipeline.done();
     System.exit(result.succeeded() ? 0 : 1);
   }
 

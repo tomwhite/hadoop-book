@@ -49,11 +49,11 @@ public class CheckpointTest implements Serializable {
     Thread.sleep(2000);
 
     PipelineResult result1 = runCheckpointedPipeline(
-        new MRPipeline(CheckpointTest.class), inputPath);
+        new MRPipeline(getClass()), inputPath);
     assertEquals(2, result1.getStageResults().size());
 
     PipelineResult result2 = runCheckpointedPipeline(
-        new MRPipeline(CheckpointTest.class), inputPath);
+        new MRPipeline(getClass()), inputPath);
     assertEquals(1, result2.getStageResults().size());
 
   }

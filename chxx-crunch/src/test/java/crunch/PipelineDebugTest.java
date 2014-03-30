@@ -1,6 +1,5 @@
 package crunch;
 
-import java.io.IOException;
 import org.apache.crunch.PCollection;
 import org.apache.crunch.Pipeline;
 import org.apache.crunch.impl.mr.MRPipeline;
@@ -8,22 +7,18 @@ import org.apache.crunch.test.TemporaryPath;
 import org.junit.Rule;
 import org.junit.Test;
 
-import static org.apache.crunch.types.avro.Avros.strings;
-import static org.junit.Assert.assertEquals;
-
-public class SerializableFunctionsTest {
-
+public class PipelineDebugTest {
   @Rule
   public transient TemporaryPath tmpDir = new TemporaryPath();
 
   @Test
-  public void testInitialize() throws IOException {
+  public void testDebug() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
     Pipeline pipeline = new MRPipeline(getClass());
+    pipeline.enableDebug();
+    pipeline.getConfiguration().setBoolean("crunch.log.job.progress", true);
     PCollection<String> lines = pipeline.readTextFile(inputPath);
-    long len = lines.parallelDo(new CustomDoFn<String, String>(), strings())
-        .length().getValue();
-    assertEquals(4, len);
+    pipeline.writeTextFile(lines, tmpDir.getFileName("out"));
     pipeline.done();
   }
 }

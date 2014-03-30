@@ -120,7 +120,7 @@ public class PageRankTest implements Serializable {
   public void test() throws Exception {
     Configuration conf = tmpDir.getDefaultConfiguration();
     String urlInput = tmpDir.copyResourceFileName("urls.txt");
-    Pipeline pipeline = new MRPipeline(PageRankTest.class, conf);
+    Pipeline pipeline = new MRPipeline(getClass());
     PTable<String, PageRankData> scores = readUrls(pipeline, urlInput);
     Float delta = 1.0f;
     while (delta > 0.01) {

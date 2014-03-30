@@ -25,7 +25,7 @@ public class NonSerializableOuterClass {
   public void runPipeline() throws IOException {
     List<String> expectedContent = Lists.newArrayList("b", "c", "a", "e");
     String inputPath = tmpDir.copyResourceFileName("set1.txt");
-    Pipeline pipeline = new MRPipeline(NonSerializableOuterClass.class);
+    Pipeline pipeline = new MRPipeline(getClass());
     PCollection<String> lines = pipeline.readTextFile(inputPath);
     PCollection<String> lower = lines.parallelDo(new DoFn<String, String>() {
       @Override

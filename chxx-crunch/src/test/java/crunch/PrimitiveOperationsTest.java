@@ -92,7 +92,7 @@ public class PrimitiveOperationsTest implements Serializable {
   @Test
   public void testGrouping() throws Exception {
     String inputPath = tmpDir.copyResourceFileName("fruit.txt");
-    Pipeline pipeline = new MRPipeline(PrimitiveOperationsTest.class);
+    Pipeline pipeline = new MRPipeline(getClass());
 
     PCollection<String> a = pipeline.readTextFile(inputPath);
     assertEquals("{cherry,apple,banana}", dump(a));
