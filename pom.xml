@@ -15,6 +15,7 @@
     <module>ch03</module>
     <module>ch04</module>
     <module>ch04-avro</module>
+    <module>chxx-parquet</module>
     <module>ch05</module>
     <module>ch07</module>
     <module>ch08</module>

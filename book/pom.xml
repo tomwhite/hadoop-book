@@ -15,6 +15,7 @@
     <!-- Component versions are defined here -->
     <!-- Note that Hadoop dependencies are defined in hadoop-meta -->
     <avro.version>1.7.5</avro.version>
+    <parquet.version>1.5.0</parquet.version>
     <crunch.version>0.9.0-hadoop2</crunch.version>
     <pig.version>0.9.1</pig.version>
     <hive.version>0.8.0</hive.version>
@@ -34,6 +35,17 @@
         <groupId>org.apache.avro</groupId>
         <artifactId>avro-mapred</artifactId>
         <version>${avro.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.twitter</groupId>
+        <artifactId>parquet-avro</artifactId>
+        <version>${parquet.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-core</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <dependency>
         <groupId>org.apache.hbase</groupId>
