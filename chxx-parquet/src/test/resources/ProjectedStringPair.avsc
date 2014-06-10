@@ -1,0 +1,8 @@
+{
+  "type": "record",
+  "name": "StringPair",
+  "doc": "The right field of a pair of strings.",
+  "fields": [
+    {"name": "right", "type": "string"}
+  ]
+}

@@ -8,6 +8,7 @@ import org.apache.hadoop.fs.Path;
 import org.junit.Test;
 import parquet.avro.AvroParquetReader;
 import parquet.avro.AvroParquetWriter;
+import parquet.avro.AvroReadSupport;
 import parquet.column.ParquetProperties;
 import parquet.example.data.Group;
 import parquet.example.data.GroupFactory;
@@ -87,6 +88,73 @@ public class ParquetTest {
     assertNotNull(result);
     assertThat(result.get("left").toString(), is("L"));
     assertThat(result.get("right").toString(), is("R"));
+    assertNull(reader.read());
+
+    FileSystem fs = FileSystem.get(new Configuration());
+    fs.delete(path, true);
+  }
+
+  @Test
+  public void testParquetFileUsingAvroProjection() throws IOException {
+    Schema.Parser parser = new Schema.Parser();
+    Schema schema = parser.parse(getClass().getResourceAsStream("StringPair.avsc"));
+
+    GenericRecord datum = new GenericData.Record(schema);
+    datum.put("left", "L");
+    datum.put("right", "R");
+
+    Path path = new Path("data.parquet");
+    AvroParquetWriter<GenericRecord> writer =
+        new AvroParquetWriter<GenericRecord>(path, schema);
+    writer.write(datum);
+    writer.close();
+
+    parser = new Schema.Parser();
+    Schema projectionSchema = parser.parse(
+        getClass().getResourceAsStream("ProjectedStringPair.avsc"));
+    Configuration conf = new Configuration();
+    AvroReadSupport.setRequestedProjection(conf, projectionSchema);
+    AvroParquetReader<GenericRecord> reader =
+        new AvroParquetReader<GenericRecord>(conf, path);
+    GenericRecord result = reader.read();
+    assertNull(result.get("left"));
+    assertThat(result.get("right").toString(), is("R"));
+    assertNull(reader.read());
+
+    FileSystem fs = FileSystem.get(new Configuration());
+    fs.delete(path, true);
+  }
+
+  @Test
+  public void testParquetFileUsingAvroProjectionAndReadSchema() throws IOException {
+    Schema.Parser parser = new Schema.Parser();
+    Schema schema = parser.parse(getClass().getResourceAsStream("StringPair.avsc"));
+
+    GenericRecord datum = new GenericData.Record(schema);
+    datum.put("left", "L");
+    datum.put("right", "R");
+
+    Path path = new Path("data.parquet");
+    AvroParquetWriter<GenericRecord> writer =
+        new AvroParquetWriter<GenericRecord>(path, schema);
+    writer.write(datum);
+    writer.close();
+
+    parser = new Schema.Parser();
+    Schema projectionSchema = parser.parse(
+        getClass().getResourceAsStream("ProjectedStringPair.avsc"));
+    parser = new Schema.Parser();
+    Schema readSchema = parser.parse(
+        getClass().getResourceAsStream("NewStringPair.avsc"));
+    Configuration conf = new Configuration();
+    AvroReadSupport.setRequestedProjection(conf, projectionSchema);
+    AvroReadSupport.setAvroReadSchema(conf, readSchema);
+    AvroParquetReader<GenericRecord> reader =
+        new AvroParquetReader<GenericRecord>(conf, path);
+    GenericRecord result = reader.read();
+    assertNull(result.get("left"));
+    assertThat(result.get("right").toString(), is("R"));
+    assertThat(result.get("description").toString(), is(""));
     assertNull(reader.read());
 
     FileSystem fs = FileSystem.get(new Configuration());
