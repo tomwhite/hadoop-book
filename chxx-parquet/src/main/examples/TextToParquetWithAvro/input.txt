@@ -1,0 +1,2 @@
+hadoop jar parquet-examples.jar TextToParquetWithAvro \
+  input/docs/quangle.txt output

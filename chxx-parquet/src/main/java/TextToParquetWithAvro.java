@@ -1,4 +1,7 @@
 import java.io.IOException;
+import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
@@ -9,33 +12,35 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
+import parquet.avro.AvroParquetOutputFormat;
 import parquet.example.data.Group;
-import parquet.example.data.GroupFactory;
-import parquet.example.data.simple.SimpleGroupFactory;
-import parquet.hadoop.example.ExampleOutputFormat;
-import parquet.schema.MessageType;
-import parquet.schema.MessageTypeParser;
 
-public class TextToParquet extends Configured implements Tool {
+/**
+ * Convert text files to Parquet files using Parquet's {@code AvroParquetOutputFormat}.
+ */
+public class TextToParquetWithAvro extends Configured implements Tool {
 
-  private static final MessageType SCHEMA = MessageTypeParser.parseMessageType(
-      "message Line {\n" +
-      "  required int64 offset;\n" +
-      "  required binary line (UTF8);\n" +
+  private static final Schema SCHEMA = new Schema.Parser().parse(
+      "{\n" +
+      "  \"type\": \"record\",\n" +
+      "  \"name\": \"Line\",\n" +
+      "  \"fields\": [\n" +
+      "    {\"name\": \"offset\", \"type\": \"long\"},\n" +
+      "    {\"name\": \"line\", \"type\": \"string\"}\n" +
+      "  ]\n" +
       "}");
 
   public static class TextToParquetMapper
-      extends Mapper<LongWritable, Text, Void, Group> {
+      extends Mapper<LongWritable, Text, Void, GenericRecord> {
 
-    private GroupFactory groupFactory = new SimpleGroupFactory(SCHEMA);
+    private GenericRecord record = new GenericData.Record(SCHEMA);
 
     @Override
     protected void map(LongWritable key, Text value, Context context)
         throws IOException, InterruptedException {
-      Group group = groupFactory.newGroup()
-          .append("offset", key.get())
-          .append("line", value.toString());
-      context.write(null, group);
+      record.put("offset", key.get());
+      record.put("line", value.toString());
+      context.write(null, record);
     }
   }
 
@@ -57,8 +62,8 @@ public class TextToParquet extends Configured implements Tool {
     job.setMapperClass(TextToParquetMapper.class);
     job.setNumReduceTasks(0);
 
-    job.setOutputFormatClass(ExampleOutputFormat.class);
-    ExampleOutputFormat.setSchema(job, SCHEMA);
+    job.setOutputFormatClass(AvroParquetOutputFormat.class);
+    AvroParquetOutputFormat.setSchema(job, SCHEMA);
 
     job.setOutputKeyClass(Void.class);
     job.setOutputValueClass(Group.class);
@@ -67,7 +72,7 @@ public class TextToParquet extends Configured implements Tool {
   }
 
   public static void main(String[] args) throws Exception {
-    int exitCode = ToolRunner.run(new TextToParquet(), args);
+    int exitCode = ToolRunner.run(new TextToParquetWithAvro(), args);
     System.exit(exitCode);
   }
 }

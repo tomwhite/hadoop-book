@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
-public class ParquetMRTest {
+public class ParquetMRWithExampleTest {
   @Rule
   public transient TemporaryFolder tmpDir = new TemporaryFolder();
 
@@ -39,7 +39,7 @@ public class ParquetMRTest {
     Path parquetOutput = new Path(parquetOutputFolder.toURI());
     Path textOutput = new Path(textOutputFolder.toURI());
 
-    int rc = runTool(new TextToParquet(), conf, input.toString(), parquetOutput.toString());
+    int rc = runTool(new TextToParquetWithExample(), conf, input.toString(), parquetOutput.toString());
     assertEquals(0, rc);
 
     Path parquetFile = new Path(parquetOutput, "part-m-00000.parquet");
@@ -51,7 +51,7 @@ public class ParquetMRTest {
     checkNextGroup(reader, 13, "banana");
     assertNull(reader.read());
 
-    rc = runTool(new ParquetToText(), conf, parquetOutput.toString(), textOutput.toString());
+    rc = runTool(new ParquetToTextWithExample(), conf, parquetOutput.toString(), textOutput.toString());
     assertEquals(0, rc);
 
     assertEquals(
