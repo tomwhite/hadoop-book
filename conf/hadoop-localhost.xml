@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<configuration>
+
+  <property>
+    <name>fs.default.name</name>
+    <value>hdfs://localhost/</value>
+  </property>
+  
+  <property>
+    <name>mapred.job.tracker</name>
+    <value>localhost:8021</value>
+  </property>
+  
+</configuration>

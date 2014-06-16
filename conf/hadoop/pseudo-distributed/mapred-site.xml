@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!-- mapred-site.xml -->
+<configuration>
+  <property>
+    <name>mapred.job.tracker</name>
+    <value>localhost:8021</value>
+  </property>
+</configuration>

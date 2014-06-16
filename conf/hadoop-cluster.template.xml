@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<configuration>
+
+  <property>
+    <name>fs.default.name</name>
+    <value>hdfs://namenode/</value>
+  </property>
+  
+  <property>
+    <name>mapred.job.tracker</name>
+    <value>jobtracker:8021</value>
+  </property>
+  
+</configuration>

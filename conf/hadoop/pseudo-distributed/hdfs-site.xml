@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!-- hdfs-site.xml -->
+<configuration>
+  <property>
+    <name>dfs.replication</name>
+    <value>1</value>
+  </property>
+</configuration>
