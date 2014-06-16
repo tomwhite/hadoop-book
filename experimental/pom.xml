@@ -23,11 +23,6 @@
       <artifactId>ch04</artifactId>
       <version>3.0</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.crunch</groupId>
-      <artifactId>crunch-core</artifactId>
-      <version>0.9.0-hadoop2</version>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
