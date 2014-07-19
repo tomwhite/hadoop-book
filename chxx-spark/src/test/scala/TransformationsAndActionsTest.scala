@@ -61,28 +61,6 @@ class TransformationsAndActionsTest extends FunSuite with BeforeAndAfterEach {
     assert(sets.collect().toSet === Set(("a", Set(1, 3, 5)), ("b", Set(7))))
   }
 
-  test("noisy reduceByKey and foldByKey") {
-    val pairs: RDD[(String, NoisyInt)] =
-      sc.parallelize(Array(("a", new NoisyInt(3)), ("a", new NoisyInt(1)), ("b",
-        new NoisyInt(7)), ("a", new NoisyInt(5))))
-
-    val sums: RDD[(String, NoisyInt)] = pairs.reduceByKey(_ + _)
-    assert(sums.collect().toSet === Set(("a", new NoisyInt(9)), ("b", new NoisyInt(7))))
-
-    val foldedSums: RDD[(String, NoisyInt)] = pairs.foldByKey(new NoisyInt(0))(_ + _)
-    assert(foldedSums.collect().toSet === Set(("a", new NoisyInt(9)), ("b",
-      new NoisyInt(7))))
-  }
-
-  test("noisy aggregateByKey") {
-    val pairs: RDD[(String, Int)] =
-      sc.parallelize(Array(("a", 3), ("a", 1), ("b", 7), ("a", 5)))
-
-    val sets: RDD[(String, NoisySet)] =
-      pairs.aggregateByKey(new NoisySet)(_+=_, _++=_)
-    assert(sets.collect().toSet === Set(("a", Set(1, 3, 5)), ("b", Set(7))))
-  }
-
 }
 
 class MapReduce[K1, V1, K2, V2, K3, V3] {
@@ -94,31 +72,5 @@ class MapReduce[K1, V1, K2, V2, K3, V3] {
     val shuffled: RDD[(K2, Iterable[V2])] = mapOutput.groupByKey().sortByKey()
     val output: RDD[(K3, V3)] = shuffled.flatMap(reduceFn)
     output
-  }
-}
-
-case class NoisyInt(var value: Int) extends Serializable {
-  println("tw: " + hashCode() + " New int: " + value)
-  def +(that: NoisyInt) = {
-    println("tw: " + hashCode() + " Adding " + value + " to " + that.value + " equals "
-      + (value + that.value))
-    this.value = value + that.value
-    this
-  }
-  def toInt() = value
-}
-
-class NoisySet extends HashSet[Int] {
-  println("tw: " + hashCode() + " New empty set")
-  override def += (elem: Int): this.type = {
-    println("tw: " + hashCode() + " Adding element " + elem + " to " + this)
-    super.+=(elem)
-    this
-  }
-
-  override def ++=(xs: TraversableOnce[Int]): this.type = {
-    println("tw: " + hashCode() + " Adding elements + " + xs + " to " + this)
-    super.++=(xs)
-    this
   }
 }
