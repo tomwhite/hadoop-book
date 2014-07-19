@@ -28,20 +28,35 @@ class FunctionSerializationTest extends FunSuite with BeforeAndAfterEach {
 
   test("serializable global singleton function") {
     val params = sc.parallelize(Array(1, 2, 3))
-    val result = params.reduce(Fns.singletonMyAddFn)
+    val result = params.reduce(NonSerializableSingleton.myAddFn)
     assert(result === 6)
   }
 
   test("non-serializable class function") {
-    val notSerializable = new NotSerializable()
+    val nonSerializable = new NonSerializableClass()
     val params = sc.parallelize(Array(1, 2, 3))
     intercept[SparkException] {
-      val result = params.reduce(notSerializable.classMyAddFn)
+      val result = params.reduce(nonSerializable.myAddFn)
     }
+  }
+
+  test("serializable class function") {
+    val serializable = new SerializableClass()
+    val params = sc.parallelize(Array(1, 2, 3))
+    val result = params.reduce(serializable.myAddFn)
+    assert(result === 6)
   }
 
 }
 
-object Fns {
-  def singletonMyAddFn(x: Int, y: Int): Int = { x + y }
+object NonSerializableSingleton {
+  def myAddFn(x: Int, y: Int): Int = { x + y }
+}
+
+class NonSerializableClass {
+  def myAddFn(x: Int, y: Int): Int = { x + y }
+}
+
+class SerializableClass extends Serializable {
+  def myAddFn(x: Int, y: Int): Int = { x + y }
 }
