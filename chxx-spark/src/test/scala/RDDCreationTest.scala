@@ -5,15 +5,14 @@ import org.apache.avro.file.DataFileWriter
 import org.apache.avro.generic.{GenericData, GenericDatumWriter, GenericRecord}
 import org.apache.avro.io.DatumWriter
 import org.apache.avro.mapred.AvroKey
-import org.apache.avro.mapreduce.{AvroKeyInputFormat, AvroJob}
+import org.apache.avro.mapreduce.{AvroJob, AvroKeyInputFormat}
 import org.apache.avro.reflect.{ReflectData, ReflectDatumWriter}
-import org.apache.avro.specific.{SpecificData, SpecificDatumWriter}
-import org.apache.hadoop.io.{NullWritable, IntWritable, Text}
+import org.apache.avro.specific.SpecificDatumWriter
+import org.apache.hadoop.io.{IntWritable, NullWritable, Text}
 import org.apache.hadoop.mapreduce.Job
 import org.apache.spark.SparkContext._
-import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD
-
+import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 import specific.WeatherRecord
 

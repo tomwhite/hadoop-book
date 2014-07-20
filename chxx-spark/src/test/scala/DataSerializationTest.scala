@@ -1,7 +1,7 @@
 import example.IntWrapper;
 import org.apache.avro.Schema
 import org.apache.avro.generic.{GenericData, GenericRecord}
-import org.apache.spark.{SparkConf, SparkException, SparkContext}
+import org.apache.spark.{SparkConf, SparkContext, SparkException}
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 
 class DataSerializationTest extends FunSuite with BeforeAndAfterEach {

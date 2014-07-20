@@ -1,4 +1,4 @@
-import org.apache.spark.{SparkException, SparkContext}
+import org.apache.spark.{SparkContext, SparkException}
 import org.scalatest.{BeforeAndAfterEach, FunSuite}
 
 class FunctionSerializationTest extends FunSuite with BeforeAndAfterEach {
