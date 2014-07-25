@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
 import org.apache.avro.mapred.AvroCollector;
 import org.apache.avro.mapred.AvroJob;
 import org.apache.avro.mapred.AvroMapper;
@@ -59,7 +60,9 @@ public class AvroSort extends Configured implements Tool {
     
     FileInputFormat.addInputPath(conf, new Path(input));
     FileOutputFormat.setOutputPath(conf, new Path(output));
-    
+
+    AvroJob.setDataModelClass(conf, GenericData.class);
+
     Schema schema = new Schema.Parser().parse(new File(schemaFile));
     AvroJob.setInputSchema(conf, schema);
     Schema intermediateSchema = Pair.getPairSchema(schema, schema);

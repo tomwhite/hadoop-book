@@ -14,7 +14,7 @@
     
     <!-- Component versions are defined here -->
     <!-- Note that Hadoop dependencies are defined in hadoop-meta -->
-    <avro.version>1.7.5</avro.version>
+    <avro.version>1.7.7</avro.version>
     <parquet.version>1.5.0</parquet.version>
     <crunch.version>0.10.0-hadoop2</crunch.version>
     <pig.version>0.9.1</pig.version>
