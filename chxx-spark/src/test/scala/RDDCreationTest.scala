@@ -1,5 +1,6 @@
 import java.io.File
 
+import com.google.common.io.{Resources, Files}
 import org.apache.avro.Schema
 import org.apache.avro.file.DataFileWriter
 import org.apache.avro.generic.{GenericData, GenericDatumWriter, GenericRecord}
@@ -42,8 +43,10 @@ class RDDCreationTest extends FunSuite with BeforeAndAfterEach {
   }
 
   test("text file") {
-    val inputPath = "chxx-spark/src/test/resources/fruit.txt"
-    val text: RDD[String] = sc.textFile(inputPath)
+    val input: File = File.createTempFile("input", "")
+    Files.copy(Resources.newInputStreamSupplier(Resources.getResource("fruit.txt")),
+      input)
+    val text: RDD[String] = sc.textFile(input.getPath)
     assert(text.collect().toList === List("cherry", "apple", "banana"))
   }
 
@@ -55,15 +58,19 @@ class RDDCreationTest extends FunSuite with BeforeAndAfterEach {
 //  }
 
   test("sequence file writable") {
-    val inputPath = "chxx-spark/src/test/resources/numbers.seq"
-    val data = sc.sequenceFile[IntWritable, Text](inputPath)
+    val input: File = File.createTempFile("input", "")
+    Files.copy(Resources.newInputStreamSupplier(Resources.getResource("numbers.seq")),
+      input)
+    val data = sc.sequenceFile[IntWritable, Text](input.getPath)
     assert(data.first._1 === new IntWritable(100))
     assert(data.first._2 === new Text("One, two, buckle my shoe"))
   }
 
   test("sequence file java") {
-    val inputPath = "chxx-spark/src/test/resources/numbers.seq"
-    val data = sc.sequenceFile[Int, String](inputPath)
+    val input: File = File.createTempFile("input", "")
+    Files.copy(Resources.newInputStreamSupplier(Resources.getResource("numbers.seq")),
+      input)
+    val data = sc.sequenceFile[Int, String](input.getPath)
     assert(data.first._1 === 100)
     assert(data.first._2 === "One, two, buckle my shoe")
   }
