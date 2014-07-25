@@ -67,7 +67,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         <dependency>
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
-          <version>0.8.1-incubating</version>
+          <version>${mrunit.version}</version>
           <classifier>hadoop100</classifier>
           <scope>test</scope>
         </dependency>
@@ -132,7 +132,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         <dependency>
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
-          <version>0.8.1-incubating</version>
+          <version>${mrunit.version}</version>
           <classifier>hadoop100</classifier>
           <scope>test</scope>
         </dependency>
@@ -205,7 +205,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         <dependency>
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
-          <version>0.8.1-incubating</version>
+          <version>${mrunit.version}</version>
           <classifier>hadoop023</classifier>
           <scope>test</scope>
         </dependency>
@@ -314,7 +314,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         <dependency>
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
-          <version>0.8.1-incubating</version>
+          <version>${mrunit.version}</version>
           <classifier>hadoop023</classifier>
           <scope>test</scope>
         </dependency>
@@ -417,7 +417,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         <dependency>
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
-          <version>0.8.1-incubating</version>
+          <version>${mrunit.version}</version>
           <classifier>hadoop023</classifier>
           <scope>test</scope>
         </dependency>
@@ -520,7 +520,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         <dependency>
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
-          <version>0.8.1-incubating</version>
+          <version>${mrunit.version}</version>
           <classifier>hadoop023</classifier>
           <scope>test</scope>
         </dependency>
@@ -626,7 +626,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         <dependency>
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
-          <version>0.8.1-incubating</version>
+          <version>${mrunit.version}</version>
           <classifier>hadoop023</classifier>
           <scope>test</scope>
         </dependency>
