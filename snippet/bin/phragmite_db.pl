@@ -171,7 +171,6 @@ for my $file (map { s{\\}{/}g; glob $_ } @ARGV) {
         my $line = $_;
         $line =~ s!&!&amp;!g;                         # escape XML &
         $line =~ s!<!&lt;!g;                          # escape XML <
-        $line =~ s!"!&quot;!g;                        # escape XML "
         $line =~ s!'!&apos;!g;                        # escape XML '
         $line =~ s!/\*\*\s*(\S+(?:\s+\S+)*)\s*\*\*/!/\* \`\{$1\}\` \*/!g;
         $line =~ s!/\*\[\*/!<emphasis role="bold">!g; # /*[*/
@@ -381,7 +380,7 @@ sub leftShift {
 sub lengthCheck {
     my $key = shift;
     my $frag = shift;
-    $frag =~ s!(&lt;|&gt;|&amp;|&quot;|&apos;)!1!g;
+    $frag =~ s!(&lt;|&gt;|&amp;|&apos;)!1!g;
     $frag =~ s!<emphasis role="bold">!!g;
     $frag =~ s!</emphasis>!!g;
     my $maxline = MAXLINE + 1;
