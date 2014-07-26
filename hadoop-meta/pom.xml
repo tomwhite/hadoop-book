@@ -174,67 +174,6 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
       </dependencies>
     </profile>
 
-    <profile>
-      <id>apache-trunk</id>
-      <activation>
-        <property>
-          <name>hadoop.distro</name>
-          <value>apache-truck</value>
-        </property>
-      </activation>
-      <properties>
-        <hadoop.version>3.0.0-SNAPSHOT</hadoop.version>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-client</artifactId>
-          <version>${hadoop.version}</version>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-common</artifactId>
-          <version>${hadoop.version}</version>
-          <type>test-jar</type>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-hdfs</artifactId>
-          <version>${hadoop.version}</version>
-          <type>test-jar</type>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.hadoop</groupId>
-          <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
-          <version>${hadoop.version}</version>
-          <type>test-jar</type>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.mrunit</groupId>
-          <artifactId>mrunit</artifactId>
-          <version>${mrunit.version}</version>
-          <classifier>hadoop2</classifier>
-          <scope>test</scope>
-        </dependency>
-      </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <testExcludes>
-                <exclude>CoherencyModelTest.java</exclude> <!-- sync() was removed -->
-                <exclude>v3/MaxTemperatureDriverMiniTest.java</exclude> <!-- Failing -->
-              </testExcludes>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
   </profiles>
 
 </project>
