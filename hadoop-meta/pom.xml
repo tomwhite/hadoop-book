@@ -127,6 +127,8 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <artifactId>hadoop-client</artifactId>
           <version>${hadoop.version}</version>
         </dependency>
+
+        <!-- following are needed for mini clusters -->
         <dependency>
           <groupId>org.apache.hadoop</groupId>
           <artifactId>hadoop-common</artifactId>
@@ -149,6 +151,20 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <scope>test</scope>
         </dependency>
         <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-yarn-server-tests</artifactId>
+          <version>${hadoop.version}</version>
+          <type>test-jar</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-mapreduce-client-hs</artifactId>
+          <version>${hadoop.version}</version>
+          <scope>test</scope>
+        </dependency>
+
+        <dependency>
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
           <version>${mrunit.version}</version>
@@ -156,19 +172,6 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <scope>test</scope>
         </dependency>
       </dependencies>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <configuration>
-              <testExcludes>
-                <exclude>v3/MaxTemperatureDriverMiniTest.java</exclude> <!-- Failing -->
-              </testExcludes>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
     </profile>
 
     <profile>
