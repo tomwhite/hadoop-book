@@ -21,4 +21,4 @@ sed -e '/<programlisting/s/ id="[^"]*"//; s|</programlisting>|\
 $bin/check_manuscript.py /tmp/chxx-avro.xml $actual/ch04-avro/*
 
 # Common check
-$bin/check_manuscript.py $book_workspace/ch07-*.xml $actual/common/*
+$bin/check_manuscript.py /tmp/ch07.xml $actual/common/*

@@ -17,6 +17,6 @@ for snippet_file in sys.argv[2:]:
   index = manuscript.find(snippet)
   if index == -1:
     print "Snippet not found", snippet_file
-  else:
-    print "Snippet found", snippet_file
+  #else:
+  #  print "Snippet found", snippet_file
 

@@ -210,14 +210,22 @@ public class AvroTest {
     DataFileReader<GenericRecord> dataFileReader =
       new DataFileReader<GenericRecord>(file, reader);
     assertThat("Schema is the same", schema, is(dataFileReader.getSchema()));
-    
-    int count = 0;
+
 // vv AvroDataFileIterator
     GenericRecord record = null;
     while (dataFileReader.hasNext()) {
       record = dataFileReader.next(record);
       // process record
+    }
 // ^^ AvroDataFileIterator
+
+    dataFileReader =
+        new DataFileReader<GenericRecord>(file, reader);
+    int count = 0;
+    record = null;
+    while (dataFileReader.hasNext()) {
+      record = dataFileReader.next(record);
+      // process record
       count++;
       assertThat(record.get("left").toString(), is("L"));
       if (count == 1) {
@@ -225,10 +233,8 @@ public class AvroTest {
       } else {
         assertThat(record.get("right").toString(), is("r"));        
       }
-// vv AvroDataFileIterator      
     }
-// ^^ AvroDataFileIterator    
-    
+
     assertThat(count, is(2));
     file.delete();
   }
@@ -255,12 +261,18 @@ public class AvroTest {
     DataFileReader<GenericRecord> dataFileReader =
       new DataFileReader<GenericRecord>(file, reader);
     assertThat("Schema is the same", schema, is(dataFileReader.getSchema()));
-    
-    int count = 0;
+
 // vv AvroDataFileShortIterator
     for (GenericRecord record : dataFileReader) {
       // process record
+    }
 // ^^ AvroDataFileShortIterator
+
+    dataFileReader =
+        new DataFileReader<GenericRecord>(file, reader);
+    int count = 0;
+    for (GenericRecord record : dataFileReader) {
+      // process record
       count++;
       assertThat(record.get("left").toString(), is("L"));
       if (count == 1) {
@@ -268,10 +280,8 @@ public class AvroTest {
       } else {
         assertThat(record.get("right").toString(), is("r"));        
       }
-// vv AvroDataFileShortIterator      
     }
-// ^^ AvroDataFileShortIterator    
-    
+
     assertThat(count, is(2));
     file.delete();
   }
