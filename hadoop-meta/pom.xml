@@ -85,7 +85,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
           <version>${mrunit.version}</version>
-          <classifier>hadoop100</classifier>
+          <classifier>hadoop1</classifier>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -142,10 +142,17 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <scope>test</scope>
         </dependency>
         <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
+          <version>${hadoop.version}</version>
+          <type>test-jar</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
           <version>${mrunit.version}</version>
-          <classifier>hadoop023</classifier>
+          <classifier>hadoop2</classifier>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -196,10 +203,17 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
           <scope>test</scope>
         </dependency>
         <dependency>
+          <groupId>org.apache.hadoop</groupId>
+          <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
+          <version>${hadoop.version}</version>
+          <type>test-jar</type>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
           <groupId>org.apache.mrunit</groupId>
           <artifactId>mrunit</artifactId>
           <version>${mrunit.version}</version>
-          <classifier>hadoop023</classifier>
+          <classifier>hadoop2</classifier>
           <scope>test</scope>
         </dependency>
       </dependencies>

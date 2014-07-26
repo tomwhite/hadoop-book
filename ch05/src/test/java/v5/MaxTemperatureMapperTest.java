@@ -19,7 +19,7 @@ public class MaxTemperatureMapperTest {
                               // Temperature ^^^^^
     new MapDriver<LongWritable, Text, Text, IntWritable>()
       .withMapper(new MaxTemperatureMapper())
-      .withInputValue(value)
+      .withInput(new LongWritable(0), value)
       .withOutput(new Text("1950"), new IntWritable(-11))
       .runTest();
   }
@@ -33,7 +33,7 @@ public class MaxTemperatureMapperTest {
                               // Temperature ^^^^^
     new MapDriver<LongWritable, Text, Text, IntWritable>()
       .withMapper(new MaxTemperatureMapper())
-      .withInputValue(value)
+      .withInput(new LongWritable(0), value)
       .runTest();
   }
 //vv MaxTemperatureMapperTestV5Malformed
@@ -47,7 +47,7 @@ public class MaxTemperatureMapperTest {
     Counters counters = new Counters();
     new MapDriver<LongWritable, Text, Text, IntWritable>()
       .withMapper(new MaxTemperatureMapper())
-      .withInputValue(value)
+      .withInput(new LongWritable(0), value)
       .withCounters(counters)
       .runTest();
     Counter c = counters.findCounter(MaxTemperatureMapper.Temperature.MALFORMED);
