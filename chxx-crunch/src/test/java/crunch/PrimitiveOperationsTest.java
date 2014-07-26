@@ -27,6 +27,7 @@ import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PrimitiveOperationsTest implements Serializable {
 
@@ -109,7 +110,9 @@ public class PrimitiveOperationsTest implements Serializable {
     assertEquals("{(5,[apple]),(6,[banana,cherry])}", dump(c));
 
     c = b.groupByKey(2);
-    assertEquals("{(5,[apple]),(6,[banana,cherry])}", dump(c));
+    String dumpc = dump(c);
+    assertTrue(dumpc, "{(5,[apple]),(6,[banana,cherry])}".equals(dumpc) ||
+        "{(6,[banana,cherry]),(5,[apple])}".equals(dumpc));
 
     c = b.groupByKey(); // since value iterator is single use
 

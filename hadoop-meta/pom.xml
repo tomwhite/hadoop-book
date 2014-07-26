@@ -99,7 +99,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
         </property>
       </activation>
       <properties>
-        <hadoop.version>2.2.0</hadoop.version>
+        <hadoop.version>2.4.1</hadoop.version>
       </properties>
       <dependencies>
         <dependency>
