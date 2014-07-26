@@ -69,7 +69,6 @@ public class AvroTest {
   }
   
   @Test
-  @Ignore("Requires Avro 1.6.0 or later")
   public void testGenericString() throws IOException {
     Schema schema = new Schema.Parser().parse("{\"type\": \"string\", \"avro.java.string\": \"String\"}");
     

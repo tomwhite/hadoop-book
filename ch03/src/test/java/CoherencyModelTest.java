@@ -62,7 +62,6 @@ public class CoherencyModelTest {
   }
   
   @Test
-  @Ignore("See https://issues.apache.org/jira/browse/HADOOP-4379")
   public void fileContentIsVisibleAfterFlushAndSync() throws IOException {
     // vv CoherencyModelTest-VisibleAfterFlushAndSync
     Path p = new Path("p");
@@ -75,8 +74,20 @@ public class CoherencyModelTest {
     out.close();
     assertThat(fs.delete(p, true), is(true));
   }
-  
-  
+
+  @Test
+  public void fileContentIsVisibleAfterHSync() throws IOException {
+    // vv CoherencyModelTest-VisibleAfterHSync
+    Path p = new Path("p");
+    FSDataOutputStream out = fs.create(p);
+    out.write("content".getBytes("UTF-8"));
+    /*[*/out.hsync();/*]*/
+    assertThat(fs.getFileStatus(p).getLen(), is(((long) "content".length())));
+    // ^^ CoherencyModelTest-VisibleAfterHSync
+    out.close();
+    assertThat(fs.delete(p, true), is(true));
+  }
+
   @Test
   public void localFileContentIsVisibleAfterFlushAndSync() throws IOException {
     File localFile = File.createTempFile("tmp", "");
