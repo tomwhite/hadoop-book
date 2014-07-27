@@ -12,6 +12,7 @@ public class LoggingIdentityMapper<KEYIN, VALUEIN, KEYOUT, VALUEOUT>
   private static final Log LOG = LogFactory.getLog(LoggingIdentityMapper.class);
   
   @Override
+  @SuppressWarnings("unchecked")
   public void map(KEYIN key, VALUEIN value, Context context)
       throws IOException, InterruptedException {
     // Log to stdout file

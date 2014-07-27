@@ -7,6 +7,7 @@ public class BinaryOrTextWritable extends GenericWritable {
   private static Class[] TYPES = { BytesWritable.class, Text.class };
 
   @Override
+  @SuppressWarnings("unchecked")
   protected Class<? extends Writable>[] getTypes() {
     return TYPES;
   }

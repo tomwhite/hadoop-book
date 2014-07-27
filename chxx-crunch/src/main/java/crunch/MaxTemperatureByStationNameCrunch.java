@@ -36,8 +36,7 @@ public class MaxTemperatureByStationNameCrunch {
     PTable<String, String> stationIdToName = stations
         .parallelDo(toStationIdNamePairsFn(), tableOf(strings(), strings()));
 
-    JoinStrategy<String, Integer, String> mapsideJoin =
-        new MapsideJoinStrategy<String, Integer, String>();
+    JoinStrategy<String, Integer, String> mapsideJoin = MapsideJoinStrategy.create();
     PTable<String, Pair<Integer, String>> joined =
         mapsideJoin.join(maxTemps, stationIdToName, JoinType.INNER_JOIN);
     pipeline.writeTextFile(joined, args[2]);

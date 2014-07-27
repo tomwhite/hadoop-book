@@ -51,6 +51,7 @@ public class IntWritableTest extends WritableTestBase {
   }
   
   @Test
+  @SuppressWarnings("unchecked")
   public void comparator() throws IOException {
     // vv IntWritableTest-Comparator
     RawComparator<IntWritable> comparator = WritableComparator.get(IntWritable.class);

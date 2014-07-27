@@ -10,6 +10,7 @@ import org.apache.hadoop.io.SequenceFile;
 // vv MapFileFixer
 public class MapFileFixer {
 
+  @SuppressWarnings("unchecked")
   public static void main(String[] args) throws Exception {
     String mapUri = args[0];
     

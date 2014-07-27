@@ -14,6 +14,7 @@ public class CustomDoFn<S, T> extends DoFn<S, T> {
     helper = new NonSerializableHelper();
   }
 
+  @SuppressWarnings("unchecked")
   @Override
   public void process(S input, Emitter<T> emitter) {
     // use helper here

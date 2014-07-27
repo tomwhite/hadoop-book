@@ -36,6 +36,7 @@ public class PartitionByStationUsingMultipleOutputs extends Configured
       multipleOutputs = new MultipleOutputs(conf);
     }
 
+    @SuppressWarnings("unchecked")
     public void reduce(Text key, Iterator<Text> values,
         OutputCollector<NullWritable, Text> output, Reporter reporter)
         throws IOException {
