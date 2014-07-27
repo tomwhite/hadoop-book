@@ -21,7 +21,7 @@ public class ShowFileStatusTest {
     if (System.getProperty("test.build.data") == null) {
       System.setProperty("test.build.data", "/tmp");
     }
-    cluster = new MiniDFSCluster(conf, 1, true, null);
+    cluster = new MiniDFSCluster.Builder(conf).build();
     fs = cluster.getFileSystem();
     OutputStream out = fs.create(new Path("/dir/file"));
     out.write("content".getBytes("UTF-8"));
@@ -44,13 +44,12 @@ public class ShowFileStatusTest {
     Path file = new Path("/dir/file");
     FileStatus stat = fs.getFileStatus(file);
     assertThat(stat.getPath().toUri().getPath(), is("/dir/file"));
-    assertThat(stat.isDir(), is(false));
+    assertThat(stat.isDirectory(), is(false));
     assertThat(stat.getLen(), is(7L));
     assertThat(stat.getModificationTime(),
         is(lessThanOrEqualTo(System.currentTimeMillis())));
     assertThat(stat.getReplication(), is((short) 1));
-    assertThat(stat.getBlockSize(),
-        anyOf(is(64 * 1024 * 1024L), is(128 * 1024 * 1024L)));
+    assertThat(stat.getBlockSize(), is(128 * 1024 * 1024L));
     assertThat(stat.getOwner(), is(System.getProperty("user.name")));
     assertThat(stat.getGroup(), is("supergroup"));
     assertThat(stat.getPermission().toString(), is("rw-r--r--"));
@@ -61,7 +60,7 @@ public class ShowFileStatusTest {
     Path dir = new Path("/dir");
     FileStatus stat = fs.getFileStatus(dir);
     assertThat(stat.getPath().toUri().getPath(), is("/dir"));
-    assertThat(stat.isDir(), is(true));
+    assertThat(stat.isDirectory(), is(true));
     assertThat(stat.getLen(), is(0L));
     assertThat(stat.getModificationTime(),
         is(lessThanOrEqualTo(System.currentTimeMillis())));

@@ -7,7 +7,7 @@ actual="$bin"/../actual
 book_workspace=~/book-workspace/htdg-git
 
 # Should add remaining chapters: ch03 ch04 ch14
-for ch in ch02 ch05 ch07 ch08 # ch11 ch12
+for ch in ch02 ch03 ch05 ch07 ch08 # ch11 ch12
 do
   # remove id attributes from program listings, and add a newline before </programlisting>
   sed '/<programlisting/s/ id="[^"]*"//; s|</programlisting>|\

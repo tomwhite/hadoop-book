@@ -28,7 +28,7 @@ public class CoherencyModelTest {
     if (System.getProperty("test.build.data") == null) {
       System.setProperty("test.build.data", "/tmp");
     }
-    cluster = new MiniDFSCluster(conf, 1, true, null);
+    cluster = new MiniDFSCluster.Builder(conf).build();
     fs = cluster.getFileSystem();
   }
   
@@ -40,11 +40,11 @@ public class CoherencyModelTest {
   
   @Test
   public void fileExistsImmediatelyAfterCreation() throws IOException {
-    // vv CoherencyModelTest
+    // vv CoherencyModelTest-ExistsImmediatelyAfterCreation
     Path p = new Path("p");
     fs.create(p);
     assertThat(fs.exists(p), is(true));
-    // ^^ CoherencyModelTest
+    // ^^ CoherencyModelTest-ExistsImmediatelyAfterCreation
     assertThat(fs.delete(p, true), is(true));
   }
   
@@ -62,28 +62,25 @@ public class CoherencyModelTest {
   }
   
   @Test
-  public void fileContentIsVisibleAfterFlushAndSync() throws IOException {
-    // vv CoherencyModelTest-VisibleAfterFlushAndSync
+  public void fileContentIsVisibleAfterHFlush() throws IOException {
+    // vv CoherencyModelTest-VisibleAfterHFlush
     Path p = new Path("p");
     FSDataOutputStream out = fs.create(p);
     out.write("content".getBytes("UTF-8"));
-    out.flush();
-    /*[*/out.sync();/*]*/
+    /*[*/out.hflush();/*]*/
     assertThat(fs.getFileStatus(p).getLen(), is(((long) "content".length())));
-    // ^^ CoherencyModelTest-VisibleAfterFlushAndSync
+    // ^^ CoherencyModelTest-VisibleAfterHFlush
     out.close();
     assertThat(fs.delete(p, true), is(true));
   }
 
   @Test
   public void fileContentIsVisibleAfterHSync() throws IOException {
-    // vv CoherencyModelTest-VisibleAfterHSync
     Path p = new Path("p");
     FSDataOutputStream out = fs.create(p);
     out.write("content".getBytes("UTF-8"));
     /*[*/out.hsync();/*]*/
     assertThat(fs.getFileStatus(p).getLen(), is(((long) "content".length())));
-    // ^^ CoherencyModelTest-VisibleAfterHSync
     out.close();
     assertThat(fs.delete(p, true), is(true));
   }
@@ -92,13 +89,13 @@ public class CoherencyModelTest {
   public void localFileContentIsVisibleAfterFlushAndSync() throws IOException {
     File localFile = File.createTempFile("tmp", "");
     assertThat(localFile.exists(), is(true));
-    // vv CoherencyModelTest-LocalFileVisibleAfterFlush
+    // vv CoherencyModelTest-LocalFileVisibleAfterFlushAndSync
     FileOutputStream out = new FileOutputStream(localFile);
     out.write("content".getBytes("UTF-8"));
     out.flush(); // flush to operating system
     out.getFD().sync(); // sync to disk
     assertThat(localFile.length(), is(((long) "content".length())));
-    // ^^ CoherencyModelTest-LocalFileVisibleAfterFlush
+    // ^^ CoherencyModelTest-LocalFileVisibleAfterFlushAndSync
     out.close();
     assertThat(localFile.delete(), is(true));
   }
