@@ -86,20 +86,22 @@ public class FileSystemGlobTest {
     assertThat(glob("/*/*/*", filter), is(paths("/2007/12/31", "/2008/01/01")));  
   } 
   
-  private Path[] glob(String pattern) throws IOException {
-    return FileUtil.stat2Paths(fs.globStatus(new Path(BASE_PATH + pattern)));
+  private Set<Path> glob(String pattern) throws IOException {
+    return new HashSet<Path>(Arrays.asList(
+        FileUtil.stat2Paths(fs.globStatus(new Path(BASE_PATH + pattern)))));
   }
   
-  private Path[] glob(String pattern, PathFilter pathFilter) throws IOException {
-    return FileUtil.stat2Paths(fs.globStatus(new Path(BASE_PATH + pattern), pathFilter));
+  private Set<Path> glob(String pattern, PathFilter pathFilter) throws IOException {
+    return new HashSet<Path>(Arrays.asList(
+        FileUtil.stat2Paths(fs.globStatus(new Path(BASE_PATH + pattern), pathFilter))));
   }
   
-  private Path[] paths(String... pathStrings) {
+  private Set<Path> paths(String... pathStrings) {
     Path[] paths = new Path[pathStrings.length];
     for (int i = 0; i < paths.length; i++) {
       paths[i] = new Path("file:" + BASE_PATH + pathStrings[i]);
     }
-    return paths;
+    return new HashSet<Path>(Arrays.asList(paths));
   }
   
   private Date date(String date) throws ParseException {
