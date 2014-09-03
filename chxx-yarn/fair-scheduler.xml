@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<allocations>
+  <defaultQueueSchedulingPolicy>fair</defaultQueueSchedulingPolicy>
+
+  <queue name="prod">
+    <weight>40</weight>
+    <schedulingPolicy>fifo</schedulingPolicy>
+  </queue>
+
+  <queue name="dev">
+    <weight>60</weight>
+    <queue name="eng" />
+    <queue name="science" />
+  </queue>
+
+  <queuePlacementPolicy>
+    <rule name="specified" create="false" />
+    <rule name="primaryGroup" create="false" />
+    <rule name="default" queue="dev.eng" />
+  </queuePlacementPolicy>
+</allocations>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<configuration>
+  <property>
+    <name>yarn.scheduler.capacity.root.queues</name>
+    <value>prod,dev</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.capacity.root.dev.queues</name>
+    <value>eng,science</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.capacity.root.prod.capacity</name>
+    <value>40</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.capacity.root.dev.capacity</name>
+    <value>60</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.capacity.root.dev.maximum-capacity</name>
+    <value>75</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.capacity.root.dev.eng.capacity</name>
+    <value>50</value>
+  </property>
+  <property>
+    <name>yarn.scheduler.capacity.root.dev.science.capacity</name>
+    <value>50</value>
+  </property>
+</configuration>
