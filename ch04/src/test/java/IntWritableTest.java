@@ -6,7 +6,8 @@
 // == IntWritableTest-Comparator
 // == IntWritableTest-ObjectComparison
 // == IntWritableTest-BytesComparison
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;

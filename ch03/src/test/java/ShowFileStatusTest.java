@@ -1,6 +1,7 @@
 // cc ShowFileStatusTest Demonstrates file status information
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.lessThanOrEqualTo;
 
 import java.io.*;
 
