@@ -104,6 +104,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
               </excludes>
               <testExcludes>
                 <exclude>CoherencyModelTest.java</exclude> <!-- TODO check -->
+                <exclude>ShowFileStatusTest.java</exclude> <!-- Missing MiniDFSCluster.Builder and FileStatus.isDirectory() -->
               </testExcludes>
             </configuration>
           </plugin>
