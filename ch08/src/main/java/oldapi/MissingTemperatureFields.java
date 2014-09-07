@@ -23,13 +23,12 @@ public class MissingTemperatureFields extends Configured implements Tool {
       System.err.printf("Job %s is not complete.\n", jobID);
       return -1;
     }
-    
+
     Counters counters = job.getCounters();
     long missing = counters.getCounter(
         MaxTemperatureWithCounters.Temperature.MISSING);
-    
-    long total = counters.findCounter("org.apache.hadoop.mapred.Task$Counter",
-        "MAP_INPUT_RECORDS").getCounter();
+
+    long total = counters.getCounter(Task.Counter.MAP_INPUT_RECORDS);
 
     System.out.printf("Records with missing temperature fields: %.2f%%\n",
         100.0 * missing / total);

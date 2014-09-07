@@ -99,7 +99,7 @@ A module which allows the Hadoop dependencies to be specified by a Maven profile
                 <exclude>LookupRecordByTemperature.java</exclude>
                 <exclude>LookupRecordsByTemperature.java</exclude>
                 <exclude>MaxTemperatureByStationNameUsingDistributedCacheFileApi.java</exclude>
-                <exclude>NewMissingTemperatureFields.java</exclude>
+                <exclude>MissingTemperatureFields.java</exclude>
                 <exclude>SortByTemperatureToMapFile.java</exclude>
               </excludes>
               <testExcludes>
