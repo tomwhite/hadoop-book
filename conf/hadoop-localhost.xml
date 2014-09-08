@@ -2,7 +2,7 @@
 <configuration>
 
   <property>
-    <name>fs.default.name</name>
+    <name>fs.defaultFS</name>
     <value>hdfs://localhost/</value>
   </property>
   

@@ -28,8 +28,8 @@ public class MaxTemperatureDriverTest {
   @Test
   public void test() throws Exception {
     Configuration conf = new Configuration();
-    conf.set("fs.default.name", "file:///");
-    conf.set("mapred.job.tracker", "local");
+    conf.set("fs.defaultFS", "file:///");
+    conf.set("mapreduce.framework.name", "local");
     
     Path input = new Path("input/ncdc/micro");
     Path output = new Path("output");

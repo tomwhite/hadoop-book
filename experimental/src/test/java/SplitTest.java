@@ -101,7 +101,7 @@ public class SplitTest {
     createFile(input, 12, recordLength);
     
     JobConf job = new JobConf();
-    job.set("fs.default.name", fs.getUri().toString());
+    job.set("fs.defaultFS", fs.getUri().toString());
     FileInputFormat.addInputPath(job, input);
     InputFormat<LongWritable, Text> inputFormat = job.getInputFormat();
     InputSplit[] splits = inputFormat.getSplits(job, job.getNumMapTasks());
@@ -123,7 +123,7 @@ public class SplitTest {
     createFile(input, 8, recordLength);
     
     JobConf job = new JobConf();
-    job.set("fs.default.name", fs.getUri().toString());
+    job.set("fs.defaultFS", fs.getUri().toString());
     FileInputFormat.addInputPath(job, input);
     InputFormat<LongWritable, Text> inputFormat = job.getInputFormat();
     InputSplit[] splits = inputFormat.getSplits(job, job.getNumMapTasks());
@@ -148,7 +148,7 @@ public class SplitTest {
     System.out.println(">>>>>>" + fs.getLength(input));
     
     JobConf job = new JobConf();
-    job.set("fs.default.name", fs.getUri().toString());
+    job.set("fs.defaultFS", fs.getUri().toString());
     FileInputFormat.addInputPath(job, input);
     InputFormat<LongWritable, Text> inputFormat = job.getInputFormat();
     InputSplit[] splits = inputFormat.getSplits(job, job.getNumMapTasks());

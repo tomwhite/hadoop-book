@@ -2,7 +2,7 @@
 #
 # Usage:
 # hiver.sh
-# hiver.sh -hiveconf fs.default.name=file:/// -hiveconf mapred.job.tracker=local
+# hiver.sh -hiveconf fs.defaultFS=file:/// -hiveconf mapreduce.framework.name=local
 
 set -x
 set -e
