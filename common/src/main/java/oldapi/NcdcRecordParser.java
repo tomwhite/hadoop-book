@@ -25,7 +25,7 @@ public class NcdcRecordParser {
     observationDateString = record.substring(15, 27);
     year = record.substring(15, 19);
     airTemperatureMalformed = false;
-    // Remove leading plus sign as parseInt doesn't like them
+    // Remove leading plus sign as parseInt doesn't like them (pre-Java 7)
     if (record.charAt(87) == '+') {
       airTemperatureString = record.substring(88, 92);
       airTemperature = Integer.parseInt(airTemperatureString);
