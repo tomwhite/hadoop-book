@@ -1,4 +1,3 @@
-// cc SortByTemperatureToMapFile A MapReduce program for sorting a SequenceFile and producing MapFiles as output
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.SequenceFile.CompressionType;
@@ -10,7 +9,6 @@ import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-// vv SortByTemperatureToMapFile
 public class SortByTemperatureToMapFile extends Configured implements Tool {
   
   @Override
@@ -22,7 +20,7 @@ public class SortByTemperatureToMapFile extends Configured implements Tool {
     
     job.setInputFormatClass(SequenceFileInputFormat.class);
     job.setOutputKeyClass(IntWritable.class);
-    /*[*/job.setOutputFormatClass(MapFileOutputFormat.class);/*]*/
+    job.setOutputFormatClass(MapFileOutputFormat.class);
     SequenceFileOutputFormat.setCompressOutput(job, true);
     SequenceFileOutputFormat.setOutputCompressorClass(job, GzipCodec.class);
     SequenceFileOutputFormat.setOutputCompressionType(job,
@@ -36,4 +34,3 @@ public class SortByTemperatureToMapFile extends Configured implements Tool {
     System.exit(exitCode);
   }
 }
-// ^^ SortByTemperatureToMapFile

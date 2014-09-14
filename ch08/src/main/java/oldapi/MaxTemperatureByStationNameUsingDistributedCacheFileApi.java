@@ -1,4 +1,3 @@
-// == OldMaxTemperatureByStationNameUsingDistributedCacheFileApi
 package oldapi;
 
 import java.io.*;
@@ -36,12 +35,11 @@ public class MaxTemperatureByStationNameUsingDistributedCacheFileApi
     
     private NcdcStationMetadata metadata;
     
-    // vv OldMaxTemperatureByStationNameUsingDistributedCacheFileApi
     @Override
     public void configure(JobConf conf) {
       metadata = new NcdcStationMetadata();
       try {
-        Path[] localPaths = /*[*/DistributedCache.getLocalCacheFiles(conf);/*]*/
+        Path[] localPaths = DistributedCache.getLocalCacheFiles(conf);
         if (localPaths.length == 0) {
           throw new FileNotFoundException("Distributed cache file not found.");
         }
@@ -51,7 +49,6 @@ public class MaxTemperatureByStationNameUsingDistributedCacheFileApi
         throw new RuntimeException(e);
       }
     }
-    // ^^ OldMaxTemperatureByStationNameUsingDistributedCacheFileApi
 
     public void reduce(Text key, Iterator<IntWritable> values,
         OutputCollector<Text, IntWritable> output, Reporter reporter)

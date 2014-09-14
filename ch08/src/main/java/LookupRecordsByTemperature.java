@@ -1,5 +1,3 @@
-// cc LookupRecordsByTemperature Retrieve all entries with a given key from a collection of MapFiles
-// == LookupRecordsByTemperature-ReaderFragment
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.*;
@@ -9,7 +7,6 @@ import org.apache.hadoop.mapreduce.lib.output.MapFileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.partition.HashPartitioner;
 import org.apache.hadoop.util.*;
 
-// vv LookupRecordsByTemperature
 public class LookupRecordsByTemperature extends Configured implements Tool {
 
   @Override
@@ -26,9 +23,7 @@ public class LookupRecordsByTemperature extends Configured implements Tool {
       new HashPartitioner<IntWritable, Text>();
     Text val = new Text();
     
-    // vv LookupRecordsByTemperature-ReaderFragment
     Reader reader = readers[partitioner.getPartition(key, val, readers.length)];
-    // ^^ LookupRecordsByTemperature-ReaderFragment
     Writable entry = reader.get(key, val);
     if (entry == null) {
       System.err.println("Key not found: " + key);
@@ -48,4 +43,3 @@ public class LookupRecordsByTemperature extends Configured implements Tool {
     System.exit(exitCode);
   }
 }
-// ^^ LookupRecordsByTemperature
