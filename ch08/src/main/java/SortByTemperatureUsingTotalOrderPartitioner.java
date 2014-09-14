@@ -3,15 +3,11 @@ import java.net.URI;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.filecache.DistributedCache;
-import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.io.SequenceFile.CompressionType;
 import org.apache.hadoop.io.compress.GzipCodec;
 import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.partition.InputSampler;
 import org.apache.hadoop.mapreduce.lib.partition.TotalOrderPartitioner;
@@ -45,11 +41,9 @@ public class SortByTemperatureUsingTotalOrderPartitioner extends Configured
 
     // Add to DistributedCache
     Configuration conf = job.getConfiguration();
-    String partitionFile =TotalOrderPartitioner.getPartitionFile(conf);
-    URI partitionUri = new URI(partitionFile + "#" +
-        TotalOrderPartitioner.DEFAULT_PATH);
-    DistributedCache.addCacheFile(partitionUri, conf);
-    DistributedCache.createSymlink(conf);
+    String partitionFile = TotalOrderPartitioner.getPartitionFile(conf);
+    URI partitionUri = new URI(partitionFile);
+    job.addCacheFile(partitionUri);
 
     return job.waitForCompletion(true) ? 0 : 1;
   }
