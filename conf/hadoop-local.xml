@@ -7,7 +7,7 @@
   </property>
   
   <property>
-    <name>mapred.job.tracker</name>
+    <name>mapreduce.framework.name</name>
     <value>local</value>
   </property>
   

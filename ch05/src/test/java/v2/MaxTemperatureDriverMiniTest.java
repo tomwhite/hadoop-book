@@ -1,4 +1,4 @@
-package v3;
+package v2;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;

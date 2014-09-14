@@ -12,7 +12,7 @@ import org.apache.hadoop.util.ToolRunner;
 
 import v1.MaxTemperatureReducer;
 
-// Identical to v2 except for v3 mapper
+//Identical to v2 except for v3 mapper
 public class MaxTemperatureDriver extends Configured implements Tool {
 
   @Override

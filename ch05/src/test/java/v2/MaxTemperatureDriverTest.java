@@ -1,5 +1,6 @@
-package v3;
-// cc MaxTemperatureDriverTestV3 A test for MaxTemperatureDriver that uses a local, in-process job runner
+package v2;
+// cc MaxTemperatureDriverTestV2 A test for MaxTemperatureDriver that uses a local,
+// in-process job runner
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -14,6 +15,7 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.PathFilter;
+import org.apache.hadoop.mapreduce.JobContext;
 import org.junit.Test;
 
 public class MaxTemperatureDriverTest {
@@ -24,12 +26,13 @@ public class MaxTemperatureDriverTest {
     }
   }
   
-//vv MaxTemperatureDriverTestV3
+//vv MaxTemperatureDriverTestV2
   @Test
   public void test() throws Exception {
     Configuration conf = new Configuration();
     conf.set("fs.defaultFS", "file:///");
     conf.set("mapreduce.framework.name", "local");
+    conf.setInt("mapreduce.task.io.sort.mb", 1);
     
     Path input = new Path("input/ncdc/micro");
     Path output = new Path("output");
@@ -46,7 +49,7 @@ public class MaxTemperatureDriverTest {
     
     checkOutput(conf, output);
   }
-//^^ MaxTemperatureDriverTestV3
+//^^ MaxTemperatureDriverTestV2
 
   private void checkOutput(Configuration conf, Path output) throws IOException {
     FileSystem fs = FileSystem.getLocal(conf);

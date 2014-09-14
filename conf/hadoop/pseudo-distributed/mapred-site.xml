@@ -2,7 +2,7 @@
 <!-- mapred-site.xml -->
 <configuration>
   <property>
-    <name>mapreduce.framework.name</name>
-    <value>yarn</value>
+    <name>mapred.job.tracker</name>
+    <value>localhost:8021</value>
   </property>
 </configuration>
