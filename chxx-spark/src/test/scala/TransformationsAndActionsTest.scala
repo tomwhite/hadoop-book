@@ -61,13 +61,13 @@ class TransformationsAndActionsTest extends FunSuite with BeforeAndAfterEach {
     assert(sums.collect().toSet === Set(("a", 9), ("b", 7)))
   }
 
-//  test("aggregateByKey") { // Spark 1.1.0
-//    val pairs: RDD[(String, Int)] =
-//      sc.parallelize(Array(("a", 3), ("a", 1), ("b", 7), ("a", 5)))
-//    val sets: RDD[(String, HashSet[Int])] =
-//      pairs.aggregateByKey(new HashSet[Int])(_+=_, _++=_)
-//    assert(sets.collect().toSet === Set(("a", Set(1, 3, 5)), ("b", Set(7))))
-//  }
+  test("aggregateByKey") {
+    val pairs: RDD[(String, Int)] =
+      sc.parallelize(Array(("a", 3), ("a", 1), ("b", 7), ("a", 5)))
+    val sets: RDD[(String, HashSet[Int])] =
+      pairs.aggregateByKey(new HashSet[Int])(_+=_, _++=_)
+    assert(sets.collect().toSet === Set(("a", Set(1, 3, 5)), ("b", Set(7))))
+  }
 
 }
 

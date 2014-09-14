@@ -21,7 +21,7 @@
     <hive.version>0.8.0</hive.version>
     <hbase.version>0.94.15</hbase.version>
     <mrunit.version>1.1.0</mrunit.version>
-    <spark.version>1.0.1</spark.version>
+    <spark.version>1.1.0</spark.version>
     <zookeeper.version>3.4.2</zookeeper.version>
     <sqoop.version>1.4.0-incubating</sqoop.version>
   </properties>
