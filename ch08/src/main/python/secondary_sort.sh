@@ -1,14 +1,13 @@
-hadoop jar $HADOOP_INSTALL/contrib/streaming/hadoop-*-streaming.jar \
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
   -D stream.num.map.output.key.fields=2 \
-  -D mapred.text.key.partitioner.options=-k1,1 \
-  -D mapred.output.key.comparator.class=\
+  -D mapreduce.partition.keypartitioner.options=-k1,1 \
+  -D mapreduce.job.output.key.comparator.class=\
 org.apache.hadoop.mapred.lib.KeyFieldBasedComparator \
-  -D mapred.text.key.comparator.options="-k1n -k2nr" \
+  -D mapreduce.partition.keycomparator.options="-k1n -k2nr" \
+  -files secondary_sort_map.py,secondary_sort_reduce.py \
   -input input/ncdc/all \
-  -output output_secondarysort_streaming \
+  -output output-secondarysort-streaming \
   -mapper ch08/src/main/python/secondary_sort_map.py \
   -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner \
-  -reducer ch08/src/main/python/secondary_sort_reduce.py \
-  -file ch08/src/main/python/secondary_sort_map.py \
-  -file ch08/src/main/python/secondary_sort_reduce.py
+  -reducer ch08/src/main/python/secondary_sort_reduce.py
   

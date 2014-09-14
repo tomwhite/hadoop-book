@@ -1,4 +1,4 @@
-hadoop jar $HADOOP_INSTALL/contrib/streaming/hadoop-*-streaming.jar \
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
   -D mapred.reduce.tasks=0 \
   -D mapred.map.tasks.speculative.execution=false \
   -D mapred.task.timeout=12000000 \
