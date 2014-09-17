@@ -26,7 +26,7 @@ public class SortTest {
   public void testSortTableByKey() throws IOException {
     assertEquals("{(2,3),(1,2),(2,4)}", dump(a));
     PTable<Integer, Integer> b = Sort.sort(a);
-    assertEquals("{(2,3),(1,2),(2,4)}", dump(b));
+    assertEquals("{(1,2),(2,3),(2,4)}", dump(b));
   }
 
   // use sortPairs to treat as pairs, so we can impose an order on the value
