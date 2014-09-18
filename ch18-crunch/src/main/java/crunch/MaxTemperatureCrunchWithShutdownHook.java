@@ -14,7 +14,7 @@ import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 
-// Crunch version of ch02 MaxTemperature
+// Crunch version of ch02-mr-intro MaxTemperature
 public class MaxTemperatureCrunchWithShutdownHook {
   
   public static void main(String[] args) throws Exception {

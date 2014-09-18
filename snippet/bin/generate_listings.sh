@@ -6,7 +6,7 @@ bin=`cd "$bin"; pwd`
 
 actual="$bin"/../actual
 
-perl $bin/phragmite_db.pl $actual/ch02/ $(grep -ElR '(// ?cc|// ?==)' --include '*.java' $bin/../../ch02)
+perl $bin/phragmite_db.pl $actual/ch02-mr-intro/ $(grep -ElR '(// ?cc|// ?==)' --include '*.java' $bin/../../ch02-mr-intro)
 perl $bin/phragmite_db.pl $actual/ch03/ $(grep -ElR '(// ?cc|// ?==)' --include '*.java' $bin/../../ch03)
 perl $bin/phragmite_db.pl $actual/ch04/ $(grep -ElR '(// ?cc|// ?==)' --include '*.java' $bin/../../ch04)
 perl $bin/phragmite_db.pl $actual/ch06-avro/ $(grep -ElR '(// ?cc|// ?==)' --include '*.java' $bin/../../ch06-avro)

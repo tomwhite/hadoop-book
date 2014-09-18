@@ -20,7 +20,7 @@
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch02</artifactId>
+      <artifactId>ch02-mr-intro</artifactId>
       <version>3.0</version>
     </dependency>
     <dependency>

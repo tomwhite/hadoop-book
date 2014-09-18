@@ -11,7 +11,7 @@
   <modules>
     <module>book</module>
     <module>common</module>
-    <module>ch02</module>
+    <module>ch02-mr-intro</module>
     <module>ch03</module>
     <module>ch04</module>
     <module>ch06-avro</module>

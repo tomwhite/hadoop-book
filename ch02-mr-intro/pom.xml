@@ -8,7 +8,7 @@
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>ch02</artifactId>
+  <artifactId>ch02-mr-intro</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
   <name>Chapter 2: MapReduce</name>

@@ -16,7 +16,7 @@ import org.apache.crunch.Pipeline;
 import org.apache.crunch.impl.mr.MRPipeline;
 import org.apache.crunch.io.To;
 
-// Crunch version of ch02 MaxTemperature
+// Crunch version of ch02-mr-intro MaxTemperature
 public class MaxTemperatureCrunch {
   
   public static void main(String[] args) throws Exception {
