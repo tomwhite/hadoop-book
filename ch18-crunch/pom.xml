@@ -8,10 +8,10 @@
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>chxx-crunch</artifactId>
+  <artifactId>ch18-crunch</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>Chapter xx: Crunch</name>
+  <name>Chapter 18: Crunch</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.crunch</groupId>

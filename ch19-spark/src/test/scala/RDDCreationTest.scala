@@ -51,7 +51,7 @@ class RDDCreationTest extends FunSuite with BeforeAndAfterEach {
   }
 
 //  test("whole text file") {
-//    val inputPath = "chxx-spark/src/test/resources/fruit.txt"
+//    val inputPath = "ch19-spark/src/test/resources/fruit.txt"
 //    val files: RDD[(String, String)] = sc.wholeTextFiles(inputPath)
 //    assert(files.first._1.endsWith(inputPath))
 //    assert(files.first._2 === "cherry\napple\nbanana\n")

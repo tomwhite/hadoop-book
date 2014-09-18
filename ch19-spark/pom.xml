@@ -8,10 +8,10 @@
     <relativePath>../book/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>chxx-spark</artifactId>
+  <artifactId>ch19-spark</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>Chapter xx: Spark</name>
+  <name>Chapter 19: Spark</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.spark</groupId>

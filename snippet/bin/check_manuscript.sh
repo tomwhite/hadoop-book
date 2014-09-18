@@ -17,8 +17,8 @@ done
 
 # Avro check
 sed -e '/<programlisting/s/ id="[^"]*"//; s|</programlisting>|\
-</programlisting>|' $book_workspace/chxx-avro.xml > /tmp/chxx-avro.xml
-$bin/check_manuscript.py /tmp/chxx-avro.xml $actual/ch04-avro/*
+</programlisting>|' $book_workspace/ch06-avro.xml > /tmp/ch06-avro.xml
+$bin/check_manuscript.py /tmp/ch06-avro.xml $actual/ch06-avro/*
 
 # Common check
 $bin/check_manuscript.py /tmp/ch07.xml $actual/common/*

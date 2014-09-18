@@ -8,10 +8,10 @@
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>chxx-parquet</artifactId>
+  <artifactId>ch07-parquet</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>Chapter xx: Parquet</name>
+  <name>Chapter 7: Parquet</name>
   <dependencies>
     <dependency>
       <groupId>com.twitter</groupId>

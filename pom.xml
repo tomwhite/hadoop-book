@@ -14,15 +14,15 @@
     <module>ch02</module>
     <module>ch03</module>
     <module>ch04</module>
-    <module>ch04-avro</module>
-    <module>chxx-parquet</module>
+    <module>ch06-avro</module>
+    <module>ch07-parquet</module>
     <module>ch05</module>
     <module>ch07</module>
     <module>ch08</module>
     <module>ch11</module>
     <module>ch12</module>
-    <module>chxx-crunch</module>
-    <module>chxx-spark</module>
+    <module>ch18-crunch</module>
+    <module>ch19-spark</module>
     <module>ch13</module>
     <module>ch14</module>
     <module>ch15</module>
