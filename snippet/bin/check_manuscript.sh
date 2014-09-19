@@ -6,12 +6,12 @@ bin=`cd "$bin"; pwd`
 actual="$bin"/../actual
 book_workspace=~/book-workspace/htdg-git
 
-# Should add remaining chapters: ch03 ch04 ch14
-for ch in ch02-mr-intro ch03 ch05 ch07 ch08 # ch11 ch12
+# Should add remaining chapters: ch03-hdfs ch05-io ch21-zk
+for ch in ch02-mr-intro ch03-hdfs ch08-mr-dev ch10-mr-types ch11-mr-features # ch16-pig ch17-hive
 do
   # remove id attributes from program listings, and add a newline before </programlisting>
   sed '/<programlisting/s/ id="[^"]*"//; s|</programlisting>|\
-</programlisting>|' $book_workspace/$ch-*.xml > /tmp/$ch.xml
+</programlisting>|' $book_workspace/$ch.xml > /tmp/$ch.xml
   $bin/check_manuscript.py /tmp/$ch.xml $actual/$ch/*
 done
 
@@ -21,4 +21,4 @@ sed -e '/<programlisting/s/ id="[^"]*"//; s|</programlisting>|\
 $bin/check_manuscript.py /tmp/ch06-avro.xml $actual/ch06-avro/*
 
 # Common check
-$bin/check_manuscript.py /tmp/ch07.xml $actual/common/*
+$bin/check_manuscript.py /tmp/ch10-mr-types.xml $actual/common/*

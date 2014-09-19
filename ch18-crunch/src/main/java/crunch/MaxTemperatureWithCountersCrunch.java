@@ -15,7 +15,7 @@ import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 
-// Crunch version of ch08 MaxTemperatureWithCountersCrunch and MissingTemperatureFields
+// Crunch version of ch11-mr-features MaxTemperatureWithCountersCrunch and MissingTemperatureFields
 // Note that both are naturally combined into a single program.
 public class MaxTemperatureWithCountersCrunch {
   

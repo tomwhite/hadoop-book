@@ -12,7 +12,7 @@ import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 
-// Crunch version of ch07 MaxTemperatureWithMultipleInputsCrunch
+// Crunch version of ch10-mr-types MaxTemperatureWithMultipleInputsCrunch
 // TODO: sanity check output
 public class MaxTemperatureWithMultipleInputsCrunch {
 

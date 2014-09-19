@@ -8,33 +8,26 @@
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>experimental</artifactId>
+  <artifactId>ch03-hdfs</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>Experimental Code</name>
+  <name>Chapter 3: The Hadoop Distributed Filesystem</name>
   <dependencies>
     <dependency>
-      <groupId>com.hadoopbook</groupId>
-      <artifactId>ch03-hdfs</artifactId>
-      <version>3.0</version>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.hadoopbook</groupId>
-      <artifactId>ch05-io</artifactId>
-      <version>3.0</version>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <testExcludes>
-            <exclude>SplitTest.java</exclude>
-          </testExcludes>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>

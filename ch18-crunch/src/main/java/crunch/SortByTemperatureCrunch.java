@@ -13,7 +13,7 @@ import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 
-// Crunch version of ch08 SortByTemperatureUsingTotalOrderPartitioner
+// Crunch version of ch11-mr-features SortByTemperatureUsingTotalOrderPartitioner
 public class SortByTemperatureCrunch {
 
   public static void main(String[] args) throws Exception {

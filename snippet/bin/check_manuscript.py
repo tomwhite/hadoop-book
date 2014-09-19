@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Check that the expected (or actual) snippets are in the manuscript. E.g.
-# bin/check_manuscript.py  ~/book-workspace/htdg-git/ch11.xml expected/ch11/grunt/*
+# bin/check_manuscript.py  ~/book-workspace/htdg-git/ch16-pig.xml expected/ch16-pig/grunt/*
 
 import sys
 

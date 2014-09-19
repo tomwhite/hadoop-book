@@ -8,32 +8,42 @@
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>experimental</artifactId>
+  <artifactId>ch20-hbase</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>Experimental Code</name>
+  <name>Chapter 20: HBase</name>
   <dependencies>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch03-hdfs</artifactId>
+      <artifactId>common</artifactId>
       <version>3.0</version>
     </dependency>
     <dependency>
-      <groupId>com.hadoopbook</groupId>
-      <artifactId>ch05-io</artifactId>
-      <version>3.0</version>
+      <groupId>org.apache.hbase</groupId>
+      <artifactId>hbase</artifactId>
     </dependency>
   </dependencies>
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
+        <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <testExcludes>
-            <exclude>SplitTest.java</exclude>
-          </testExcludes>
+          <descriptors>
+            <descriptor>../book/src/main/assembly/jar.xml</descriptor>
+          </descriptors>
+          <finalName>hbase-examples</finalName>
+          <outputDirectory>${project.build.directory}/../..</outputDirectory>
+          <appendAssemblyId>false</appendAssemblyId>
         </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

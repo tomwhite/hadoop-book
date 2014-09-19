@@ -16,7 +16,7 @@ import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 
-// Crunch version of ch04 MaxTemperatureWithCompression
+// Crunch version of ch06-avro MaxTemperatureWithCompression
 public class MaxTemperatureWithCompressionCrunch {
 
   private static final int MISSING = 9999;

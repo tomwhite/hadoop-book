@@ -14,10 +14,10 @@ actual="$bin"/../actual
 
 cd "$bin"/../..
 
-#rm -rf $actual/ch12
-mkdir -p $actual/ch12
+#rm -rf $actual/ch17-hive
+mkdir -p $actual/ch17-hive
 
-for f in ch12/src/main/hive/*.hive; do
+for f in ch17-hive/src/main/hive/*.hive; do
   out=$f.output.txt
   hive "$@" -S < $f 2> /dev/null \
     | grep -v '^hive> $' \
@@ -35,7 +35,7 @@ for f in ch12/src/main/hive/*.hive; do
     > $out
    
   cat $out
-  python "$bin"/phragmite_hive.py $out $actual/ch12
+  python "$bin"/phragmite_hive.py $out $actual/ch17-hive
   rm $out
 done
 

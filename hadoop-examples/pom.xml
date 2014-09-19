@@ -26,27 +26,27 @@
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch03</artifactId>
+      <artifactId>ch03-hdfs</artifactId>
       <version>3.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch04</artifactId>
+      <artifactId>ch05-io</artifactId>
       <version>3.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch05</artifactId>
+      <artifactId>ch08-mr-dev</artifactId>
       <version>3.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch07</artifactId>
+      <artifactId>ch10-mr-types</artifactId>
       <version>3.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch08</artifactId>
+      <artifactId>ch11-mr-features</artifactId>
       <version>3.0</version>
     </dependency>
   </dependencies>
