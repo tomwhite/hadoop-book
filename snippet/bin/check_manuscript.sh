@@ -6,7 +6,7 @@ bin=`cd "$bin"; pwd`
 actual="$bin"/../actual
 book_workspace=~/book-workspace/htdg-git
 
-# Should add remaining chapters: ch03-hdfs ch05-io ch21-zk
+# Should add remaining chapters: ch05-io ch21-zk
 for ch in ch02-mr-intro ch03-hdfs ch08-mr-dev ch10-mr-types ch11-mr-features # ch16-pig ch17-hive
 do
   # remove id attributes from program listings, and add a newline before </programlisting>

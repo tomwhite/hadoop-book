@@ -4,6 +4,5 @@
   <property>
     <name>fs.defaultFS</name>
     <value>hdfs://namenode/</value>
-    <final>true</final>
   </property>
 </configuration>

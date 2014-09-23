@@ -2,8 +2,8 @@
 <!-- yarn-site.xml -->
 <configuration>
   <property>
-    <name>yarn.resourcemanager.address</name>
-    <value>localhost:8032</value>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>localhost</value>
   </property>
   <property>
     <name>yarn.nodemanager.aux-services</name>
