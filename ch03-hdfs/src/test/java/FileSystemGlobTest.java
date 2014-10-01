@@ -38,10 +38,7 @@ public class FileSystemGlobTest {
   public void glob() throws Exception {
     assertThat(glob("/*"), is(paths("/2007", "/2008")));
     assertThat(glob("/*/*"), is(paths("/2007/12", "/2008/01")));
-    
-    // bug?
-    //assertThat(glob("/*/12/*"), is(paths("/2007/12/30", "/2007/12/31")));
-
+    assertThat(glob("/*/12/*"), is(paths("/2007/12/30", "/2007/12/31")));
     assertThat(glob("/200?"), is(paths("/2007", "/2008")));
     assertThat(glob("/200[78]"), is(paths("/2007", "/2008")));
     assertThat(glob("/200[7-8]"), is(paths("/2007", "/2008")));
@@ -51,19 +48,12 @@ public class FileSystemGlobTest {
     assertThat(glob("/*/*/3{0,1}"), is(paths("/2007/12/30", "/2007/12/31")));
 
     assertThat(glob("/*/{12/31,01/01}"), is(paths("/2007/12/31", "/2008/01/01")));
-
-    // bug?
-    //assertThat(glob("/2007/12/30/data\\[2007-12-30\\]"), is(paths("/2007/12/30/data[2007-12-30]")));
-
   }
   
   @Test
   public void regexIncludes() throws Exception {
     assertThat(glob("/*", new RegexPathFilter("^.*/2007$")), is(paths("/2007")));
-    
-    // bug?
-    //assertThat(glob("/*/*/*", new RegexPathFilter("^.*/2007/12/31$")), is(paths("/2007/12/31")));
-    // this works but shouldn't be necessary? see https://issues.apache.org/jira/browse/HADOOP-3497
+    assertThat(glob("/*/*/*", new RegexPathFilter("^.*/2007/12/31$")), is(paths("/2007/12/31")));
     assertThat(glob("/*/*/*", new RegexPathFilter("^.*/2007(/12(/31)?)?$")), is(paths("/2007/12/31")));
   }
   
@@ -78,7 +68,8 @@ public class FileSystemGlobTest {
     assertThat(glob("/*", new RegexExcludePathFilter("^.*/2007$")), is(paths("/2008")));
     assertThat(glob("/2007/*/*", new RegexExcludePathFilter("^.*/2007/12/31$")), is(paths("/2007/12/30")));
   }
-	  
+
+  @Test
   public void testDateRange() throws Exception {
     DateRangePathFilter filter = new DateRangePathFilter(date("2007/12/31"),
         date("2008/01/01"));

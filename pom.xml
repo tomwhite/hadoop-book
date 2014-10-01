@@ -29,6 +29,5 @@
     <module>ch22-case-studies</module>
     <module>hadoop-examples</module>
     <module>snippet</module>
-    <module>experimental</module>
   </modules>
 </project>
