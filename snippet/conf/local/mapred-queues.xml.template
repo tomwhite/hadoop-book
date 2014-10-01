@@ -18,10 +18,10 @@
 <!-- This is the template for queue configuration. The format supports nesting of
      queues within queues - a feature called hierarchical queues. All queues are
      defined within the 'queues' tag which is the top level element for this
-     XML document.
-     The 'aclsEnabled' attribute should be set to true, if ACLs should be checked
-     on queue operations such as submitting jobs, killing jobs etc. -->
-<queues aclsEnabled="false">
+     XML document. The queue acls configured here for different queues are
+     checked for authorization only if the configuration property
+     mapreduce.cluster.acls.enabled is set to true. -->
+<queues>
 
   <!-- Configuration for a queue is specified by defining a 'queue' element. -->
   <queue>
@@ -40,17 +40,37 @@
 
     <!-- Specifies the ACLs to check for submitting jobs to this queue.
          If set to '*', it allows all users to submit jobs to the queue.
+         If set to ' '(i.e. space), no user will be allowed to do this
+         operation. The default value for any queue acl is ' '.
          For specifying a list of users and groups the format to use is
-         user1,user2 group1,group2 -->
-    <acl-submit-job>*</acl-submit-job>
+         user1,user2 group1,group2
 
-    <!-- Specifies the ACLs to check for modifying jobs in this queue.
-         Modifications include killing jobs, tasks of jobs or changing
+         It is only used if authorization is enabled in Map/Reduce by setting
+         the configuration property mapreduce.cluster.acls.enabled to true.
+
+         Irrespective of this ACL configuration, the user who started the
+         cluster and cluster administrators configured via
+         mapreduce.cluster.administrators can do this operation. -->
+    <acl-submit-job> </acl-submit-job>
+
+    <!-- Specifies the ACLs to check for viewing and modifying jobs in this
+         queue. Modifications include killing jobs, tasks of jobs or changing
          priorities.
-         If set to '*', it allows all users to submit jobs to the queue.
+         If set to '*', it allows all users to view, modify jobs of the queue.
+         If set to ' '(i.e. space), no user will be allowed to do this
+         operation.
          For specifying a list of users and groups the format to use is
-         user1,user2 group1,group2 -->
-    <acl-administer-jobs>*</acl-administer-jobs>
+         user1,user2 group1,group2
+
+         It is only used if authorization is enabled in Map/Reduce by setting
+         the configuration property mapreduce.cluster.acls.enabled to true.
+
+         Irrespective of this ACL configuration, the user who started the
+         cluster  and cluster administrators configured via
+         mapreduce.cluster.administrators can do the above operations on all
+         the jobs in all the queues. The job owner can do all the above
+         operations on his/her job irrespective of this ACL configuration. -->
+    <acl-administer-jobs> </acl-administer-jobs>
   </queue>
 
   <!-- Here is a sample of a hierarchical queue configuration

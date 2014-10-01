@@ -1,3 +1,4 @@
+#!/bin/sh
 if ! hadoop fs -test -e input; then
   hadoop fs -put input .
 fi
