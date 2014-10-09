@@ -1,4 +1,3 @@
-// == MapFileSeekTest
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -38,11 +37,9 @@ public class MapFileSeekTest {
   
   @Test
   public void get() throws Exception {
-    // vv MapFileSeekTest
     Text value = new Text();
     reader.get(new IntWritable(496), value);
     assertThat(value.toString(), is("One, two, buckle my shoe"));
-    // ^^ MapFileSeekTest
   }
   
   @Test

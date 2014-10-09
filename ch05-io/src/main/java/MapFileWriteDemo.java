@@ -1,4 +1,3 @@
-// cc MapFileWriteDemo Writing a MapFile
 import java.io.IOException;
 import java.net.URI;
 
@@ -9,7 +8,6 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.MapFile;
 import org.apache.hadoop.io.Text;
 
-// vv MapFileWriteDemo
 public class MapFileWriteDemo {
   
   private static final String[] DATA = {
@@ -42,4 +40,3 @@ public class MapFileWriteDemo {
     }
   }
 }
-// ^^ MapFileWriteDemo

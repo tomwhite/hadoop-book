@@ -1,4 +1,3 @@
-// cc MapFileFixer Re-creates the index for a MapFile
 import java.net.URI;
 
 import org.apache.hadoop.conf.Configuration;
@@ -7,7 +6,6 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.MapFile;
 import org.apache.hadoop.io.SequenceFile;
 
-// vv MapFileFixer
 public class MapFileFixer {
 
   @SuppressWarnings("unchecked")
@@ -31,4 +29,3 @@ public class MapFileFixer {
     System.out.printf("Created MapFile %s with %d entries\n", map, entries);
   }
 }
-// ^^ MapFileFixer

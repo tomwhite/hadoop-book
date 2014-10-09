@@ -20,8 +20,8 @@ public class MaxTemperatureWithMapOutputCompression {
 
     // vv MaxTemperatureWithMapOutputCompression
     Configuration conf = new Configuration();
-    conf.setBoolean("mapred.compress.map.output", true);
-    conf.setClass("mapred.map.output.compression.codec", GzipCodec.class,
+    conf.setBoolean(Job.MAP_OUTPUT_COMPRESS, true);
+    conf.setClass(Job.MAP_OUTPUT_COMPRESS_CODEC, GzipCodec.class,
         CompressionCodec.class);
     Job job = new Job(conf);
     // ^^ MaxTemperatureWithMapOutputCompression
