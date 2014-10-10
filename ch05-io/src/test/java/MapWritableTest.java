@@ -18,7 +18,8 @@ public class MapWritableTest extends WritableTestBase {
     MapWritable dest = new MapWritable();
     WritableUtils.cloneInto(dest, src);
     assertThat((Text) dest.get(new IntWritable(1)), is(new Text("cat")));
-    assertThat((LongWritable) dest.get(new VIntWritable(2)), is(new LongWritable(163)));
+    assertThat((LongWritable) dest.get(new VIntWritable(2)),
+        is(new LongWritable(163)));
     // ^^ MapWritableTest
   }
 

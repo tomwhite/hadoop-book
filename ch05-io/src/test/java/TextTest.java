@@ -54,7 +54,8 @@ public class TextTest extends WritableTestBase {
     Text t = new Text("hadoop");
     t.set(/*[*/new Text("pig")/*]*/);
     assertThat(t.getLength(), is(3));
-    assertThat("Byte length not shortened", t.getBytes().length, /*[*/is(6)/*]*/);
+    assertThat("Byte length not shortened", t.getBytes().length,
+      /*[*/is(6)/*]*/);
     // ^^ TextTest-ByteArrayNotShortened
   }
 
@@ -67,10 +68,8 @@ public class TextTest extends WritableTestBase {
   
   @Test
   public void comparison() throws IOException {
-    // vv TextTest-Comparison
     assertThat("\ud800\udc00".compareTo("\ue000"), lessThan(0));
     assertThat(new Text("\ud800\udc00").compareTo(new Text("\ue000")), greaterThan(0));
-    // ^^ TextTest-Comparison
   }
   
   @Test

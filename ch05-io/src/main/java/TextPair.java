@@ -1,7 +1,7 @@
-// cc TextPair A Writable implementation that stores a pair of Text objects
+// cc TextPairTop A Writable implementation that stores a pair of Text objects
 // cc TextPairComparator A RawComparator for comparing TextPair byte representations
 // cc TextPairFirstComparator A custom RawComparator for comparing the first field of TextPair byte representations
-// vv TextPair
+// vv TextPairTop
 import java.io.*;
 
 import org.apache.hadoop.io.*;
@@ -75,7 +75,7 @@ public class TextPair implements WritableComparable<TextPair> {
     }
     return second.compareTo(tp.second);
   }
-  // ^^ TextPair
+  // ^^ TextPairTop
   
   // vv TextPairComparator
   public static class Comparator extends WritableComparator {
@@ -142,6 +142,6 @@ public class TextPair implements WritableComparable<TextPair> {
   }
   // ^^ TextPairFirstComparator
   
-// vv TextPair
+// vv TextPairTop
 }
-// ^^ TextPair
+// ^^ TextPairTop
