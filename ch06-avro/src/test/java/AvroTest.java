@@ -36,7 +36,6 @@ import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.specific.SpecificDatumReader;
 import org.apache.avro.specific.SpecificDatumWriter;
 import org.apache.avro.util.Utf8;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class AvroTest {
@@ -131,8 +130,8 @@ public class AvroTest {
     
 // vv AvroSpecificStringPair
     /*[*/StringPair datum = new StringPair();
-    datum.left = "L";
-    datum.right = "R";/*]*/
+    datum.setLeft("L");
+    datum.setRight("R");/*]*/
 
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     /*[*/DatumWriter<StringPair> writer =
@@ -146,8 +145,8 @@ public class AvroTest {
       new SpecificDatumReader<StringPair>(StringPair.class);/*]*/
     Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(), null);
     StringPair result = reader.read(null, decoder);
-    assertThat(result./*[*/left/*]*/.toString(), is("L"));
-    assertThat(result./*[*/right/*]*/.toString(), is("R"));
+    assertThat(result./*[*/getLeft()/*]*/, is("L"));
+    assertThat(result./*[*/getRight()/*]*/, is("R"));
 // ^^ AvroSpecificStringPair
   }
 

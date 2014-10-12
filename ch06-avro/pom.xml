@@ -43,7 +43,7 @@
                 <include>StringPair.avsc</include>
                 <include>WeatherRecord.avsc</include>
               </includes>
-              <stringType>String</stringType> <!-- Avro 1.6.0 onwards -->
+              <stringType>String</stringType>
               <sourceDirectory>src/main/resources</sourceDirectory>
               <outputDirectory>${project.build.directory}/generated-sources/java
               </outputDirectory>
