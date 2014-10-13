@@ -2,40 +2,43 @@
 
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
-import org.apache.avro.mapred.AvroCollector;
-import org.apache.avro.mapred.AvroJob;
-import org.apache.avro.mapred.AvroMapper;
-import org.apache.avro.mapred.AvroReducer;
-import org.apache.avro.mapred.Pair;
+import org.apache.avro.mapred.AvroKey;
+import org.apache.avro.mapred.AvroValue;
+import org.apache.avro.mapreduce.AvroJob;
+import org.apache.avro.mapreduce.AvroKeyInputFormat;
+import org.apache.avro.mapreduce.AvroKeyOutputFormat;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileOutputFormat;
-import org.apache.hadoop.mapred.JobClient;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 //vv AvroSort
 public class AvroSort extends Configured implements Tool {
 
-  static class SortMapper<K> extends AvroMapper<K, Pair<K, K>> {
-    public void map(K datum, AvroCollector<Pair<K, K>> collector,
-        Reporter reporter) throws IOException {
-      collector.collect(new Pair<K, K>(datum, null, datum, null));
+  static class SortMapper<K> extends Mapper<AvroKey<K>, NullWritable,
+      AvroKey<K>, AvroValue<K>> {
+    @Override
+    protected void map(AvroKey<K> key, NullWritable value,
+        Context context) throws IOException, InterruptedException {
+      context.write(key, new AvroValue<K>(key.datum()));
     }
   }
 
-  static class SortReducer<K> extends AvroReducer<K, K, K> {
-    public void reduce(K key, Iterable<K> values,
-        AvroCollector<K> collector,
-        Reporter reporter) throws IOException {
-      for (K value : values) {
-        collector.collect(value);
+  static class SortReducer<K> extends Reducer<AvroKey<K>, AvroValue<K>,
+      AvroKey<K>, NullWritable> {
+    @Override
+    protected void reduce(AvroKey<K> key, Iterable<AvroValue<K>> values,
+        Context context) throws IOException, InterruptedException {
+      for (AvroValue<K> value : values) {
+        context.write(new AvroKey(value.datum()), NullWritable.get());
       }
     }
   }
@@ -55,25 +58,33 @@ public class AvroSort extends Configured implements Tool {
     String output = args[1];
     String schemaFile = args[2];
 
-    JobConf conf = new JobConf(getConf(), getClass());
-    conf.setJobName("Avro sort");
-    
-    FileInputFormat.addInputPath(conf, new Path(input));
-    FileOutputFormat.setOutputPath(conf, new Path(output));
+    Job job = new Job(getConf(), "Avro sort");
+    job.setJarByClass(getClass());
 
-    AvroJob.setDataModelClass(conf, GenericData.class);
+    job.getConfiguration().setBoolean(
+        Job.MAPREDUCE_JOB_USER_CLASSPATH_FIRST, true);
+
+    FileInputFormat.addInputPath(job, new Path(input));
+    FileOutputFormat.setOutputPath(job, new Path(output));
+
+    AvroJob.setDataModelClass(job, GenericData.class);
 
     Schema schema = new Schema.Parser().parse(new File(schemaFile));
-    AvroJob.setInputSchema(conf, schema);
-    Schema intermediateSchema = Pair.getPairSchema(schema, schema);
-    AvroJob.setMapOutputSchema(conf, intermediateSchema);
-    AvroJob.setOutputSchema(conf, schema);
-    
-    AvroJob.setMapperClass(conf, SortMapper.class);
-    AvroJob.setReducerClass(conf, SortReducer.class);
-  
-    JobClient.runJob(conf); 
-    return 0;
+    AvroJob.setInputKeySchema(job, schema);
+    AvroJob.setMapOutputKeySchema(job, schema);
+    AvroJob.setMapOutputValueSchema(job, schema);
+    AvroJob.setOutputKeySchema(job, schema);
+
+    job.setInputFormatClass(AvroKeyInputFormat.class);
+    job.setOutputFormatClass(AvroKeyOutputFormat.class);
+
+    job.setOutputKeyClass(AvroKey.class);
+    job.setOutputValueClass(NullWritable.class);
+
+    job.setMapperClass(SortMapper.class);
+    job.setReducerClass(SortReducer.class);
+
+    return job.waitForCompletion(true) ? 0 : 1;
   }
   
   public static void main(String[] args) throws Exception {

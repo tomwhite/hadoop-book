@@ -5,20 +5,21 @@ import java.io.IOException;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.mapred.AvroCollector;
-import org.apache.avro.mapred.AvroJob;
-import org.apache.avro.mapred.AvroMapper;
-import org.apache.avro.mapred.AvroReducer;
-import org.apache.avro.mapred.AvroUtf8InputFormat;
-import org.apache.avro.mapred.Pair;
-import org.apache.avro.util.Utf8;
+import org.apache.avro.mapred.AvroKey;
+import org.apache.avro.mapred.AvroValue;
+import org.apache.avro.mapreduce.AvroJob;
+import org.apache.avro.mapreduce.AvroKeyOutputFormat;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileOutputFormat;
-import org.apache.hadoop.mapred.JobClient;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
@@ -39,39 +40,40 @@ public class AvroGenericMaxTemperature extends Configured implements Tool {
   );
 
   public static class MaxTemperatureMapper
-      extends AvroMapper<Utf8, Pair<Integer, GenericRecord>> {
+      extends Mapper<LongWritable, Text, AvroKey<Integer>, AvroValue<GenericRecord>> {
     private NcdcRecordParser parser = new NcdcRecordParser();
     private GenericRecord record = new GenericData.Record(SCHEMA);
+
     @Override
-    public void map(Utf8 line,
-        AvroCollector<Pair<Integer, GenericRecord>> collector,
-        Reporter reporter) throws IOException {
-      parser.parse(line.toString());
+    protected void map(LongWritable key, Text value, Context context)
+        throws IOException, InterruptedException {
+      parser.parse(value.toString());
       if (parser.isValidTemperature()) {
         record.put("year", parser.getYearInt());
         record.put("temperature", parser.getAirTemperature());
         record.put("stationId", parser.getStationId());
-        collector.collect(
-            new Pair<Integer, GenericRecord>(parser.getYearInt(), record));
+        context.write(new AvroKey<Integer>(parser.getYearInt()),
+            new AvroValue<GenericRecord>(record));
       }
     }
   }
   
   public static class MaxTemperatureReducer
-      extends AvroReducer<Integer, GenericRecord, GenericRecord> {
+      extends Reducer<AvroKey<Integer>, AvroValue<GenericRecord>,
+            AvroKey<GenericRecord>, NullWritable> {
 
     @Override
-    public void reduce(Integer key, Iterable<GenericRecord> values,
-        AvroCollector<GenericRecord> collector, Reporter reporter)
-        throws IOException {
+    protected void reduce(AvroKey<Integer> key, Iterable<AvroValue<GenericRecord>>
+        values, Context context) throws IOException, InterruptedException {
       GenericRecord max = null;
-      for (GenericRecord value : values) {
+      for (AvroValue<GenericRecord> value : values) {
+        GenericRecord record = value.datum();
         if (max == null || 
-            (Integer) value.get("temperature") > (Integer) max.get("temperature")) {
-          max = newWeatherRecord(value);
+            (Integer) record.get("temperature") > (Integer) max.get("temperature")) {
+          max = newWeatherRecord(record);
         }
       }
-      collector.collect(max);
+      context.write(new AvroKey(max), NullWritable.get());
     }
     private GenericRecord newWeatherRecord(GenericRecord value) {
       GenericRecord record = new GenericData.Record(SCHEMA);
@@ -90,25 +92,27 @@ public class AvroGenericMaxTemperature extends Configured implements Tool {
       ToolRunner.printGenericCommandUsage(System.err);
       return -1;
     }
-    
-    JobConf conf = new JobConf(getConf(), getClass());
-    conf.setJobName("Max temperature");
-    
-    FileInputFormat.addInputPath(conf, new Path(args[0]));
-    FileOutputFormat.setOutputPath(conf, new Path(args[1]));
-    
-    AvroJob.setInputSchema(conf, Schema.create(Schema.Type.STRING));
-    AvroJob.setMapOutputSchema(conf,
-        Pair.getPairSchema(Schema.create(Schema.Type.INT), SCHEMA));
-    AvroJob.setOutputSchema(conf, SCHEMA);
-    
-    conf.setInputFormat(AvroUtf8InputFormat.class);
 
-    AvroJob.setMapperClass(conf, MaxTemperatureMapper.class);
-    AvroJob.setReducerClass(conf, MaxTemperatureReducer.class);
+    Job job = new Job(getConf(), "Max temperature");
+    job.setJarByClass(getClass());
 
-    JobClient.runJob(conf);
-    return 0;
+    job.getConfiguration().setBoolean(
+        Job.MAPREDUCE_JOB_USER_CLASSPATH_FIRST, true);
+
+    FileInputFormat.addInputPath(job, new Path(args[0]));
+    FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
+    AvroJob.setMapOutputKeySchema(job, Schema.create(Schema.Type.INT));
+    AvroJob.setMapOutputValueSchema(job, SCHEMA);
+    AvroJob.setOutputKeySchema(job, SCHEMA);
+
+    job.setInputFormatClass(TextInputFormat.class);
+    job.setOutputFormatClass(AvroKeyOutputFormat.class);
+
+    job.setMapperClass(MaxTemperatureMapper.class);
+    job.setReducerClass(MaxTemperatureReducer.class);
+
+    return job.waitForCompletion(true) ? 0 : 1;
   }
   
   public static void main(String[] args) throws Exception {

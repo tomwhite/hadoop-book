@@ -1,5 +1,6 @@
-import java.io.IOException;
+package oldapi;
 
+import java.io.IOException;
 import org.apache.avro.Schema;
 import org.apache.avro.mapred.AvroCollector;
 import org.apache.avro.mapred.AvroJob;
@@ -17,7 +18,6 @@ import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
-
 import specific.WeatherRecord;
 
 public class AvroSpecificMaxTemperature extends Configured implements Tool {

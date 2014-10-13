@@ -1,5 +1,6 @@
-import java.io.File;
+package oldapi;
 
+import java.io.File;
 import org.apache.avro.Schema;
 import org.apache.avro.mapred.AvroJob;
 import org.apache.hadoop.conf.Configured;
