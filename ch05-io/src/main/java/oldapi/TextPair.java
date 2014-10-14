@@ -1,8 +1,5 @@
 package oldapi;
-// cc TextPair A Writable implementation that stores a pair of Text objects
-// cc TextPairComparator A RawComparator for comparing TextPair byte representations
-// cc TextPairFirstComparator A custom RawComparator for comparing the first field of TextPair byte representations
-// vv TextPair
+
 import java.io.*;
 
 import org.apache.hadoop.io.*;
@@ -76,9 +73,7 @@ public class TextPair implements WritableComparable<TextPair> {
     }
     return second.compareTo(tp.second);
   }
-  // ^^ TextPair
-  
-  // vv TextPairComparator
+
   public static class Comparator extends WritableComparator {
     
     private static final Text.Comparator TEXT_COMPARATOR = new Text.Comparator();
@@ -109,9 +104,7 @@ public class TextPair implements WritableComparable<TextPair> {
   static {
     WritableComparator.define(TextPair.class, new Comparator());
   }
-  // ^^ TextPairComparator
-  
-  // vv TextPairFirstComparator
+
   public static class FirstComparator extends WritableComparator {
     
     private static final Text.Comparator TEXT_COMPARATOR = new Text.Comparator();
@@ -141,8 +134,4 @@ public class TextPair implements WritableComparable<TextPair> {
       return super.compare(a, b);
     }
   }
-  // ^^ TextPairFirstComparator
-  
-// vv TextPair
 }
-// ^^ TextPair
