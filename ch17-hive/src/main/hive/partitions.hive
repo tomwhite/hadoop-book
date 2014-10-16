@@ -1,5 +1,7 @@
 ! echo; # == partitions;
 
+DROP TABLE IF EXISTS logs;
+
 CREATE TABLE logs (ts BIGINT, line STRING)
 PARTITIONED BY (dt STRING, country STRING);
 
