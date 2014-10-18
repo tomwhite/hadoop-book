@@ -3,14 +3,15 @@
 DROP TABLE IF EXISTS complex;
 
 CREATE TABLE complex (
-  col1 ARRAY<INT>,
-  col2 MAP<STRING, INT>,
-  col3 STRUCT<a:STRING, b:INT, c:DOUBLE>
+  c1 ARRAY<INT>,
+  c2 MAP<STRING, INT>,
+  c3 STRUCT<a:STRING, b:INT, c:DOUBLE>,
+  c4 UNIONTYPE<STRING, INT>
 );
 
 LOAD DATA LOCAL INPATH 'input/hive/types/complex.txt'
 OVERWRITE INTO TABLE complex;
 
 ! echo; # vv complex_types;
-SELECT col1[0], col2['b'], col3.c FROM complex;
+SELECT c1[0], c2['b'], c3.c, c4 FROM complex;
 ! echo; # ^^ complex_types;
