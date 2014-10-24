@@ -50,10 +50,5 @@ SELECT *
 FROM things LEFT SEMI JOIN sales ON (sales.id = things.id);
 ! echo; # ^^ semi_join;
 
-! echo; # vv map_join;
 SELECT /*+ MAPJOIN(things) */ sales.*, things.*
 FROM sales JOIN things ON (sales.id = things.id);
-! echo; # ^^ map_join;
-
-SELECT /*+ MAPJOIN(things) */ sales.*, things.*
-FROM sales LEFT OUTER JOIN things ON (sales.id = things.id);
