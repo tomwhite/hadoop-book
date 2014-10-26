@@ -16,7 +16,7 @@ C = JOIN A BY $0, B BY $1;
 DUMP C;
 -- ^^ join_join
 -- vv join_frj
-C = JOIN A BY $0, B BY $1 USING "replicated";
+C = JOIN A BY $0, B BY $1 USING 'replicated';
 -- ^^ join_frj
 -- vv join_left_outer
 C = JOIN A BY $0 LEFT OUTER, B BY $1;
