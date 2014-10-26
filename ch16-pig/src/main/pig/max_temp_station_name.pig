@@ -6,8 +6,7 @@ stations = LOAD 'input/ncdc/metadata/stations-fixed-width.txt'
   USING com.hadoopbook.pig.CutLoadFunc('1-6,8-12,14-42')
   AS (usaf:chararray, wban:chararray, name:chararray);
   
-trimmed_stations = FOREACH stations GENERATE usaf, wban,
-  com.hadoopbook.pig.Trim(name);    
+trimmed_stations = FOREACH stations GENERATE usaf, wban, TRIM(name);
 
 records = LOAD 'input/ncdc/all/191*'
   USING com.hadoopbook.pig.CutLoadFunc('5-10,11-15,88-92,93-93')
