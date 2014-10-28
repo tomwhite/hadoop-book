@@ -24,8 +24,7 @@ INSERT OVERWRITE TABLE records_by_year
   GROUP BY year
 INSERT OVERWRITE TABLE good_records_by_year
   SELECT year, COUNT(1)
-  WHERE temperature != 9999
-    AND (quality = 0 OR quality = 1 OR quality = 4 OR quality = 5 OR quality = 9)
+  WHERE temperature != 9999 AND quality IN (0, 1, 4, 5, 9)
   GROUP BY year;  
   
 SELECT * FROM stations_by_year;
