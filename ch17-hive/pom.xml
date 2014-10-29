@@ -13,7 +13,6 @@
   <version>3.0</version>
   <name>Chapter 17: Hive</name>
   <dependencies>
-    <!-- TODO: make sure Hadoop version is compatible -->
     <dependency>
       <groupId>org.apache.hive</groupId>
       <artifactId>hive-common</artifactId>

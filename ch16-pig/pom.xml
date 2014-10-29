@@ -13,7 +13,6 @@
   <version>3.0</version>
   <name>Chapter 16: Pig</name>
   <dependencies>
-    <!-- TODO: make sure Hadoop version is compatible -->
     <dependency>
       <groupId>org.apache.pig</groupId>
       <artifactId>pig</artifactId>
