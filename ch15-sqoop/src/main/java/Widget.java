@@ -1,5 +1,9 @@
-// ORM class for widgets
+// ORM class for table 'widgets'
 // WARNING: This class is AUTO-GENERATED. Modify at your own risk.
+//
+// Debug information:
+// Generated date: Wed Oct 29 09:58:23 GMT 2014
+// For connector: org.apache.sqoop.manager.MySQLManager
 import org.apache.hadoop.io.BytesWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
@@ -117,6 +121,23 @@ public class Widget extends SqoopRecord  implements DBWritable, Writable {
     equal = equal && (this.design_comment == null ? that.design_comment == null : this.design_comment.equals(that.design_comment));
     return equal;
   }
+  public boolean equals0(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Widget)) {
+      return false;
+    }
+    Widget that = (Widget) o;
+    boolean equal = true;
+    equal = equal && (this.id == null ? that.id == null : this.id.equals(that.id));
+    equal = equal && (this.widget_name == null ? that.widget_name == null : this.widget_name.equals(that.widget_name));
+    equal = equal && (this.price == null ? that.price == null : this.price.equals(that.price));
+    equal = equal && (this.design_date == null ? that.design_date == null : this.design_date.equals(that.design_date));
+    equal = equal && (this.version == null ? that.version == null : this.version.equals(that.version));
+    equal = equal && (this.design_comment == null ? that.design_comment == null : this.design_comment.equals(that.design_comment));
+    return equal;
+  }
   public void readFields(ResultSet __dbResults) throws SQLException {
     this.__cur_result_set = __dbResults;
     this.id = JdbcWritableBridge.readInteger(1, __dbResults);
@@ -126,7 +147,18 @@ public class Widget extends SqoopRecord  implements DBWritable, Writable {
     this.version = JdbcWritableBridge.readInteger(5, __dbResults);
     this.design_comment = JdbcWritableBridge.readString(6, __dbResults);
   }
+  public void readFields0(ResultSet __dbResults) throws SQLException {
+    this.id = JdbcWritableBridge.readInteger(1, __dbResults);
+    this.widget_name = JdbcWritableBridge.readString(2, __dbResults);
+    this.price = JdbcWritableBridge.readBigDecimal(3, __dbResults);
+    this.design_date = JdbcWritableBridge.readDate(4, __dbResults);
+    this.version = JdbcWritableBridge.readInteger(5, __dbResults);
+    this.design_comment = JdbcWritableBridge.readString(6, __dbResults);
+  }
   public void loadLargeObjects(LargeObjectLoader __loader)
+      throws SQLException, IOException, InterruptedException {
+  }
+  public void loadLargeObjects0(LargeObjectLoader __loader)
       throws SQLException, IOException, InterruptedException {
   }
   public void write(PreparedStatement __dbStmt) throws SQLException {
@@ -142,7 +174,17 @@ public class Widget extends SqoopRecord  implements DBWritable, Writable {
     JdbcWritableBridge.writeString(design_comment, 6 + __off, 12, __dbStmt);
     return 6;
   }
+  public void write0(PreparedStatement __dbStmt, int __off) throws SQLException {
+    JdbcWritableBridge.writeInteger(id, 1 + __off, 4, __dbStmt);
+    JdbcWritableBridge.writeString(widget_name, 2 + __off, 12, __dbStmt);
+    JdbcWritableBridge.writeBigDecimal(price, 3 + __off, 3, __dbStmt);
+    JdbcWritableBridge.writeDate(design_date, 4 + __off, 91, __dbStmt);
+    JdbcWritableBridge.writeInteger(version, 5 + __off, 4, __dbStmt);
+    JdbcWritableBridge.writeString(design_comment, 6 + __off, 12, __dbStmt);
+  }
   public void readFields(DataInput __dataIn) throws IOException {
+this.readFields0(__dataIn);  }
+  public void readFields0(DataInput __dataIn) throws IOException {
     if (__dataIn.readBoolean()) { 
         this.id = null;
     } else {
@@ -212,7 +254,45 @@ public class Widget extends SqoopRecord  implements DBWritable, Writable {
     Text.writeString(__dataOut, design_comment);
     }
   }
-  private final DelimiterSet __outputDelimiters = new DelimiterSet((char) 44, (char) 10, (char) 0, (char) 0, false);
+  public void write0(DataOutput __dataOut) throws IOException {
+    if (null == this.id) { 
+        __dataOut.writeBoolean(true);
+    } else {
+        __dataOut.writeBoolean(false);
+    __dataOut.writeInt(this.id);
+    }
+    if (null == this.widget_name) { 
+        __dataOut.writeBoolean(true);
+    } else {
+        __dataOut.writeBoolean(false);
+    Text.writeString(__dataOut, widget_name);
+    }
+    if (null == this.price) { 
+        __dataOut.writeBoolean(true);
+    } else {
+        __dataOut.writeBoolean(false);
+    com.cloudera.sqoop.lib.BigDecimalSerializer.write(this.price, __dataOut);
+    }
+    if (null == this.design_date) { 
+        __dataOut.writeBoolean(true);
+    } else {
+        __dataOut.writeBoolean(false);
+    __dataOut.writeLong(this.design_date.getTime());
+    }
+    if (null == this.version) { 
+        __dataOut.writeBoolean(true);
+    } else {
+        __dataOut.writeBoolean(false);
+    __dataOut.writeInt(this.version);
+    }
+    if (null == this.design_comment) { 
+        __dataOut.writeBoolean(true);
+    } else {
+        __dataOut.writeBoolean(false);
+    Text.writeString(__dataOut, design_comment);
+    }
+  }
+  private static final DelimiterSet __outputDelimiters = new DelimiterSet((char) 44, (char) 10, (char) 0, (char) 0, false);
   public String toString() {
     return toString(__outputDelimiters, true);
   }
@@ -229,7 +309,7 @@ public class Widget extends SqoopRecord  implements DBWritable, Writable {
     __sb.append(fieldDelim);
     __sb.append(FieldFormatter.escapeAndEnclose(widget_name==null?"null":widget_name, delimiters));
     __sb.append(fieldDelim);
-    __sb.append(FieldFormatter.escapeAndEnclose(price==null?"null":"" + price, delimiters));
+    __sb.append(FieldFormatter.escapeAndEnclose(price==null?"null":price.toPlainString(), delimiters));
     __sb.append(fieldDelim);
     __sb.append(FieldFormatter.escapeAndEnclose(design_date==null?"null":"" + design_date, delimiters));
     __sb.append(fieldDelim);
@@ -241,7 +321,20 @@ public class Widget extends SqoopRecord  implements DBWritable, Writable {
     }
     return __sb.toString();
   }
-  private final DelimiterSet __inputDelimiters = new DelimiterSet((char) 44, (char) 10, (char) 0, (char) 0, false);
+  public void toString0(DelimiterSet delimiters, StringBuilder __sb, char fieldDelim) {
+    __sb.append(FieldFormatter.escapeAndEnclose(id==null?"null":"" + id, delimiters));
+    __sb.append(fieldDelim);
+    __sb.append(FieldFormatter.escapeAndEnclose(widget_name==null?"null":widget_name, delimiters));
+    __sb.append(fieldDelim);
+    __sb.append(FieldFormatter.escapeAndEnclose(price==null?"null":price.toPlainString(), delimiters));
+    __sb.append(fieldDelim);
+    __sb.append(FieldFormatter.escapeAndEnclose(design_date==null?"null":"" + design_date, delimiters));
+    __sb.append(fieldDelim);
+    __sb.append(FieldFormatter.escapeAndEnclose(version==null?"null":"" + version, delimiters));
+    __sb.append(fieldDelim);
+    __sb.append(FieldFormatter.escapeAndEnclose(design_comment==null?"null":design_comment, delimiters));
+  }
+  private static final DelimiterSet __inputDelimiters = new DelimiterSet((char) 44, (char) 10, (char) 0, (char) 0, false);
   private RecordParser __parser;
   public void parse(Text __record) throws RecordParser.ParseError {
     if (null == this.__parser) {
@@ -293,7 +386,8 @@ public class Widget extends SqoopRecord  implements DBWritable, Writable {
 
   private void __loadFromFields(List<String> fields) {
     Iterator<String> __it = fields.listIterator();
-    String __cur_str;
+    String __cur_str = null;
+    try {
     __cur_str = __it.next();
     if (__cur_str.equals("null") || __cur_str.length() == 0) { this.id = null; } else {
       this.id = Integer.valueOf(__cur_str);
@@ -324,12 +418,51 @@ public class Widget extends SqoopRecord  implements DBWritable, Writable {
       this.design_comment = __cur_str;
     }
 
-  }
+    } catch (RuntimeException e) {    throw new RuntimeException("Can't parse input data: '" + __cur_str + "'", e);    }  }
+
+  private void __loadFromFields0(Iterator<String> __it) {
+    String __cur_str = null;
+    try {
+    __cur_str = __it.next();
+    if (__cur_str.equals("null") || __cur_str.length() == 0) { this.id = null; } else {
+      this.id = Integer.valueOf(__cur_str);
+    }
+
+    __cur_str = __it.next();
+    if (__cur_str.equals("null")) { this.widget_name = null; } else {
+      this.widget_name = __cur_str;
+    }
+
+    __cur_str = __it.next();
+    if (__cur_str.equals("null") || __cur_str.length() == 0) { this.price = null; } else {
+      this.price = new java.math.BigDecimal(__cur_str);
+    }
+
+    __cur_str = __it.next();
+    if (__cur_str.equals("null") || __cur_str.length() == 0) { this.design_date = null; } else {
+      this.design_date = java.sql.Date.valueOf(__cur_str);
+    }
+
+    __cur_str = __it.next();
+    if (__cur_str.equals("null") || __cur_str.length() == 0) { this.version = null; } else {
+      this.version = Integer.valueOf(__cur_str);
+    }
+
+    __cur_str = __it.next();
+    if (__cur_str.equals("null")) { this.design_comment = null; } else {
+      this.design_comment = __cur_str;
+    }
+
+    } catch (RuntimeException e) {    throw new RuntimeException("Can't parse input data: '" + __cur_str + "'", e);    }  }
 
   public Object clone() throws CloneNotSupportedException {
     Widget o = (Widget) super.clone();
     o.design_date = (o.design_date != null) ? (java.sql.Date) o.design_date.clone() : null;
     return o;
+  }
+
+  public void clone0(Widget o) throws CloneNotSupportedException {
+    o.design_date = (o.design_date != null) ? (java.sql.Date) o.design_date.clone() : null;
   }
 
   public Map<String, Object> getFieldMap() {
@@ -341,6 +474,15 @@ public class Widget extends SqoopRecord  implements DBWritable, Writable {
     __sqoop$field_map.put("version", this.version);
     __sqoop$field_map.put("design_comment", this.design_comment);
     return __sqoop$field_map;
+  }
+
+  public void getFieldMap0(Map<String, Object> __sqoop$field_map) {
+    __sqoop$field_map.put("id", this.id);
+    __sqoop$field_map.put("widget_name", this.widget_name);
+    __sqoop$field_map.put("price", this.price);
+    __sqoop$field_map.put("design_date", this.design_date);
+    __sqoop$field_map.put("version", this.version);
+    __sqoop$field_map.put("design_comment", this.design_comment);
   }
 
   public void setField(String __fieldName, Object __fieldVal) {
@@ -365,5 +507,33 @@ public class Widget extends SqoopRecord  implements DBWritable, Writable {
     else {
       throw new RuntimeException("No such field: " + __fieldName);
     }
+  }
+  public boolean setField0(String __fieldName, Object __fieldVal) {
+    if ("id".equals(__fieldName)) {
+      this.id = (Integer) __fieldVal;
+      return true;
+    }
+    else    if ("widget_name".equals(__fieldName)) {
+      this.widget_name = (String) __fieldVal;
+      return true;
+    }
+    else    if ("price".equals(__fieldName)) {
+      this.price = (java.math.BigDecimal) __fieldVal;
+      return true;
+    }
+    else    if ("design_date".equals(__fieldName)) {
+      this.design_date = (java.sql.Date) __fieldVal;
+      return true;
+    }
+    else    if ("version".equals(__fieldName)) {
+      this.version = (Integer) __fieldVal;
+      return true;
+    }
+    else    if ("design_comment".equals(__fieldName)) {
+      this.design_comment = (String) __fieldVal;
+      return true;
+    }
+    else {
+      return false;    }
   }
 }

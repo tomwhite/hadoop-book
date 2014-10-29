@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.hadoopbook</groupId>
-    <artifactId>book</artifactId>
+    <artifactId>hadoop-meta</artifactId>
     <version>3.0</version>
-    <relativePath>../book/pom.xml</relativePath>
+    <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
   <artifactId>ch15-sqoop</artifactId>
@@ -14,29 +14,18 @@
   <name>Chapter 15: Sqoop</name>
   <dependencies>
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-core</artifactId>
-      <version>0.20.2-cdh3u2</version>
-    </dependency>
-    <dependency>
       <groupId>org.apache.sqoop</groupId>
       <artifactId>sqoop</artifactId>
-      <exclusions>
-      	<exclusion>
-      	  <groupId>org.apache.hbase</groupId>
-      	  <artifactId>hbase</artifactId>
-      	</exclusion>
-      </exclusions>
+      <classifier>hadoop200</classifier>
     </dependency>
     <dependency>
       <groupId>org.apache.avro</groupId>
       <artifactId>avro</artifactId>
-      <version>1.5.4</version>
     </dependency>
     <dependency>
       <groupId>org.apache.avro</groupId>
       <artifactId>avro-mapred</artifactId>
-      <version>1.5.4</version>
+      <classifier>hadoop2</classifier>
     </dependency>
   </dependencies>
   <build>

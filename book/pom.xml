@@ -15,15 +15,15 @@
     <!-- Component versions are defined here -->
     <!-- Note that Hadoop dependencies are defined in hadoop-meta -->
     <avro.version>1.7.7</avro.version>
-    <parquet.version>1.5.0</parquet.version>
     <crunch.version>0.11.0-hadoop2</crunch.version>
-    <pig.version>0.13.0</pig.version>
-    <hive.version>0.13.1</hive.version>
     <hbase.version>0.94.15</hbase.version>
+    <hive.version>0.13.1</hive.version>
     <mrunit.version>1.1.0</mrunit.version>
+    <parquet.version>1.5.0</parquet.version>
+    <pig.version>0.13.0</pig.version>
     <spark.version>1.1.0</spark.version>
+    <sqoop.version>1.4.5</sqoop.version>
     <zookeeper.version>3.4.6</zookeeper.version>
-    <sqoop.version>1.4.0-incubating</sqoop.version>
   </properties>
   
   <dependencyManagement>
@@ -120,6 +120,7 @@
       <dependency>
         <groupId>org.apache.sqoop</groupId>
         <artifactId>sqoop</artifactId>
+        <classifier>hadoop200</classifier>
         <version>${sqoop.version}</version>
       </dependency>
       <dependency>

@@ -88,7 +88,7 @@ public class MaxWidgetIdGenericAvro extends Configured implements Tool {
 
   public int run(String [] args) throws Exception {
     JobConf conf = new JobConf(getConf(), getClass());
-    conf.setJobName("Max temperature");
+    conf.setJobName("Max widget ID");
     
     Path inputDir = new Path("widgets");
     FileInputFormat.addInputPath(conf, inputDir);
