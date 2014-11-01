@@ -1,11 +1,16 @@
 import java.io.IOException;
-import java.util.*;
-
+import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.client.HTable;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.util.*;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 public class HBaseTemperatureCli extends Configured implements Tool {
   static final byte [] DATA_COLUMNFAMILY = Bytes.toBytes("data");
@@ -18,7 +23,7 @@ public class HBaseTemperatureCli extends Configured implements Tool {
     Scan scan = new Scan(startRow);
     scan.addColumn(DATA_COLUMNFAMILY, AIRTEMP_QUALIFIER);
     ResultScanner scanner = table.getScanner(scan);
-    Result res = null;
+    Result res;
     int count = 0;
     try {
       while ((res = scanner.next()) != null && count++ < maxCount) {
@@ -49,7 +54,7 @@ public class HBaseTemperatureCli extends Configured implements Tool {
       return -1;
     }
     
-    HTable table = new HTable(new HBaseConfiguration(getConf()), "observations");
+    HTable table = new HTable(HBaseConfiguration.create(getConf()), "observations");
     NavigableMap<Long, Integer> observations =
       getStationObservations(table, args[0]).descendingMap();
     for (Map.Entry<Long, Integer> observation : observations.entrySet()) {
@@ -61,7 +66,7 @@ public class HBaseTemperatureCli extends Configured implements Tool {
   }
 
   public static void main(String[] args) throws Exception {
-    int exitCode = ToolRunner.run(new HBaseConfiguration(),
+    int exitCode = ToolRunner.run(HBaseConfiguration.create(),
         new HBaseTemperatureCli(), args);
     System.exit(exitCode);
   }

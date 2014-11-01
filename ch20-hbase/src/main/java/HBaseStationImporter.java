@@ -1,4 +1,5 @@
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.hadoop.conf.Configured;
@@ -6,7 +7,8 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.util.*;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 public class HBaseStationImporter extends Configured implements Tool {
   
@@ -16,7 +18,7 @@ public class HBaseStationImporter extends Configured implements Tool {
       return -1;
     }
     
-    HTable table = new HTable(new HBaseConfiguration(getConf()), "stations");
+    HTable table = new HTable(HBaseConfiguration.create(getConf()), "stations");
     
     NcdcStationMetadata metadata = new NcdcStationMetadata();
     metadata.initialize(new File(args[0]));
@@ -36,7 +38,7 @@ public class HBaseStationImporter extends Configured implements Tool {
   }
 
   public static void main(String[] args) throws Exception {
-    int exitCode = ToolRunner.run(new HBaseConfiguration(),
+    int exitCode = ToolRunner.run(HBaseConfiguration.create(),
         new HBaseStationImporter(), args);
     System.exit(exitCode);
   }

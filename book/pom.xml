@@ -16,7 +16,7 @@
     <!-- Note that Hadoop dependencies are defined in hadoop-meta -->
     <avro.version>1.7.7</avro.version>
     <crunch.version>0.11.0-hadoop2</crunch.version>
-    <hbase.version>0.94.15</hbase.version>
+    <hbase.version>0.98.7-hadoop2</hbase.version>
     <hive.version>0.13.1</hive.version>
     <mrunit.version>1.1.0</mrunit.version>
     <parquet.version>1.5.0</parquet.version>
@@ -52,7 +52,7 @@
       </dependency>
       <dependency>
         <groupId>org.apache.hbase</groupId>
-        <artifactId>hbase</artifactId>
+        <artifactId>hbase-client</artifactId>
         <version>${hbase.version}</version>
       </dependency>
       <dependency>

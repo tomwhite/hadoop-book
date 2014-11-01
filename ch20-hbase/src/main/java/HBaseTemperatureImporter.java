@@ -6,10 +6,18 @@ import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapred.*;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapred.FileInputFormat;
+import org.apache.hadoop.mapred.JobClient;
+import org.apache.hadoop.mapred.JobConf;
+import org.apache.hadoop.mapred.MapReduceBase;
+import org.apache.hadoop.mapred.Mapper;
+import org.apache.hadoop.mapred.OutputCollector;
+import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.mapred.lib.NullOutputFormat;
-import org.apache.hadoop.util.*;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 public class HBaseTemperatureImporter extends Configured implements Tool {
   
@@ -19,6 +27,7 @@ public class HBaseTemperatureImporter extends Configured implements Tool {
     private NcdcRecordParser parser = new NcdcRecordParser();
     private HTable table;
 
+    @Override
     public void map(LongWritable key, Text value,
       OutputCollector<K, V> output, Reporter reporter)
     throws IOException {
@@ -34,12 +43,13 @@ public class HBaseTemperatureImporter extends Configured implements Tool {
       }
     }
 
+    @Override
     public void configure(JobConf jc) {
       super.configure(jc);
       // Create the HBase table client once up-front and keep it around
       // rather than create on each map invocation.
       try {
-        this.table = new HTable(new HBaseConfiguration(jc), "observations");
+        this.table = new HTable(HBaseConfiguration.create(jc), "observations");
       } catch (IOException e) {
         throw new RuntimeException("Failed HTable construction", e);
       }
@@ -67,7 +77,7 @@ public class HBaseTemperatureImporter extends Configured implements Tool {
   }
 
   public static void main(String[] args) throws Exception {
-    int exitCode = ToolRunner.run(new HBaseConfiguration(),
+    int exitCode = ToolRunner.run(HBaseConfiguration.create(),
         new HBaseTemperatureImporter(), args);
     System.exit(exitCode);
   }

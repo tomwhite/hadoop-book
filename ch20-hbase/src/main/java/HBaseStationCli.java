@@ -43,21 +43,21 @@ public class HBaseStationCli extends Configured implements Tool {
       return -1;
     }
 
-    HTable table = new HTable(new HBaseConfiguration(getConf()), "stations");
+    HTable table = new HTable(HBaseConfiguration.create(getConf()), "stations");
     Map<String, String> stationInfo = getStationInfo(table, args[0]);
     if (stationInfo == null) {
       System.err.printf("Station ID %s not found.\n", args[0]);
       return -1;
     }
     for (Map.Entry<String, String> station : stationInfo.entrySet()) {
-      // Print the date, time, and temperature
+      // Print the station ID and information
       System.out.printf("%s\t%s\n", station.getKey(), station.getValue());
     }
     return 0;
   }
 
   public static void main(String[] args) throws Exception {
-    int exitCode = ToolRunner.run(new HBaseConfiguration(),
+    int exitCode = ToolRunner.run(HBaseConfiguration.create(),
         new HBaseStationCli(), args);
     System.exit(exitCode);
   }
