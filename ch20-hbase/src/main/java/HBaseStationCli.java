@@ -12,10 +12,10 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 public class HBaseStationCli extends Configured implements Tool {
-  static final byte [] INFO_COLUMNFAMILY = Bytes.toBytes("info");
-  static final byte [] NAME_QUALIFIER = Bytes.toBytes("name");
-  static final byte [] LOCATION_QUALIFIER = Bytes.toBytes("location");
-  static final byte [] DESCRIPTION_QUALIFIER = Bytes.toBytes("description");
+  static final byte[] INFO_COLUMNFAMILY = Bytes.toBytes("info");
+  static final byte[] NAME_QUALIFIER = Bytes.toBytes("name");
+  static final byte[] LOCATION_QUALIFIER = Bytes.toBytes("location");
+  static final byte[] DESCRIPTION_QUALIFIER = Bytes.toBytes("description");
 
   public Map<String, String> getStationInfo(HTable table, String stationId)
       throws IOException {
@@ -32,8 +32,8 @@ public class HBaseStationCli extends Configured implements Tool {
     return resultMap;
   }
 
-  private static String getValue(Result res, byte [] cf, byte [] qualifier) {
-    byte [] value = res.getValue(cf, qualifier);
+  private static String getValue(Result res, byte[] cf, byte[] qualifier) {
+    byte[] value = res.getValue(cf, qualifier);
     return value == null? "": Bytes.toString(value);
   }
 

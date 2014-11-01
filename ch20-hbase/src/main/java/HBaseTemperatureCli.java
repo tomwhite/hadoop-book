@@ -13,8 +13,8 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 public class HBaseTemperatureCli extends Configured implements Tool {
-  static final byte [] DATA_COLUMNFAMILY = Bytes.toBytes("data");
-  static final byte [] AIRTEMP_QUALIFIER = Bytes.toBytes("airtemp");
+  static final byte[] DATA_COLUMNFAMILY = Bytes.toBytes("data");
+  static final byte[] AIRTEMP_QUALIFIER = Bytes.toBytes("airtemp");
   
   public NavigableMap<Long, Integer> getStationObservations(HTable table,
       String stationId, long maxStamp, int maxCount) throws IOException {
