@@ -37,8 +37,8 @@ public class HBaseTemperatureImporter extends Configured implements Tool {
         byte[] rowKey = RowKeyConverter.makeObservationRowKey(parser.getStationId(),
             parser.getObservationDate().getTime());
         Put p = new Put(rowKey);
-        p.add(HBaseTemperatureCli.DATA_COLUMNFAMILY,
-            HBaseTemperatureCli.AIRTEMP_QUALIFIER,
+        p.add(HBaseTemperatureQuery.DATA_COLUMNFAMILY,
+            HBaseTemperatureQuery.AIRTEMP_QUALIFIER,
             Bytes.toBytes(parser.getAirTemperature()));
         table.put(p);
       }

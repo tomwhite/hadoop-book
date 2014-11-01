@@ -11,7 +11,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-public class HBaseStationCli extends Configured implements Tool {
+public class HBaseStationQuery extends Configured implements Tool {
   static final byte[] INFO_COLUMNFAMILY = Bytes.toBytes("info");
   static final byte[] NAME_QUALIFIER = Bytes.toBytes("name");
   static final byte[] LOCATION_QUALIFIER = Bytes.toBytes("location");
@@ -39,7 +39,7 @@ public class HBaseStationCli extends Configured implements Tool {
 
   public int run(String[] args) throws IOException {
     if (args.length != 1) {
-      System.err.println("Usage: HBaseStationCli <station_id>");
+      System.err.println("Usage: HBaseStationQuery <station_id>");
       return -1;
     }
 
@@ -58,7 +58,7 @@ public class HBaseStationCli extends Configured implements Tool {
 
   public static void main(String[] args) throws Exception {
     int exitCode = ToolRunner.run(HBaseConfiguration.create(),
-        new HBaseStationCli(), args);
+        new HBaseStationQuery(), args);
     System.exit(exitCode);
   }
 }

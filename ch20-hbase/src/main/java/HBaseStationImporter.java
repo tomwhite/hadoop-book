@@ -26,11 +26,11 @@ public class HBaseStationImporter extends Configured implements Tool {
     
     for (Map.Entry<String, String> entry : stationIdToNameMap.entrySet()) {
       Put put = new Put(Bytes.toBytes(entry.getKey()));
-      put.add(HBaseStationCli.INFO_COLUMNFAMILY, HBaseStationCli.NAME_QUALIFIER,
+      put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.NAME_QUALIFIER,
         Bytes.toBytes(entry.getValue()));
-      put.add(HBaseStationCli.INFO_COLUMNFAMILY, HBaseStationCli.DESCRIPTION_QUALIFIER,
+      put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.DESCRIPTION_QUALIFIER,
         Bytes.toBytes("Description..."));
-      put.add(HBaseStationCli.INFO_COLUMNFAMILY, HBaseStationCli.LOCATION_QUALIFIER,
+      put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.LOCATION_QUALIFIER,
         Bytes.toBytes("Location..."));
       table.put(put);
     }

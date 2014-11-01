@@ -12,7 +12,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-public class HBaseTemperatureCli extends Configured implements Tool {
+public class HBaseTemperatureQuery extends Configured implements Tool {
   static final byte[] DATA_COLUMNFAMILY = Bytes.toBytes("data");
   static final byte[] AIRTEMP_QUALIFIER = Bytes.toBytes("airtemp");
   
@@ -50,7 +50,7 @@ public class HBaseTemperatureCli extends Configured implements Tool {
 
   public int run(String[] args) throws IOException {
     if (args.length != 1) {
-      System.err.println("Usage: HBaseTemperatureCli <station_id>");
+      System.err.println("Usage: HBaseTemperatureQuery <station_id>");
       return -1;
     }
     
@@ -67,7 +67,7 @@ public class HBaseTemperatureCli extends Configured implements Tool {
 
   public static void main(String[] args) throws Exception {
     int exitCode = ToolRunner.run(HBaseConfiguration.create(),
-        new HBaseTemperatureCli(), args);
+        new HBaseTemperatureQuery(), args);
     System.exit(exitCode);
   }
 }
