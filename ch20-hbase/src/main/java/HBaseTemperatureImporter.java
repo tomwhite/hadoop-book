@@ -50,6 +50,7 @@ public class HBaseTemperatureImporter extends Configured implements Tool {
     }
   }
 
+  @Override
   public int run(String[] args) throws Exception {
     if (args.length != 1) {
       System.err.println("Usage: HBaseTemperatureImporter <input>");

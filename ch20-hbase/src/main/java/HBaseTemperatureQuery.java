@@ -23,9 +23,9 @@ public class HBaseTemperatureQuery extends Configured implements Tool {
     Scan scan = new Scan(startRow);
     scan.addColumn(DATA_COLUMNFAMILY, AIRTEMP_QUALIFIER);
     ResultScanner scanner = table.getScanner(scan);
-    Result res;
-    int count = 0;
     try {
+      Result res;
+      int count = 0;
       while ((res = scanner.next()) != null && count++ < maxCount) {
         byte[] row = res.getRow();
         byte[] value = res.getValue(DATA_COLUMNFAMILY, AIRTEMP_QUALIFIER);
