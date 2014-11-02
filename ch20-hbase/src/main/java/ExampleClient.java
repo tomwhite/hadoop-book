@@ -23,21 +23,27 @@ public class ExampleClient {
     htd.addFamily(hcd);
     admin.createTable(htd);
     byte[] tablename = htd.getName();
-    HTableDescriptor [] tables = admin.listTables();
+    HTableDescriptor[] tables = admin.listTables();
     if (tables.length != 1 && Bytes.equals(tablename, tables[0].getName())) {
       throw new IOException("Failed create of table");
     }
 
-    // Run some operations -- a put, a get, and a scan -- against the table.
+    // Run some operations -- three puts, a get, and a scan -- against the table.
     HTable table = new HTable(config, tablename);
-    byte[] row1 = Bytes.toBytes("row1");
-    Put p1 = new Put(row1);
-    byte[] databytes = Bytes.toBytes("data");
-    p1.add(databytes, Bytes.toBytes("1"), Bytes.toBytes("value1"));
-    table.put(p1);
-    Get g = new Get(row1);
-    Result result = table.get(g);
+    for (int i = 1; i <= 3; i++) {
+      byte[] row = Bytes.toBytes("row" + i);
+      Put put = new Put(row);
+      byte[] columnFamily = Bytes.toBytes("data");
+      byte[] qualifier = Bytes.toBytes(String.valueOf(i));
+      byte[] value = Bytes.toBytes("value1");
+      put.add(columnFamily, qualifier, value);
+      table.put(put);
+    }
+
+    Get get = new Get(Bytes.toBytes("row1"));
+    Result result = table.get(get);
     System.out.println("Get: " + result);
+
     Scan scan = new Scan();
     ResultScanner scanner = table.getScanner(scan);
     try {
@@ -48,7 +54,7 @@ public class ExampleClient {
       scanner.close();
     }
 
-    // Drop the table
+    // Disable then drop the table
     admin.disableTable(tablename);
     admin.deleteTable(tablename);
   }
