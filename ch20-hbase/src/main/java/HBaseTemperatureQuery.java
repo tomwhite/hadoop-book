@@ -40,14 +40,6 @@ public class HBaseTemperatureQuery extends Configured implements Tool {
     return resultMap;
   }
 
-  /**
-   * Return the last ten observations.
-   */
-  public NavigableMap<Long, Integer> getStationObservations(HTable table,
-      String stationId) throws IOException {
-    return getStationObservations(table, stationId, Long.MAX_VALUE, 10);
-  }
-
   public int run(String[] args) throws IOException {
     if (args.length != 1) {
       System.err.println("Usage: HBaseTemperatureQuery <station_id>");
@@ -56,7 +48,7 @@ public class HBaseTemperatureQuery extends Configured implements Tool {
     
     HTable table = new HTable(HBaseConfiguration.create(getConf()), "observations");
     NavigableMap<Long, Integer> observations =
-      getStationObservations(table, args[0]).descendingMap();
+      getStationObservations(table, args[0], Long.MAX_VALUE, 10).descendingMap();
     for (Map.Entry<Long, Integer> observation : observations.entrySet()) {
       // Print the date, time, and temperature
       System.out.printf("%1$tF %1$tR\t%2$s\n", observation.getKey(),

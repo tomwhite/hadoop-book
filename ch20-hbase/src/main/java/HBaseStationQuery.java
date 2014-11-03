@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.hadoop.conf.Configured;
@@ -25,7 +25,7 @@ public class HBaseStationQuery extends Configured implements Tool {
     if (res == null) {
       return null;
     }
-    Map<String, String> resultMap = new HashMap<String, String>();
+    Map<String, String> resultMap = new LinkedHashMap<String, String>();
     resultMap.put("name", getValue(res, INFO_COLUMNFAMILY, NAME_QUALIFIER));
     resultMap.put("location", getValue(res, INFO_COLUMNFAMILY, LOCATION_QUALIFIER));
     resultMap.put("description", getValue(res, INFO_COLUMNFAMILY, DESCRIPTION_QUALIFIER));
@@ -50,7 +50,6 @@ public class HBaseStationQuery extends Configured implements Tool {
       return -1;
     }
     for (Map.Entry<String, String> station : stationInfo.entrySet()) {
-      // Print the station ID and information
       System.out.printf("%s\t%s\n", station.getKey(), station.getValue());
     }
     return 0;

@@ -29,9 +29,9 @@ public class HBaseStationImporter extends Configured implements Tool {
       put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.NAME_QUALIFIER,
         Bytes.toBytes(entry.getValue()));
       put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.DESCRIPTION_QUALIFIER,
-        Bytes.toBytes("Description..."));
+        Bytes.toBytes("(unknown)"));
       put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.LOCATION_QUALIFIER,
-        Bytes.toBytes("Location..."));
+        Bytes.toBytes("(unknown)"));
       table.put(put);
     }
     return 0;
