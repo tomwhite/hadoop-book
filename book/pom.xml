@@ -56,6 +56,11 @@
         <version>${hbase.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.apache.hbase</groupId>
+        <artifactId>hbase-server</artifactId>
+        <version>${hbase.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.hive</groupId>
         <artifactId>hive-common</artifactId>
         <version>${hive.version}</version>
@@ -317,33 +322,5 @@
       </plugins>
     </pluginManagement>
   </build>
-  
-  <repositories>
-    <repository>
-      <id>apache.releases</id>
-      <name>Apache Snapshot Repository</name>
-      <url>https://repository.apache.org/content/repositories/releases/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <!-- For Hive snapshots until they get into Maven Central -->
-      <id>apache.snapshots</id>
-      <name>Apache Snapshot Repository</name>
-      <url>http://repository.apache.org/snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
-    <repository>
-      <!-- For CDH -->
-      <id>cloudera</id>
-      <url>https://repository.cloudera.com/content/repositories/releases/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
 
 </project>
