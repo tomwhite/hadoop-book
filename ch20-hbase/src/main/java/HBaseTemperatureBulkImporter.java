@@ -19,6 +19,10 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
+/**
+ * Uses HBase's bulk load facility ({@link HFileOutputFormat2} and {@link
+ * LoadIncrementalHFiles}) to efficiently load temperature data into a HBase table.
+ */
 public class HBaseTemperatureBulkImporter extends Configured implements Tool {
   
   static class HBaseTemperatureMapper extends Mapper<LongWritable, Text,

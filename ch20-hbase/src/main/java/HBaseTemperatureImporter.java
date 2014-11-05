@@ -1,33 +1,25 @@
 import java.io.IOException;
-
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.mapreduce.TableOutputFormat;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.NullOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
+/**
+ * Uses HBase's {@link TableOutputFormat} to load temperature data into a HBase table.
+ */
 public class HBaseTemperatureImporter extends Configured implements Tool {
   
-  static class HBaseTemperatureMapper<K, V> extends Mapper<LongWritable, Text, K, V> {
+  static class HBaseTemperatureMapper<K> extends Mapper<LongWritable, Text, K, Put> {
     private NcdcRecordParser parser = new NcdcRecordParser();
-    private HTable table;
-
-    @Override
-    protected void setup(Context context) throws IOException {
-      // Create the HBase table client once up-front and keep it around
-      // rather than create on each map invocation.
-      this.table = new HTable(HBaseConfiguration.create(context.getConfiguration()),
-          "observations");
-    }
 
     @Override
     public void map(LongWritable key, Text value, Context context) throws
@@ -40,13 +32,8 @@ public class HBaseTemperatureImporter extends Configured implements Tool {
         p.add(HBaseTemperatureQuery.DATA_COLUMNFAMILY,
             HBaseTemperatureQuery.AIRTEMP_QUALIFIER,
             Bytes.toBytes(parser.getAirTemperature()));
-        table.put(p);
+        context.write(null, p);
       }
-    }
-
-    @Override
-    protected void cleanup(Context context) throws IOException {
-      table.close();
     }
   }
 
@@ -59,9 +46,10 @@ public class HBaseTemperatureImporter extends Configured implements Tool {
     Job job = new Job(getConf(), getClass().getSimpleName());
     job.setJarByClass(getClass());
     FileInputFormat.addInputPath(job, new Path(args[0]));
+    job.getConfiguration().set(TableOutputFormat.OUTPUT_TABLE, "observations");
     job.setMapperClass(HBaseTemperatureMapper.class);
     job.setNumReduceTasks(0);
-    job.setOutputFormatClass(NullOutputFormat.class);
+    job.setOutputFormatClass(TableOutputFormat.class);
     return job.waitForCompletion(true) ? 0 : 1;
   }
 
