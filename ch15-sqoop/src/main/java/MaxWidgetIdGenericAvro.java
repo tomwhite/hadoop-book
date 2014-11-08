@@ -1,43 +1,39 @@
 import java.io.IOException;
-
 import org.apache.avro.Schema;
 import org.apache.avro.file.DataFileReader;
 import org.apache.avro.file.FileReader;
 import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericDatumReader;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.avro.mapred.AvroCollector;
-import org.apache.avro.mapred.AvroInputFormat;
-import org.apache.avro.mapred.AvroJob;
-import org.apache.avro.mapred.AvroMapper;
-import org.apache.avro.mapred.AvroOutputFormat;
-import org.apache.avro.mapred.AvroReducer;
+import org.apache.avro.mapred.AvroKey;
+import org.apache.avro.mapred.AvroValue;
 import org.apache.avro.mapred.FsInput;
-import org.apache.avro.mapred.Pair;
+import org.apache.avro.mapreduce.AvroJob;
+import org.apache.avro.mapreduce.AvroKeyInputFormat;
+import org.apache.avro.mapreduce.AvroKeyOutputFormat;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileOutputFormat;
-import org.apache.hadoop.mapred.JobClient;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.Reporter;
+import org.apache.hadoop.io.NullWritable;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 public class MaxWidgetIdGenericAvro extends Configured implements Tool {
-  
-  public static class MaxWidgetMapper extends AvroMapper<GenericRecord, Pair<Long, GenericRecord>> {
-    
+
+  public static class MaxWidgetMapper extends Mapper<AvroKey<GenericRecord>, NullWritable,
+      AvroKey<Long>, AvroValue<GenericRecord>> {
+
     private GenericRecord maxWidget;
-    private AvroCollector<Pair<Long, GenericRecord>> collector;
-    
     @Override
-    public void map(GenericRecord widget,
-        AvroCollector<Pair<Long, GenericRecord>> collector, Reporter reporter)
-        throws IOException {
-      this.collector = collector;
+    protected void map(AvroKey<GenericRecord> key, NullWritable value, Context context)
+        throws IOException, InterruptedException {
+      GenericRecord widget = key.datum();
       Integer id = (Integer) widget.get("id");
       if (id != null) {
         if (maxWidget == null
@@ -46,71 +42,66 @@ public class MaxWidgetIdGenericAvro extends Configured implements Tool {
         }
       }
     }
-    
-    @Override
-    public void close() throws IOException {
-      if (maxWidget != null) {
-        collector.collect(new Pair<Long, GenericRecord>(0L, maxWidget));
-      }
-      super.close();
-    }
-    
-  }
-  
-  static GenericRecord copy(GenericRecord record) {
-    Schema schema = record.getSchema();
-    GenericRecord copy = new GenericData.Record(schema);
-    for (Schema.Field f : schema.getFields()) {
-      copy.put(f.name(), record.get(f.name()));
-    }
-    return copy;
-  }
-  
-  public static class MaxWidgetReducer extends AvroReducer<Long, GenericRecord, GenericRecord> {
-    
-    @Override
-    public void reduce(Long key, Iterable<GenericRecord> values,
-        AvroCollector<GenericRecord> collector, Reporter reporter) throws IOException {
-      GenericRecord maxWidget = null;
 
-      for (GenericRecord w : values) {
+    @Override
+    protected void cleanup(Context context) throws IOException, InterruptedException {
+      context.write(new AvroKey(0L), new AvroValue<GenericRecord>(maxWidget));
+    }
+  }
+
+  public static class MaxWidgetReducer
+      extends Reducer<AvroKey<Long>, AvroValue<GenericRecord>,
+      AvroKey<GenericRecord>, NullWritable> {
+
+    @Override
+    protected void reduce(AvroKey<Long> key, Iterable<AvroValue<GenericRecord>>
+        values, Context context) throws IOException, InterruptedException {
+      GenericRecord maxWidget = null;
+      for (AvroValue<GenericRecord> value : values) {
+        GenericRecord record = value.datum();
         if (maxWidget == null
-            || (Integer) w.get("id") > (Integer) maxWidget.get("id")) {
-          maxWidget = copy(w);
+            || (Integer) record.get("id") > (Integer) maxWidget.get("id")) {
+          maxWidget = copy(record);
         }
       }
+      context.write(new AvroKey(maxWidget), NullWritable.get());
+    }
 
-      if (maxWidget != null) {
-        collector.collect(maxWidget);
+    private GenericRecord copy(GenericRecord record) {
+      Schema schema = record.getSchema();
+      GenericRecord copy = new GenericData.Record(schema);
+      for (Schema.Field f : schema.getFields()) {
+        copy.put(f.name(), record.get(f.name()));
       }
+      return copy;
     }
   }
 
-  public int run(String [] args) throws Exception {
-    JobConf conf = new JobConf(getConf(), getClass());
-    conf.setJobName("Max widget ID");
-    
+  @Override
+  public int run(String[] args) throws Exception {
+    Job job = new Job(getConf(), "Max widget ID");
+    job.setJarByClass(getClass());
+
+    job.getConfiguration().setBoolean(
+        Job.MAPREDUCE_JOB_USER_CLASSPATH_FIRST, true);
+
     Path inputDir = new Path("widgets");
-    FileInputFormat.addInputPath(conf, inputDir);
-    FileOutputFormat.setOutputPath(conf, new Path("maxwidget"));
-    
-    Schema schema = readSchema(inputDir, conf);
-    
-    conf.setInputFormat(AvroInputFormat.class);
-    conf.setOutputFormat(AvroOutputFormat.class);
-        
-    AvroJob.setInputSchema(conf, schema);
-    AvroJob.setMapOutputSchema(conf,
-        Pair.getPairSchema(Schema.create(Schema.Type.LONG), schema));
-    AvroJob.setOutputSchema(conf, schema);
+    FileInputFormat.addInputPath(job, inputDir);
+    FileOutputFormat.setOutputPath(job, new Path("maxwidget"));
 
-    AvroJob.setMapperClass(conf, MaxWidgetMapper.class);
-    AvroJob.setReducerClass(conf, MaxWidgetReducer.class);
+    Schema schema = readSchema(inputDir, getConf());
 
-    conf.setNumReduceTasks(1);
+    AvroJob.setMapOutputKeySchema(job, Schema.create(Schema.Type.LONG));
+    AvroJob.setMapOutputValueSchema(job, schema);
+    AvroJob.setOutputKeySchema(job, schema);
 
-    JobClient.runJob(conf);
-    return 0;
+    job.setInputFormatClass(AvroKeyInputFormat.class);
+    job.setOutputFormatClass(AvroKeyOutputFormat.class);
+
+    job.setMapperClass(MaxWidgetMapper.class);
+    job.setReducerClass(MaxWidgetReducer.class);
+
+    return job.waitForCompletion(true) ? 0 : 1;
   }
   
   /**
