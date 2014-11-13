@@ -8,10 +8,10 @@
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>ch06-avro</artifactId>
+  <artifactId>ch12-avro</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>Chapter 6: Avro</name>
+  <name>Chapter 12: Avro</name>
   <dependencies>
     <dependency>
       <groupId>org.apache.avro</groupId>

@@ -17,7 +17,7 @@ import org.apache.crunch.io.To;
 
 import static org.apache.crunch.types.avro.Avros.*;
 
-// Crunch version of ch06-avro AvroGenericMaxTemperature
+// Crunch version of ch12-avro AvroGenericMaxTemperature
 public class AvroGenericMaxTemperatureCrunch implements Serializable {
 
   private static final Schema SCHEMA = new Schema.Parser().parse(

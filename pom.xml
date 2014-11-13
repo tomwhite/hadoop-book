@@ -14,7 +14,7 @@
     <module>ch02-mr-intro</module>
     <module>ch03-hdfs</module>
     <module>ch05-io</module>
-    <module>ch06-avro</module>
+    <module>ch12-avro</module>
     <module>ch07-parquet</module>
     <module>ch06-mr-dev</module>
     <module>ch08-mr-types</module>
