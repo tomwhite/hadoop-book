@@ -41,7 +41,7 @@
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch10-mr-types</artifactId>
+      <artifactId>ch08-mr-types</artifactId>
       <version>3.0</version>
     </dependency>
     <dependency>

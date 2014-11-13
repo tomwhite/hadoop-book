@@ -6,7 +6,7 @@ bin=`cd "$bin"; pwd`
 actual="$bin"/../actual
 book_workspace=~/book-workspace/htdg-git
 
-for ch in ch02-mr-intro ch03-hdfs ch05-io ch06-mr-dev ch10-mr-types ch11-mr-features ch16-pig ch17-hive ch21-zk
+for ch in ch02-mr-intro ch03-hdfs ch05-io ch06-mr-dev ch08-mr-types ch11-mr-features ch16-pig ch17-hive ch21-zk
 do
   # remove id attributes from program listings, and add a newline before </programlisting>
   sed '/<programlisting/s/ id="[^"]*"//; s|</programlisting>|\
@@ -20,4 +20,4 @@ sed -e '/<programlisting/s/ id="[^"]*"//; s|</programlisting>|\
 $bin/check_manuscript.py /tmp/ch06-avro.xml $actual/ch06-avro/*
 
 # Common check
-$bin/check_manuscript.py /tmp/ch10-mr-types.xml $actual/common/*
+$bin/check_manuscript.py /tmp/ch08-mr-types.xml $actual/common/*

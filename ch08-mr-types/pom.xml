@@ -8,10 +8,10 @@
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>ch10-mr-types</artifactId>
+  <artifactId>ch08-mr-types</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>Chapter 10: MapReduce Types and Formats</name>
+  <name>Chapter 8: MapReduce Types and Formats</name>
   <dependencies>
     <dependency>
       <groupId>com.hadoopbook</groupId>
