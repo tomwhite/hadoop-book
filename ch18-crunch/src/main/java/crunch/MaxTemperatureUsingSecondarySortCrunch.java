@@ -14,7 +14,7 @@ import static org.apache.crunch.lib.Sort.ColumnOrder.by;
 import static org.apache.crunch.types.writable.Writables.ints;
 import static org.apache.crunch.types.writable.Writables.pairs;
 
-// Crunch version of ch11-mr-features MaxTemperatureUsingSecondarySort
+// Crunch version of ch09-mr-features MaxTemperatureUsingSecondarySort
 public class MaxTemperatureUsingSecondarySortCrunch {
 
   public static void main(String[] args) throws Exception {

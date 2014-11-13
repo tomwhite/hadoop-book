@@ -12,7 +12,7 @@ import org.apache.crunch.lib.Join;
 import static org.apache.crunch.types.writable.Writables.strings;
 import static org.apache.crunch.types.writable.Writables.tableOf;
 
-// Crunch version of ch11-mr-features JoinRecordWithStationName
+// Crunch version of ch09-mr-features JoinRecordWithStationName
 public class JoinRecordWithStationNameCrunch {
 
   public static void main(String[] args) throws Exception {

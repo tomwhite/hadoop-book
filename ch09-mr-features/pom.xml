@@ -8,7 +8,7 @@
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>ch11-mr-features</artifactId>
+  <artifactId>ch09-mr-features</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
   <name>Chapter 11: MapReduce Features</name>

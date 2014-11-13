@@ -18,7 +18,7 @@
     <module>ch07-parquet</module>
     <module>ch06-mr-dev</module>
     <module>ch08-mr-types</module>
-    <module>ch11-mr-features</module>
+    <module>ch09-mr-features</module>
     <module>ch15-sqoop</module>
     <module>ch16-pig</module>
     <module>ch17-hive</module>

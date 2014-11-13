@@ -15,5 +15,5 @@ perl $bin/phragmite_db.pl $actual/ch06-mr-dev/ $bin/../../../hadoop-book-mr-dev/
 perl $bin/phragmite_db.pl $actual/ch06-mr-dev/ $bin/../../ch06-mr-dev/src/main/resources/max-temp-workflow/workflow.xml
 perl $bin/phragmite_db.pl $actual/ch08-mr-types/ $(grep -ElR '(// ?cc|// ?==)' --include '*.java' $bin/../../ch08-mr-types)
 perl $bin/phragmite_db.pl $actual/common/ $(grep -ElR '(// ?cc|// ?==)' --include '*.java' $bin/../../common)
-perl $bin/phragmite_db.pl $actual/ch11-mr-features/ $(grep -ElR '(// ?cc|// ?==)' --include '*.java' $bin/../../ch11-mr-features)
+perl $bin/phragmite_db.pl $actual/ch09-mr-features/ $(grep -ElR '(// ?cc|// ?==)' --include '*.java' $bin/../../ch09-mr-features)
 perl $bin/phragmite_db.pl $actual/ch21-zk/ $(grep -ElR '(// ?cc|// ?==)' --include '*.java' $bin/../../ch21-zk)

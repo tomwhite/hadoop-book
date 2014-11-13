@@ -46,7 +46,7 @@
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch11-mr-features</artifactId>
+      <artifactId>ch09-mr-features</artifactId>
       <version>3.0</version>
     </dependency>
   </dependencies>

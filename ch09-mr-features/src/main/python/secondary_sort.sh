@@ -7,7 +7,7 @@ org.apache.hadoop.mapred.lib.KeyFieldBasedComparator \
   -files secondary_sort_map.py,secondary_sort_reduce.py \
   -input input/ncdc/all \
   -output output-secondarysort-streaming \
-  -mapper ch11-mr-features/src/main/python/secondary_sort_map.py \
+  -mapper ch09-mr-features/src/main/python/secondary_sort_map.py \
   -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner \
-  -reducer ch11-mr-features/src/main/python/secondary_sort_reduce.py
+  -reducer ch09-mr-features/src/main/python/secondary_sort_reduce.py
   
