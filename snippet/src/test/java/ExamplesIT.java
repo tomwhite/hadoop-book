@@ -58,7 +58,7 @@ public class ExamplesIT {
   private static final String MODE_DEFAULT = "local";
   
   private static final String EXAMPLE_CHAPTERS_PROPERTY = "example.chapters";
-  private static final String EXAMPLE_CHAPTERS_DEFAULT = "ch02-mr-intro,ch05-io,ch06-avro,ch08-mr-dev,ch10-mr-types,ch11-mr-features";
+  private static final String EXAMPLE_CHAPTERS_DEFAULT = "ch02-mr-intro,ch05-io,ch06-avro,ch06-mr-dev,ch10-mr-types,ch11-mr-features";
 
   private static final IOFileFilter HIDDEN_FILE_FILTER =
     new OrFileFilter(HiddenFileFilter.HIDDEN, new PrefixFileFilter("_"));

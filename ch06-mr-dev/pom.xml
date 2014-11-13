@@ -8,10 +8,10 @@
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
-  <artifactId>ch08-mr-dev</artifactId>
+  <artifactId>ch06-mr-dev</artifactId>
   <packaging>jar</packaging>
   <version>3.0</version>
-  <name>Chapter 8: Developing a MapReduce Application</name>
+  <name>Chapter 6: Developing a MapReduce Application</name>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

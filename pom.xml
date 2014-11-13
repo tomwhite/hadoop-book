@@ -16,7 +16,7 @@
     <module>ch05-io</module>
     <module>ch06-avro</module>
     <module>ch07-parquet</module>
-    <module>ch08-mr-dev</module>
+    <module>ch06-mr-dev</module>
     <module>ch10-mr-types</module>
     <module>ch11-mr-features</module>
     <module>ch15-sqoop</module>
