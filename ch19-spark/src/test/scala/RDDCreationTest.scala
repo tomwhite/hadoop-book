@@ -76,7 +76,7 @@ class RDDCreationTest extends FunSuite with BeforeAndAfterEach {
   }
 
   test("avro generic data file") {
-    val inputPath = "data.avro"
+    val inputPath = "target/data.avro"
     val avroSchema = new Schema.Parser().parse("{\n  \"type\": \"record\",\n  \"name\": \"StringPair\",\n  \"doc\": \"A pair of strings.\",\n  \"fields\": [\n    {\"name\": \"left\", \"type\": \"string\"},\n    {\"name\": \"right\", \"type\": \"string\"}\n  ]\n}")
 
     val datum: GenericRecord = new GenericData.Record(avroSchema)
@@ -108,7 +108,7 @@ class RDDCreationTest extends FunSuite with BeforeAndAfterEach {
   }
 
   test("avro specific data file") {
-    val inputPath = "data.avro"
+    val inputPath = "target/data.avro"
 
     val datum = new WeatherRecord(2000, 10, "id")
 
@@ -135,7 +135,7 @@ class RDDCreationTest extends FunSuite with BeforeAndAfterEach {
   }
 
   test("avro reflect data file") {
-    val inputPath = "data.avro"
+    val inputPath = "target/data.avro"
 
     val datum: ReflectWeatherRecord = new ReflectWeatherRecord(2000, 10, "id")
 
