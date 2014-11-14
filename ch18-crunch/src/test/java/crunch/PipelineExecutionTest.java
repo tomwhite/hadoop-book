@@ -84,11 +84,9 @@ public class PipelineExecutionTest implements Serializable {
     hist.write(To.textFile(outputPath), Target.WriteMode.OVERWRITE);
     PipelineExecution execution = pipeline.runAsync();
     String dot = execution.getPlanDotFile();
-    Files.write(dot, new File("pipeline.dot"), Charsets.UTF_8);
+    Files.write(dot, dotFile(), Charsets.UTF_8);
     execution.waitUntilDone();
     pipeline.done();
-
-    Files.copy(new File("pipeline.dot"), new File(name.getMethodName() + ".dot"));
   }
 
   @Test
@@ -107,11 +105,9 @@ public class PipelineExecutionTest implements Serializable {
     hist.write(To.textFile(outputPath));
     PipelineResult result = pipeline.done();
     String dot = pipeline.getConfiguration().get("crunch.planner.dotfile");
-    Files.write(dot, new File("pipeline.dot"), Charsets.UTF_8);
+    Files.write(dot, dotFile(), Charsets.UTF_8);
 
     assertTrue(result.succeeded());
-
-    Files.copy(new File("pipeline.dot"), new File(name.getMethodName() + ".dot"));
   }
 
   @Test
@@ -296,7 +292,7 @@ public class PipelineExecutionTest implements Serializable {
 
     PipelineExecution execution = pipeline.runAsync();
     execution.waitUntilDone();
-    FileUtils.write(new File(name.getMethodName() + ".dot"), execution.getPlanDotFile(),
+    FileUtils.write(dotFile(), execution.getPlanDotFile(),
         "UTF-8");
     assertEquals(2, execution.get().getStageResults().size());
 
@@ -317,7 +313,7 @@ public class PipelineExecutionTest implements Serializable {
 
     PipelineExecution execution = pipeline.runAsync();
     execution.waitUntilDone();
-    FileUtils.write(new File(name.getMethodName() + ".dot"), execution.getPlanDotFile(),
+    FileUtils.write(dotFile(), execution.getPlanDotFile(),
         "UTF-8");
     assertEquals(1, execution.get().getStageResults().size());
 
@@ -339,11 +335,15 @@ public class PipelineExecutionTest implements Serializable {
 
     PipelineExecution execution = pipeline.runAsync();
     execution.waitUntilDone();
-    FileUtils.write(new File(name.getMethodName() + ".dot"), execution.getPlanDotFile(),
+    FileUtils.write(dotFile(), execution.getPlanDotFile(),
         "UTF-8");
     assertEquals(1, execution.get().getStageResults().size());
 
     pipeline.done();
+  }
+
+  private File dotFile() {
+    return new File("target/" + name.getMethodName() + ".dot");
   }
 
 }

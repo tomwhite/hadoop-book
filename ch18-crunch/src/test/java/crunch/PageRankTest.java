@@ -143,6 +143,6 @@ public class PageRankTest implements Serializable {
   }
 
   private void writeDotFile(String dotfile) throws Exception {
-    FileUtils.write(new File("pagerank-" + i++ + ".dot"), dotfile, "UTF-8");
+    FileUtils.write(new File("target/pagerank-" + i++ + ".dot"), dotfile, "UTF-8");
   }
 }
