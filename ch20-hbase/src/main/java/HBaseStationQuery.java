@@ -45,15 +45,19 @@ public class HBaseStationQuery extends Configured implements Tool {
     }
 
     HTable table = new HTable(HBaseConfiguration.create(getConf()), "stations");
-    Map<String, String> stationInfo = getStationInfo(table, args[0]);
-    if (stationInfo == null) {
-      System.err.printf("Station ID %s not found.\n", args[0]);
-      return -1;
+    try {
+      Map<String, String> stationInfo = getStationInfo(table, args[0]);
+      if (stationInfo == null) {
+        System.err.printf("Station ID %s not found.\n", args[0]);
+        return -1;
+      }
+      for (Map.Entry<String, String> station : stationInfo.entrySet()) {
+        System.out.printf("%s\t%s\n", station.getKey(), station.getValue());
+      }
+      return 0;
+    } finally {
+      table.close();
     }
-    for (Map.Entry<String, String> station : stationInfo.entrySet()) {
-      System.out.printf("%s\t%s\n", station.getKey(), station.getValue());
-    }
-    return 0;
   }
 
   public static void main(String[] args) throws Exception {

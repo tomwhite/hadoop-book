@@ -61,16 +61,20 @@ public class HBaseTemperatureBulkImporter extends Configured implements Tool {
     job.setMapOutputKeyClass(ImmutableBytesWritable.class);
     job.setMapOutputValueClass(Put.class);
     HTable table = new HTable(conf, "observations");
-    HFileOutputFormat2.configureIncrementalLoad(job, table);
+    try {
+      HFileOutputFormat2.configureIncrementalLoad(job, table);
 
-    if (!job.waitForCompletion(true)) {
-      return 1;
+      if (!job.waitForCompletion(true)) {
+        return 1;
+      }
+
+      LoadIncrementalHFiles loader = new LoadIncrementalHFiles(conf);
+      loader.doBulkLoad(tmpPath, table);
+      FileSystem.get(conf).delete(tmpPath, true);
+      return 0;
+    } finally {
+      table.close();
     }
-
-    LoadIncrementalHFiles loader = new LoadIncrementalHFiles(conf);
-    loader.doBulkLoad(tmpPath, table);
-    FileSystem.get(conf).delete(tmpPath, true);
-    return 0;
   }
 
   public static void main(String[] args) throws Exception {

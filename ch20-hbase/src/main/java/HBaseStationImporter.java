@@ -19,22 +19,26 @@ public class HBaseStationImporter extends Configured implements Tool {
     }
     
     HTable table = new HTable(HBaseConfiguration.create(getConf()), "stations");
-    
-    NcdcStationMetadata metadata = new NcdcStationMetadata();
-    metadata.initialize(new File(args[0]));
-    Map<String, String> stationIdToNameMap = metadata.getStationIdToNameMap();
-    
-    for (Map.Entry<String, String> entry : stationIdToNameMap.entrySet()) {
-      Put put = new Put(Bytes.toBytes(entry.getKey()));
-      put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.NAME_QUALIFIER,
-        Bytes.toBytes(entry.getValue()));
-      put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.DESCRIPTION_QUALIFIER,
-        Bytes.toBytes("(unknown)"));
-      put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.LOCATION_QUALIFIER,
-        Bytes.toBytes("(unknown)"));
-      table.put(put);
+    try {
+      NcdcStationMetadata metadata = new NcdcStationMetadata();
+      metadata.initialize(new File(args[0]));
+      Map<String, String> stationIdToNameMap = metadata.getStationIdToNameMap();
+
+      for (Map.Entry<String, String> entry : stationIdToNameMap.entrySet()) {
+        Put put = new Put(Bytes.toBytes(entry.getKey()));
+        put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.NAME_QUALIFIER,
+            Bytes.toBytes(entry.getValue()));
+        put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.DESCRIPTION_QUALIFIER,
+
+            Bytes.toBytes("(unknown)"));
+        put.add(HBaseStationQuery.INFO_COLUMNFAMILY, HBaseStationQuery.LOCATION_QUALIFIER,
+            Bytes.toBytes("(unknown)"));
+        table.put(put);
+      }
+      return 0;
+    } finally {
+      table.close();
     }
-    return 0;
   }
 
   public static void main(String[] args) throws Exception {

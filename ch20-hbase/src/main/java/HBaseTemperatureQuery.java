@@ -47,14 +47,18 @@ public class HBaseTemperatureQuery extends Configured implements Tool {
     }
     
     HTable table = new HTable(HBaseConfiguration.create(getConf()), "observations");
-    NavigableMap<Long, Integer> observations =
-      getStationObservations(table, args[0], Long.MAX_VALUE, 10).descendingMap();
-    for (Map.Entry<Long, Integer> observation : observations.entrySet()) {
-      // Print the date, time, and temperature
-      System.out.printf("%1$tF %1$tR\t%2$s\n", observation.getKey(),
-          observation.getValue());
+    try {
+      NavigableMap<Long, Integer> observations =
+          getStationObservations(table, args[0], Long.MAX_VALUE, 10).descendingMap();
+      for (Map.Entry<Long, Integer> observation : observations.entrySet()) {
+        // Print the date, time, and temperature
+        System.out.printf("%1$tF %1$tR\t%2$s\n", observation.getKey(),
+            observation.getValue());
+      }
+      return 0;
+    } finally {
+      table.close();
     }
-    return 0;
   }
 
   public static void main(String[] args) throws Exception {
