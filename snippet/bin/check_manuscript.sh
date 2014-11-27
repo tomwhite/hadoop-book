@@ -8,14 +8,14 @@ book_workspace=~/book-workspace/htdg-git
 
 for ch in ch02-mr-intro ch03-hdfs ch05-io ch06-mr-dev ch08-mr-types ch09-mr-features ch16-pig ch17-hive ch21-zk
 do
-  # remove id attributes from program listings, and add a newline before </programlisting>
-  sed '/<programlisting/s/ id="[^"]*"//; s|</programlisting>|\
+  # remove id and language attributes from program listings, and add a newline before </programlisting>
+  sed '/<programlisting/s/ id="[^"]*"//; /<programlisting/s/ language="[^"]*"//; s|</programlisting>|\
 </programlisting>|' $book_workspace/$ch.xml > /tmp/$ch.xml
   $bin/check_manuscript.py /tmp/$ch.xml $actual/$ch/*
 done
 
 # Avro check
-sed -e '/<programlisting/s/ id="[^"]*"//; s|</programlisting>|\
+sed -e '/<programlisting/s/ id="[^"]*"//; /<programlisting/s/ language="[^"]*"//;  s|</programlisting>|\
 </programlisting>|' $book_workspace/ch12-avro.xml > /tmp/ch12-avro.xml
 $bin/check_manuscript.py /tmp/ch12-avro.xml $actual/ch12-avro/*
 
