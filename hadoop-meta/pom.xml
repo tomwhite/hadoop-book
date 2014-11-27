@@ -13,10 +13,6 @@
   <version>4.0</version>
   <name>Hadoop dependencies</name>
 
-  <properties>
-    <hadoop.version>2.5.1</hadoop.version>
-  </properties>
-
   <build>
     <plugins>
       <plugin>

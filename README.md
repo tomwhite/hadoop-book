@@ -1,6 +1,7 @@
-# Example source code accompanying O'Reilly's "Hadoop: The Definitive Guide" by Tom White
+# Hadoop Book Example Code
 
-This repository contains the example code for [Hadoop: The Definitive Guide, Fourth Edition](http://shop.oreilly.com/product/0636920033448.do).
+This repository contains the example code for [Hadoop: The Definitive Guide, Fourth Edition](http://shop.oreilly.com/product/0636920033448.do)
+by Tom White (O'Reilly, 2014).
 
 Code for the [First], [Second], and [Third] Editions is also available.
 
@@ -37,8 +38,8 @@ This edition of the book works with Hadoop 2. It has not been tested extensively
 Hadoop 1, although most of it should work.
 
 For the precise versions of each component that the code has been tested with, see 
-[book/pom.xml](book/pom.xml) and [hadoop-meta/pom.xml](hadoop-meta/pom.xml).
+[book/pom.xml](book/pom.xml).
 
 ## Copyright
 
-Copyright (C) 2014 Tom White, ISBN: 978-1-4919-0163-2
+Copyright (C) 2014 Tom White
