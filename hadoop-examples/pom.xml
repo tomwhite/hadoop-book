@@ -4,50 +4,50 @@
   <parent>
     <groupId>com.hadoopbook</groupId>
     <artifactId>book</artifactId>
-    <version>3.0</version>
+    <version>4.0</version>
     <relativePath>../book/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
   <artifactId>hadoop-examples</artifactId>
   <packaging>pom</packaging>
-  <version>3.0</version>
+  <version>4.0</version>
   <name>Hadoop Examples JAR</name>
   <!-- Packages all the Hadoop examples into a single JAR -->
   <dependencies>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>common</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>ch02-mr-intro</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>ch03-hdfs</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>ch05-io</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>ch06-mr-dev</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>ch08-mr-types</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>ch09-mr-features</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
   </dependencies>
   <build>

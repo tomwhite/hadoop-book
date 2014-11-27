@@ -4,7 +4,7 @@
   <groupId>com.hadoopbook</groupId>
   <artifactId>book</artifactId>
   <packaging>pom</packaging>
-  <version>3.0</version>
+  <version>4.0</version>
   <name>Hadoop: The Definitive Guide, Project</name>
   <url>http://hadoopbook.com</url>
   

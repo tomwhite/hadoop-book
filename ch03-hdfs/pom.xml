@@ -4,13 +4,13 @@
   <parent>
     <groupId>com.hadoopbook</groupId>
     <artifactId>hadoop-meta</artifactId>
-    <version>3.0</version>
+    <version>4.0</version>
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
   <artifactId>ch03-hdfs</artifactId>
   <packaging>jar</packaging>
-  <version>3.0</version>
+  <version>4.0</version>
   <name>Chapter 3: The Hadoop Distributed Filesystem</name>
   <dependencies>
     <dependency>

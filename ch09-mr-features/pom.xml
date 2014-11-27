@@ -4,29 +4,29 @@
   <parent>
     <groupId>com.hadoopbook</groupId>
     <artifactId>hadoop-meta</artifactId>
-    <version>3.0</version>
+    <version>4.0</version>
     <relativePath>../hadoop-meta/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
   <artifactId>ch09-mr-features</artifactId>
   <packaging>jar</packaging>
-  <version>3.0</version>
+  <version>4.0</version>
   <name>Chapter 9: MapReduce Features</name>
   <dependencies>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>common</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>ch02-mr-intro</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>ch05-io</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
