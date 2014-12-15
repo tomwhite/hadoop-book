@@ -118,7 +118,6 @@ public class PageRankTest implements Serializable {
 
   @Test
   public void test() throws Exception {
-    Configuration conf = tmpDir.getDefaultConfiguration();
     String urlInput = tmpDir.copyResourceFileName("urls.txt");
     Pipeline pipeline = new MRPipeline(getClass());
     PTable<String, PageRankData> scores = readUrls(pipeline, urlInput);
@@ -126,10 +125,10 @@ public class PageRankTest implements Serializable {
     while (delta > 0.01) {
       scores = pageRank(scores, 0.5f);
       scores.materialize().iterator(); // force scores to be materialized
-//      writeDotFile(conf.get("crunch.planner.dotfile"));
+      //writeDotFile(pipeline.getConfiguration().get("crunch.planner.dotfile"));
       PObject<Float> pDelta = computeDelta(scores);
       delta = pDelta.getValue();
-//      writeDotFile(conf.get("crunch.planner.dotfile"));
+      //writeDotFile(pipeline.getConfiguration().get("crunch.planner.dotfile"));
     }
     pipeline.done();
     assertEquals(0.0048, delta, 0.001);
