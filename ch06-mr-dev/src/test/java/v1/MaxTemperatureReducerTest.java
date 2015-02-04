@@ -14,7 +14,8 @@ public class MaxTemperatureReducerTest {
       InterruptedException {
     new ReduceDriver<Text, IntWritable, Text, IntWritable>()
       .withReducer(new MaxTemperatureReducer())
-      .withInput(new Text("1950"), Arrays.asList(new IntWritable(10), new IntWritable(5)))
+      .withInput(new Text("1950"),
+          Arrays.asList(new IntWritable(10), new IntWritable(5)))
       .withOutput(new Text("1950"), new IntWritable(10))
       .runTest();
   }

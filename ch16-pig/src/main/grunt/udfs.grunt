@@ -14,7 +14,8 @@ filtered_records = FILTER records BY temperature != 9999 AND
 -- ^^ udfs_invoke_long
 -- vv udfs_invoke_short
 DEFINE isGood com.hadoopbook.pig.IsGoodQuality();
-filtered_records = FILTER records BY temperature != 9999 AND isGood(quality);
+filtered_records = FILTER records BY temperature != 9999 AND
+  isGood(quality);
 -- ^^ udfs_invoke_short
 DUMP filtered_records;
 
@@ -28,7 +29,8 @@ DESCRIBE B;
 -- ^^ udfs_schema
 
 -- vv udfs_dynamic_invoker
-DEFINE trim InvokeForString('org.apache.commons.lang.StringUtils.trim', 'String');
+DEFINE trim InvokeForString('org.apache.commons.lang.StringUtils.trim',
+  'String');
 B = FOREACH A GENERATE trim(fruit);
 DUMP B;
 -- ^^ udfs_dynamic_invoker

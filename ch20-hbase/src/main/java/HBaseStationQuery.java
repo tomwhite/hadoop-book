@@ -27,7 +27,8 @@ public class HBaseStationQuery extends Configured implements Tool {
     }
     Map<String, String> resultMap = new LinkedHashMap<String, String>();
     resultMap.put("name", getValue(res, INFO_COLUMNFAMILY, NAME_QUALIFIER));
-    resultMap.put("location", getValue(res, INFO_COLUMNFAMILY, LOCATION_QUALIFIER));
+    resultMap.put("location", getValue(res, INFO_COLUMNFAMILY,
+        LOCATION_QUALIFIER));
     resultMap.put("description", getValue(res, INFO_COLUMNFAMILY,
         DESCRIPTION_QUALIFIER));
     return resultMap;

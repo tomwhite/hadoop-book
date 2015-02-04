@@ -81,7 +81,8 @@ public class PrimitiveOperationsTest implements Serializable {
   @Test
   public void testPCollectionParallelDoExtractKey() throws Exception {
     PCollection<String> a = MemPipeline.collectionOf("cherry", "apple", "banana");
-    PTable<Integer, String> b = a.parallelDo(new DoFn<String, Pair<Integer, String>>() {
+    PTable<Integer, String> b = a.parallelDo(
+        new DoFn<String, Pair<Integer, String>>() {
       @Override
       public void process(String input, Emitter<Pair<Integer, String>> emitter) {
         emitter.emit(Pair.of(input.length(), input));
@@ -132,7 +133,8 @@ public class PrimitiveOperationsTest implements Serializable {
 
     c = b.groupByKey(); // since value iterator is single use
 
-    PTable<Integer, String> e = c.combineValues(Aggregators.STRING_CONCAT(";", false));
+    PTable<Integer, String> e = c.combineValues(Aggregators.STRING_CONCAT(";",
+      false));
     assertEquals("{(5,apple),(6,banana;cherry)}", dump(e));
 
     c = b.groupByKey();

@@ -15,11 +15,13 @@ cat output/part-00000
 cat input/ncdc/sample.txt | ch02-mr-intro/src/main/ruby/max_temperature_map.rb
 : ^^ max_temp_ruby_map
 : vv max_temp_ruby_pipeline
-cat input/ncdc/sample.txt | ch02-mr-intro/src/main/ruby/max_temperature_map.rb | \
+cat input/ncdc/sample.txt | \
+  ch02-mr-intro/src/main/ruby/max_temperature_map.rb | \
   sort | ch02-mr-intro/src/main/ruby/max_temperature_reduce.rb
 : ^^ max_temp_ruby_pipeline
 : vv max_temp_python_pipeline
-cat input/ncdc/sample.txt | ch02-mr-intro/src/main/python/max_temperature_map.py | \
+cat input/ncdc/sample.txt | \
+  ch02-mr-intro/src/main/python/max_temperature_map.py | \
   sort | ch02-mr-intro/src/main/python/max_temperature_reduce.py
 : ^^ max_temp_python_pipeline
   

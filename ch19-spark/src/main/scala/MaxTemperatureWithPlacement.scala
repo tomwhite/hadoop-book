@@ -9,7 +9,8 @@ object MaxTemperatureWithPlacement {
     val inputPath = args(0)
     val conf = new SparkConf().setAppName("Max Temperature")
     val preferredLocations = InputFormatInfo.computePreferredLocations(
-      Seq(new InputFormatInfo(new Configuration(), classOf[TextInputFormat], inputPath)))
+      Seq(new InputFormatInfo(new Configuration(), classOf[TextInputFormat],
+        inputPath)))
     val sc = new SparkContext(conf, preferredLocations)
 
     sc.textFile(args(0))

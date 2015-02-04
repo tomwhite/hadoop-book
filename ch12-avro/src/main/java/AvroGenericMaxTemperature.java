@@ -40,7 +40,8 @@ public class AvroGenericMaxTemperature extends Configured implements Tool {
   );
 
   public static class MaxTemperatureMapper
-      extends Mapper<LongWritable, Text, AvroKey<Integer>, AvroValue<GenericRecord>> {
+      extends Mapper<LongWritable, Text, AvroKey<Integer>,
+            AvroValue<GenericRecord>> {
     private NcdcRecordParser parser = new NcdcRecordParser();
     private GenericRecord record = new GenericData.Record(SCHEMA);
 

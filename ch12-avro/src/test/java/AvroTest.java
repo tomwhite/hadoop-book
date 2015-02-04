@@ -98,7 +98,8 @@ public class AvroTest {
   public void testPairGeneric() throws IOException {
 // vv AvroParseSchema
     Schema.Parser parser = new Schema.Parser();
-    Schema schema = parser.parse(getClass().getResourceAsStream("StringPair.avsc"));
+    Schema schema = parser.parse(
+      getClass().getResourceAsStream("StringPair.avsc"));
 // ^^ AvroParseSchema
     
 // vv AvroGenericRecordCreation
@@ -109,7 +110,8 @@ public class AvroTest {
     
 // vv AvroGenericRecordSerialization
     ByteArrayOutputStream out = new ByteArrayOutputStream();
-    DatumWriter<GenericRecord> writer = new GenericDatumWriter<GenericRecord>(schema);
+    DatumWriter<GenericRecord> writer =
+      new GenericDatumWriter<GenericRecord>(schema);
     Encoder encoder = EncoderFactory.get().binaryEncoder(out, null);
     writer.write(datum, encoder);
     encoder.flush();
@@ -117,8 +119,10 @@ public class AvroTest {
 // ^^ AvroGenericRecordSerialization
     
 // vv AvroGenericRecordDeserialization
-    DatumReader<GenericRecord> reader = new GenericDatumReader<GenericRecord>(schema);
-    Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(), null);
+    DatumReader<GenericRecord> reader =
+      new GenericDatumReader<GenericRecord>(schema);
+    Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(),
+      null);
     GenericRecord result = reader.read(null, decoder);
     assertThat(result.get("left").toString(), is("L"));
     assertThat(result.get("right").toString(), is("R"));
@@ -143,7 +147,8 @@ public class AvroTest {
     
     /*[*/DatumReader<StringPair> reader =
       new SpecificDatumReader<StringPair>(StringPair.class);/*]*/
-    Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(), null);
+    Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(),
+      null);
     StringPair result = reader.read(null, decoder);
     assertThat(result./*[*/getLeft()/*]*/, is("L"));
     assertThat(result./*[*/getRight()/*]*/, is("R"));
@@ -160,7 +165,8 @@ public class AvroTest {
 
 // vv AvroDataFileCreation
     File file = new File("data.avro");
-    DatumWriter<GenericRecord> writer = new GenericDatumWriter<GenericRecord>(schema);
+    DatumWriter<GenericRecord> writer =
+      new GenericDatumWriter<GenericRecord>(schema);
     DataFileWriter<GenericRecord> dataFileWriter =
       new DataFileWriter<GenericRecord>(writer);
     dataFileWriter.create(schema, file);
@@ -302,7 +308,8 @@ public class AvroTest {
 // vv AvroSchemaResolution
     DatumReader<GenericRecord> reader =
       /*[*/new GenericDatumReader<GenericRecord>(schema, newSchema);/*]*/
-    Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(), null);
+    Decoder decoder = DecoderFactory.get().binaryDecoder(out.toByteArray(),
+      null);
     GenericRecord result = reader.read(null, decoder);
     assertThat(result.get("left").toString(), is("L"));
     assertThat(result.get("right").toString(), is("R"));

@@ -50,7 +50,8 @@
     <error to="fail"/>
   </action>
   <kill name="fail">
-    <message>MapReduce failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    <message>MapReduce failed, error message[${wf:errorMessage(wf:lastErrorNode())}]
+    </message>
   </kill>
   <end name="end"/>
 </workflow-app>
