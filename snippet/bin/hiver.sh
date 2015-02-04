@@ -14,8 +14,8 @@ actual="$bin"/../actual
 
 cd "$bin"/../..
 
-#rm -rf $actual/ch17-hive
-mkdir -p $actual/ch17-hive
+#rm -rf $actual/ch17
+mkdir -p $actual/ch17
 
 for f in ch17-hive/src/main/hive/*.hive; do
   out=$f.output.txt
@@ -35,7 +35,7 @@ for f in ch17-hive/src/main/hive/*.hive; do
     > $out
    
   cat $out
-  python "$bin"/phragmite_hive.py $out $actual/ch17-hive
+  python "$bin"/phragmite_hive.py $out $actual/ch17
   rm $out
 done
 
