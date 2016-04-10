@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<configuration>
+
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://localhost/</value>
+  </property>
+
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+  </property>
+
+  <property>
+    <name>yarn.resourcemanager.address</name>
+    <value>localhost:8032</value>
+  </property>
+  
+</configuration>

@@ -17,4 +17,4 @@ mvn verify
 mvn verify -DargLine="-Dexample.mode=pseudo"
 
 # Run the examples from chapter 2 only
-mvn verify -DargLine="-Dexample.chapters=ch02"
+mvn verify -DargLine="-Dexample.chapters=ch02-mr-intro"

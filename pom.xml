@@ -4,26 +4,29 @@
   <groupId>com.hadoopbook</groupId>
   <artifactId>root</artifactId>
   <packaging>pom</packaging>
-  <version>3.0</version>
+  <version>4.0</version>
   <name>Hadoop: The Definitive Guide, Example Code</name>
   <url>http://hadoopbook.com</url>
   
   <modules>
     <module>book</module>
     <module>common</module>
-    <module>ch02</module>
-    <module>ch03</module>
-    <module>ch04</module>
-    <module>ch04-avro</module>
-    <module>ch05</module>
-    <module>ch07</module>
-    <module>ch08</module>
-    <module>ch11</module>
-    <module>ch12</module>
-    <module>ch13</module>
-    <module>ch14</module>
-    <module>ch15</module>
-    <module>ch16</module>
+    <module>ch02-mr-intro</module>
+    <module>ch03-hdfs</module>
+    <module>ch05-io</module>
+    <module>ch06-mr-dev</module>
+    <module>ch08-mr-types</module>
+    <module>ch09-mr-features</module>
+    <module>ch12-avro</module>
+    <module>ch13-parquet</module>
+    <module>ch15-sqoop</module>
+    <module>ch16-pig</module>
+    <module>ch17-hive</module>
+    <module>ch18-crunch</module>
+    <module>ch19-spark</module>
+    <module>ch20-hbase</module>
+    <module>ch21-zk</module>
+    <module>ch22-case-studies</module>
     <module>hadoop-examples</module>
     <module>snippet</module>
   </modules>

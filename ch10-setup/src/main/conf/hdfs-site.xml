@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- hdfs-site.xml -->
+<configuration>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>/disk1/hdfs/name,/remote/hdfs/name</value>
+  </property>
+
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>/disk1/hdfs/data,/disk2/hdfs/data</value>
+  </property>
+  
+  <property>
+    <name>dfs.namenode.checkpoint.dir</name>
+    <value>/disk1/hdfs/namesecondary,/disk2/hdfs/namesecondary</value>
+  </property>
+</configuration>

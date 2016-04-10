@@ -10,10 +10,10 @@ actual="$bin"/../actual
 
 cd "$bin"/../..
 
-rm -rf $actual/ch11
-mkdir -p $actual/ch11
+rm -rf $actual/ch16
+mkdir -p $actual/ch16
 
-for f in ch11/src/main/grunt/*.grunt; do
+for f in ch16-pig/src/main/grunt/*.grunt; do
   out=$f.output.txt
   pig -x local < $f 2> /dev/null \
       | grep -v INFO \
@@ -26,7 +26,7 @@ for f in ch11/src/main/grunt/*.grunt; do
             -e 's|^\(&gt;&gt; \)\(.*\)|<prompt moreinfo="none">\1</prompt><userinput moreinfo="none">\2</userinput>|' \
       > $out
   cat $out
-  python "$bin"/phragmite_pig.py $out $actual/ch11
+  python "$bin"/phragmite_pig.py $out $actual/ch16
   rm $out
 done
 

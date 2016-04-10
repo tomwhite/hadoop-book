@@ -1,0 +1,17 @@
+! echo; # == max_temp_select;
+
+DROP TABLE IF EXISTS records;
+
+CREATE TABLE records (year STRING, temperature INT, quality INT)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t';
+
+LOAD DATA LOCAL INPATH 'input/ncdc/micro-tab/sample.txt'
+OVERWRITE INTO TABLE records;
+
+! echo; # vv max_temp_select;
+SELECT year, MAX(temperature)
+FROM records
+WHERE temperature != 9999 AND quality IN (0, 1, 4, 5, 9)
+GROUP BY year;
+! echo; # ^^ max_temp_select;

@@ -4,18 +4,20 @@ bin=`dirname "$0"`
 bin=`cd "$bin"; pwd`
 
 actual="$bin"/../actual
+book_workspace=~/book-workspace/htdg-git
 
-# Should add remaining chapters: ch03 ch04 ch14
-for ch in ch02 ch05 ch07 ch08 ch11 ch12
+for ch in ch02 ch03 ch05 ch06 ch08 ch09 ch16 ch17 ch21
 do
-  # remove any id attributes from program listings
-  sed '/<programlisting/s/ id=".*"//' ~/book-workspace/htdg3/$ch.xml > /tmp/$ch.xml
-  $bin/check_manuscript.py  /tmp/$ch.xml $actual/$ch/*
+  # remove id and language attributes from program listings, and add a newline before </programlisting>
+  sed '/<programlisting/s/ id="[^"]*"//; /<programlisting/s/ language="[^"]*"//; s|</programlisting>|\
+</programlisting>|' $book_workspace/$ch.xml > /tmp/$ch.xml
+  $bin/check_manuscript.py /tmp/$ch.xml $actual/$ch/*
 done
 
 # Avro check
-sed '/<programlisting/s/ id=".*"//' ~/book-workspace/htdg3/ch04.xml > /tmp/ch04-avro.xml
-$bin/check_manuscript.py  /tmp/ch04-avro.xml $actual/ch04-avro/*
+sed -e '/<programlisting/s/ id="[^"]*"//; /<programlisting/s/ language="[^"]*"//;  s|</programlisting>|\
+</programlisting>|' $book_workspace/ch12.xml > /tmp/ch12.xml
+$bin/check_manuscript.py /tmp/ch12.xml $actual/ch12/*
 
 # Common check
-$bin/check_manuscript.py  ~/book-workspace/htdg3/ch07.xml $actual/common/*
+$bin/check_manuscript.py /tmp/ch08-mr-types.xml $actual/common/*

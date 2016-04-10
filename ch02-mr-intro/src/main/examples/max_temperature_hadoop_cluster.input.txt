@@ -1,0 +1,8 @@
+hadoop jar $HADOOP_HOME/share/hadoop/tools/lib/hadoop-streaming-*.jar \
+  -files ch02-mr-intro/src/main/ruby/max_temperature_map.rb,\
+ch02-mr-intro/src/main/ruby/max_temperature_reduce.rb \
+  -input input/ncdc/all \
+  -output output \
+  -mapper ch02-mr-intro/src/main/ruby/max_temperature_map.rb \
+  -combiner ch02-mr-intro/src/main/ruby/max_temperature_reduce.rb \
+  -reducer ch02-mr-intro/src/main/ruby/max_temperature_reduce.rb

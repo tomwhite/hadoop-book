@@ -1,0 +1,57 @@
+<workflow-app xmlns="uri:oozie:workflow:0.1" name="max-temp-workflow">
+  <start to="max-temp-mr"/>
+  <action name="max-temp-mr">
+    <map-reduce>
+      <job-tracker>${resourceManager}</job-tracker>
+      <name-node>${nameNode}</name-node>
+      <prepare>
+        <delete path="${nameNode}/user/${wf:user()}/output"/>
+      </prepare>
+      <configuration>
+        <property>
+          <name>mapred.mapper.new-api</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>mapred.reducer.new-api</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>mapreduce.job.map.class</name>
+          <value>MaxTemperatureMapper</value>
+        </property>
+        <property>
+          <name>mapreduce.job.combine.class</name>
+          <value>MaxTemperatureReducer</value>
+        </property>
+        <property>
+          <name>mapreduce.job.reduce.class</name>
+          <value>MaxTemperatureReducer</value>
+        </property>
+        <property>
+          <name>mapreduce.job.output.key.class</name>
+          <value>org.apache.hadoop.io.Text</value>
+        </property>
+        <property>
+          <name>mapreduce.job.output.value.class</name>
+          <value>org.apache.hadoop.io.IntWritable</value>
+        </property>        
+        <property>
+          <name>mapreduce.input.fileinputformat.inputdir</name>
+          <value>/user/${wf:user()}/input/ncdc/micro</value>
+        </property>
+        <property>
+          <name>mapreduce.output.fileoutputformat.outputdir</name>
+          <value>/user/${wf:user()}/output</value>
+        </property>
+      </configuration>
+    </map-reduce>
+    <ok to="end"/>
+    <error to="fail"/>
+  </action>
+  <kill name="fail">
+    <message>MapReduce failed, error message[${wf:errorMessage(wf:lastErrorNode())}]
+    </message>
+  </kill>
+  <end name="end"/>
+</workflow-app>

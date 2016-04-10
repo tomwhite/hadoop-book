@@ -4,22 +4,18 @@
   <parent>
     <groupId>com.hadoopbook</groupId>
     <artifactId>book</artifactId>
-    <version>3.0</version>
+    <version>4.0</version>
     <relativePath>../book/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
   <artifactId>snippet</artifactId>
   <packaging>jar</packaging>
-  <version>3.0</version>
+  <version>4.0</version>
   <name>Snippet testing</name>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-all</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>

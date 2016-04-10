@@ -1,0 +1,8 @@
+{
+  "type": "record",
+  "name": "example.IntWrapper",
+  "doc": "A record with a single int value field.",
+  "fields": [
+    {"name": "value", "type": "int"}
+  ]
+}

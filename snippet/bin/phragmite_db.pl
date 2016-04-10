@@ -171,8 +171,7 @@ for my $file (map { s{\\}{/}g; glob $_ } @ARGV) {
         my $line = $_;
         $line =~ s!&!&amp;!g;                         # escape XML &
         $line =~ s!<!&lt;!g;                          # escape XML <
-        $line =~ s!"!&quot;!g;                        # escape XML "
-        $line =~ s!'!&apos;!g;                        # escape XML '
+        $line =~ s!>!&gt;!g;                          # escape XML >
         $line =~ s!/\*\*\s*(\S+(?:\s+\S+)*)\s*\*\*/!/\* \`\{$1\}\` \*/!g;
         $line =~ s!/\*\[\*/!<emphasis role="bold">!g; # /*[*/
         $line =~ s!/\*]\*/!</emphasis>!g;             # /*]*/
@@ -316,37 +315,41 @@ for my $key (sort keys %fragments) {
         warn "fragment $key should be one of !!, ??, or ==\n";
         undef $good;
     }
-    print OUT "<!-- Generated from ", $fileNames{$key}, " -->\n";
-    if ($good) {
-        print OUT "<example id=\"$key\">\n";	
-        print OUT $header{$key};
-        print OUT "  <title>$caption</title>\n";	
-        print OUT "  <programlisting";
-        print OUT " $options" if $options;
-        print OUT " format=\"linespecific\">$fragment</programlisting>\n"; 
-        print OUT "</example>\n";
-    } elsif ($bad) {
-        print OUT "<example id=\"$key\">\n";  
-        print OUT $header{$key};
-        print OUT "  <title>$caption</title>\n";  
-        print OUT "  <programlisting";
-        print OUT " $options" if $options;
-        print OUT " format=\"linespecific\">$fragment</programlisting>\n"; 
-        print OUT "</example>\n";
-    } elsif ($nofloat) {
+
+    # Just print out the <programlisting> element, since <example> wrappers can be
+    # slightly different in the manuscript due to whitespace differences.
+
+    #print OUT "<!-- Generated from ", $fileNames{$key}, " -->\n";
+#    if ($good) {
+#        print OUT "<example id=\"$key\">\n";
+#        print OUT $header{$key};
+#        print OUT "  <title>$caption</title>\n";
+#        print OUT "  <programlisting";
+#        print OUT " $options" if $options;
+#        print OUT " format=\"linespecific\">$fragment</programlisting>\n";
+#        print OUT "</example>\n";
+#    } elsif ($bad) {
+#        print OUT "<example id=\"$key\">\n";
+#        print OUT $header{$key};
+#        print OUT "  <title>$caption</title>\n";
+#        print OUT "  <programlisting";
+#        print OUT " $options" if $options;
+#        print OUT " format=\"linespecific\">$fragment</programlisting>\n";
+#        print OUT "</example>\n";
+#    } elsif ($nofloat) {
         print OUT "<programlisting";
         print OUT " $options" if $options;
         print OUT " format=\"linespecific\">$fragment</programlisting>\n"; 
-    } else { # Hmm
-        print OUT "<example id=\"$key\">\n";  
-        print OUT $header{$key};
-        print OUT "  <title>$caption</title>\n";  
-        print OUT "  <programlisting";
-        print OUT " $options" if $options;
-        print OUT " format=\"linespecific\">$fragment</programlisting>\n"; 
-        print OUT "</example>\n";
-    }
-    
+#    } else { # Hmm
+#        print OUT "<example id=\"$key\">\n";
+#        print OUT $header{$key};
+#        print OUT "  <title>$caption</title>\n";
+#        print OUT "  <programlisting";
+#        print OUT " $options" if $options;
+#        print OUT " format=\"linespecific\">$fragment</programlisting>\n";
+#        print OUT "</example>\n";
+#    }
+#
     close OUT;
 }
 
@@ -381,7 +384,7 @@ sub leftShift {
 sub lengthCheck {
     my $key = shift;
     my $frag = shift;
-    $frag =~ s!(&lt;|&gt;|&amp;|&quot;|&apos;)!1!g;
+    $frag =~ s!(&lt;|&gt;|&amp;)!1!g;
     $frag =~ s!<emphasis role="bold">!!g;
     $frag =~ s!</emphasis>!!g;
     my $maxline = MAXLINE + 1;

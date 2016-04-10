@@ -1,0 +1,54 @@
+! echo; # == select_sales_and_things;
+! echo; # == inner_join;
+! echo; # == left_outer_join;
+! echo; # == right_outer_join;
+! echo; # == full_outer_join;
+! echo; # == semi_join;
+! echo; # == map_join;
+
+DROP TABLE IF EXISTS sales;
+CREATE TABLE sales (name STRING, id INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+DROP TABLE IF EXISTS things;
+CREATE TABLE things (id INT, name STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+LOAD DATA LOCAL INPATH 'input/hive/joins/sales.txt'
+OVERWRITE INTO TABLE sales;
+
+LOAD DATA LOCAL INPATH 'input/hive/joins/things.txt'
+OVERWRITE INTO TABLE things;
+
+! echo; # vv select_sales_and_things;
+SELECT * FROM sales;
+SELECT * FROM things;
+! echo; # ^^ select_sales_and_things;
+
+! echo; # vv inner_join;
+SELECT sales.*, things.*
+FROM sales JOIN things ON (sales.id = things.id);
+! echo; # ^^ inner_join;
+
+! echo; # vv left_outer_join;
+SELECT sales.*, things.*
+FROM sales LEFT OUTER JOIN things ON (sales.id = things.id);
+! echo; # ^^ left_outer_join;
+
+! echo; # vv right_outer_join;
+SELECT sales.*, things.*
+FROM sales RIGHT OUTER JOIN things ON (sales.id = things.id);
+! echo; # ^^ right_outer_join;
+
+! echo; # vv full_outer_join;
+SELECT sales.*, things.*
+FROM sales FULL OUTER JOIN things ON (sales.id = things.id);
+! echo; # ^^ full_outer_join;
+
+! echo; # vv semi_join;
+SELECT *
+FROM things LEFT SEMI JOIN sales ON (sales.id = things.id);
+! echo; # ^^ semi_join;
+
+SELECT /*+ MAPJOIN(things) */ sales.*, things.*
+FROM sales JOIN things ON (sales.id = things.id);

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Check that the expected (or actual) snippets are in the manuscript. E.g.
-# bin/check_manuscript.py  ~/book-workspace/htdg3/ch11.xml expected/ch11/grunt/*
+# bin/check_manuscript.py  ~/book-workspace/htdg-git/ch16-pig.xml expected/ch16-pig/grunt/*
 
 import sys
 
@@ -17,4 +17,6 @@ for snippet_file in sys.argv[2:]:
   index = manuscript.find(snippet)
   if index == -1:
     print "Snippet not found", snippet_file
+  #else:
+  #  print "Snippet found", snippet_file
 

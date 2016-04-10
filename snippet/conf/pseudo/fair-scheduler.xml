@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<allocations>
+  <defaultQueueSchedulingPolicy>fair</defaultQueueSchedulingPolicy>
+
+  <queue name="prod">
+    <weight>40</weight>
+    <schedulingPolicy>fifo</schedulingPolicy>
+  </queue>
+
+  <queue name="dev">
+    <weight>60</weight>
+    <queue name="eng" />
+    <queue name="science" />
+  </queue>
+
+  <userMaxAppsDefault>5</userMaxAppsDefault>
+
+  <queuePlacementPolicy>
+    <rule name="specified" />
+    <rule name="primaryGroup" create="false" />
+    <rule name="default" queue="dev.eng" />
+  </queuePlacementPolicy>
+</allocations>

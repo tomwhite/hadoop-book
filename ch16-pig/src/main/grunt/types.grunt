@@ -1,0 +1,35 @@
+A = LOAD 'input/pig/tuples/A'
+  AS (t0:tuple(f0:int, f2:chararray));
+DUMP A;
+DESCRIBE A;
+one = LOAD 'input/pig/types/one';
+B = FOREACH one GENERATE (1,'pomegranate')
+  AS t0:tuple(f0:int, f2:chararray);
+DUMP B;
+DESCRIBE B;
+C = FOREACH one GENERATE ['a'#'pomegranate']
+  AS t0:map[];
+DUMP C;
+DESCRIBE C;
+
+C = LOAD 'input/pig/types/C'
+  AS (f0:chararray, f1:chararray);
+D = FOREACH C GENERATE TOTUPLE(f0, f1);
+DUMP D;
+D = FOREACH C GENERATE (f0, f1);
+DUMP D;
+E = FOREACH C GENERATE TOBAG(f0, f1);
+DUMP E;
+E = FOREACH C GENERATE {f0, f1};
+DUMP E;
+F = FOREACH C GENERATE TOMAP(f0, f1);
+DUMP F;
+F = FOREACH C GENERATE [f0, f1];
+DUMP F;
+
+G = FOREACH one GENERATE true AS f0:boolean, 1 as f1:int, 1L as f2:long,
+  1.0F as f3:float, 1.0 as f4:double, '10000000000' as f5:biginteger,
+  '0.110001000000000000000001' as f6:bigdecimal, 'a' as f7:chararray,
+  ToDate('2012-01-02T03:04:05.678Z') as f8:datetime;
+DUMP G;
+DESCRIBE G;

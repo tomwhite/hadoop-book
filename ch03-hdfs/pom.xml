@@ -1,0 +1,33 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.hadoopbook</groupId>
+    <artifactId>hadoop-meta</artifactId>
+    <version>4.0</version>
+    <relativePath>../hadoop-meta/pom.xml</relativePath>
+  </parent>
+  <groupId>com.hadoopbook</groupId>
+  <artifactId>ch03-hdfs</artifactId>
+  <packaging>jar</packaging>
+  <version>4.0</version>
+  <name>Chapter 3: The Hadoop Distributed Filesystem</name>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+    </dependency>
+  </dependencies>
+</project>

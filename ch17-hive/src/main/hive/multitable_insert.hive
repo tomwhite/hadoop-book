@@ -1,0 +1,38 @@
+
+DROP TABLE IF exists records2;
+CREATE TABLE records2 (station STRING, year STRING, temperature INT, quality INT)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '\t';
+
+LOAD DATA LOCAL INPATH '/Users/tom/book-workspace/hadoop-book/input/ncdc/micro-tab/sample2.txt'
+OVERWRITE INTO TABLE records2;
+
+DROP TABLE IF exists stations_by_year;
+DROP TABLE IF exists records_by_year;
+DROP TABLE IF exists good_records_by_year;
+
+CREATE TABLE stations_by_year (year STRING, num INT);
+CREATE TABLE records_by_year (year STRING, num INT);
+CREATE TABLE good_records_by_year (year STRING, num INT);
+
+FROM records2
+INSERT OVERWRITE TABLE stations_by_year
+  SELECT year, COUNT(DISTINCT station)
+  GROUP BY year 
+INSERT OVERWRITE TABLE records_by_year
+  SELECT year, COUNT(1)
+  GROUP BY year
+INSERT OVERWRITE TABLE good_records_by_year
+  SELECT year, COUNT(1)
+  WHERE temperature != 9999 AND quality IN (0, 1, 4, 5, 9)
+  GROUP BY year;  
+  
+SELECT * FROM stations_by_year;
+SELECT * FROM records_by_year;
+SELECT * FROM good_records_by_year;
+
+SELECT /*+ MAPJOIN(records_by_year,good_records_by_year) */
+  stations_by_year.year, stations_by_year.num, records_by_year.num, good_records_by_year.num
+FROM stations_by_year
+  JOIN records_by_year ON (stations_by_year.year = records_by_year.year)
+  JOIN good_records_by_year ON (stations_by_year.year = good_records_by_year.year);

@@ -1,0 +1,45 @@
+-- == udfs_register
+-- == udfs_invoke_long
+-- == udfs_invoke_short
+-- == udfs_schema
+-- == udfs_schema_given
+-- == udfs_load
+-- vv udfs_register
+REGISTER pig-examples.jar;
+-- ^^ udfs_register
+records = LOAD 'input/ncdc/micro-tab/sample.txt' AS (year:chararray, temperature:int, quality);
+-- vv udfs_invoke_long
+filtered_records = FILTER records BY temperature != 9999 AND
+  com.hadoopbook.pig.IsGoodQuality(quality);
+-- ^^ udfs_invoke_long
+-- vv udfs_invoke_short
+DEFINE isGood com.hadoopbook.pig.IsGoodQuality();
+filtered_records = FILTER records BY temperature != 9999 AND
+  isGood(quality);
+-- ^^ udfs_invoke_short
+DUMP filtered_records;
+
+A = LOAD 'input/pig/udfs/A' AS (fruit:chararray);
+-- vv udfs_schema
+DUMP A;
+DESCRIBE A;
+B = FOREACH A GENERATE com.hadoopbook.pig.Trim(fruit);
+DUMP B;
+DESCRIBE B;
+-- ^^ udfs_schema
+
+-- vv udfs_dynamic_invoker
+DEFINE trim InvokeForString('org.apache.commons.lang.StringUtils.trim',
+  'String');
+B = FOREACH A GENERATE trim(fruit);
+DUMP B;
+-- ^^ udfs_dynamic_invoker
+DESCRIBE B;
+
+-- vv udfs_load
+records = LOAD 'input/ncdc/micro/sample.txt'
+  USING com.hadoopbook.pig.CutLoadFunc('16-19,88-92,93-93')
+  AS (year:int, temperature:int, quality:int);
+DUMP records;
+-- ^^ udfs_load
+

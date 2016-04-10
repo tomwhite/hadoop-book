@@ -1,0 +1,38 @@
+! echo; # == partitions;
+
+DROP TABLE IF EXISTS logs;
+
+CREATE TABLE logs (ts BIGINT, line STRING)
+PARTITIONED BY (dt STRING, country STRING);
+
+LOAD DATA LOCAL INPATH 'input/hive/partitions/file1'
+INTO TABLE logs
+PARTITION (dt='2001-01-01', country='GB');
+
+LOAD DATA LOCAL INPATH 'input/hive/partitions/file2'
+INTO TABLE logs
+PARTITION (dt='2001-01-01', country='GB');
+
+LOAD DATA LOCAL INPATH 'input/hive/partitions/file3'
+INTO TABLE logs
+PARTITION (dt='2001-01-01', country='US');
+
+LOAD DATA LOCAL INPATH 'input/hive/partitions/file4'
+INTO TABLE logs
+PARTITION (dt='2001-01-02', country='GB');
+
+LOAD DATA LOCAL INPATH 'input/hive/partitions/file5'
+INTO TABLE logs
+PARTITION (dt='2001-01-02', country='US');
+
+LOAD DATA LOCAL INPATH 'input/hive/partitions/file6'
+INTO TABLE logs
+PARTITION (dt='2001-01-02', country='US');
+
+! echo; # vv partitions;
+SHOW PARTITIONS logs;
+! echo; # ^^ partitions;
+
+SELECT ts, dt, line
+FROM logs
+WHERE country='GB';

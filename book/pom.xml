@@ -4,7 +4,7 @@
   <groupId>com.hadoopbook</groupId>
   <artifactId>book</artifactId>
   <packaging>pom</packaging>
-  <version>3.0</version>
+  <version>4.0</version>
   <name>Hadoop: The Definitive Guide, Project</name>
   <url>http://hadoopbook.com</url>
   
@@ -13,13 +13,17 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     
     <!-- Component versions are defined here -->
-    <!-- Note that Hadoop dependencies are defined in hadoop-meta -->
-    <avro.version>1.5.4</avro.version>
-    <pig.version>0.9.1</pig.version>
-    <hive.version>0.8.0</hive.version>
-    <hbase.version>0.94.15</hbase.version>
-    <zookeeper.version>3.4.2</zookeeper.version>
-    <sqoop.version>1.4.0-incubating</sqoop.version>
+    <avro.version>1.7.7</avro.version>
+    <crunch.version>0.11.0-hadoop2</crunch.version>
+    <hadoop.version>2.5.1</hadoop.version>
+    <hbase.version>0.98.7-hadoop2</hbase.version>
+    <hive.version>0.13.1</hive.version>
+    <mrunit.version>1.1.0</mrunit.version>
+    <parquet.version>1.5.0</parquet.version>
+    <pig.version>0.13.0</pig.version>
+    <spark.version>1.1.0</spark.version>
+    <sqoop.version>1.4.5</sqoop.version>
+    <zookeeper.version>3.4.6</zookeeper.version>
   </properties>
   
   <dependencyManagement>
@@ -32,11 +36,28 @@
       <dependency>
         <groupId>org.apache.avro</groupId>
         <artifactId>avro-mapred</artifactId>
+        <classifier>hadoop2</classifier>
         <version>${avro.version}</version>
       </dependency>
       <dependency>
+        <groupId>com.twitter</groupId>
+        <artifactId>parquet-avro</artifactId>
+        <version>${parquet.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-core</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
         <groupId>org.apache.hbase</groupId>
-        <artifactId>hbase</artifactId>
+        <artifactId>hbase-client</artifactId>
+        <version>${hbase.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hbase</groupId>
+        <artifactId>hbase-server</artifactId>
         <version>${hbase.version}</version>
       </dependency>
       <dependency>
@@ -87,6 +108,16 @@
         <version>${pig.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.apache.crunch</groupId>
+        <artifactId>crunch-core</artifactId>
+        <version>${crunch.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-core_2.10</artifactId>
+        <version>${spark.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.apache.zookeeper</groupId>
         <artifactId>zookeeper</artifactId>
         <version>${zookeeper.version}</version>
@@ -94,6 +125,7 @@
       <dependency>
         <groupId>org.apache.sqoop</groupId>
         <artifactId>sqoop</artifactId>
+        <classifier>hadoop200</classifier>
         <version>${sqoop.version}</version>
       </dependency>
       <dependency>
@@ -122,29 +154,35 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
-        <version>1.5.11</version>
+        <version>1.7.5</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-log4j12</artifactId>
-        <version>1.5.11</version>
+        <version>1.7.5</version>
       </dependency>
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.10</version>
+        <version>4.11</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.hamcrest</groupId>
         <artifactId>hamcrest-all</artifactId>
-        <version>1.1</version>
+        <version>1.3</version>
         <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>junit-addons</groupId>
         <artifactId>junit-addons</artifactId>
         <version>1.4</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.scalatest</groupId>
+        <artifactId>scalatest_2.10</artifactId>
+        <version>2.2.0</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -155,7 +193,7 @@
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
-        <version>2.0.1</version>
+        <version>2.4</version>
       </dependency>
       <dependency>
         <groupId>com.google.guava</groupId>
@@ -170,16 +208,21 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>2.3.2</version>
+        <version>3.1</version>
         <configuration>
           <source>1.6</source>
           <target>1.6</target>
+          <compilerArgs>
+            <arg>-Xlint:unchecked</arg>
+          </compilerArgs>
+          <showDeprecation>true</showDeprecation>
+          <showWarnings>true</showWarnings>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>1.0.1</version>
+        <version>1.3.1</version>
         <executions>
           <execution>
             <id>enforce-versions</id>
@@ -202,7 +245,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
-        <version>2.9</version>
+        <version>2.17</version>
         <executions>
           <execution>
             <id>integration-test</id>
@@ -221,40 +264,63 @@
       <plugin>
 	    <groupId>org.apache.maven.plugins</groupId>
 	    <artifactId>maven-surefire-plugin</artifactId>
-	    <version>2.5</version>
+	    <version>2.17</version>
 	    <configuration>
 	      <argLine>-Xmx1024m</argLine>
 	    </configuration>
       </plugin> 
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.4</version>
+        </plugin>
+        <plugin>
+          <groupId>net.alchim31.maven</groupId>
+          <artifactId>scala-maven-plugin</artifactId>
+          <version>3.1.6</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>compile</goal>
+                <goal>testCompile</goal>
+              </goals>
+              <configuration>
+                <args>
+                  <arg>-deprecation</arg>
+                  <arg>-dependencyfile</arg>
+                  <arg>${project.build.directory}/.scala_dependencies</arg>
+                </args>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.avro</groupId>
+          <artifactId>avro-maven-plugin</artifactId>
+          <version>${avro.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.scalatest</groupId>
+          <artifactId>scalatest-maven-plugin</artifactId>
+          <version>1.0</version>
+          <configuration>
+            <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+            <junitxml>.</junitxml>
+            <filereports>ScalaTestSuite.txt</filereports>
+          </configuration>
+          <executions>
+            <execution>
+              <id>test</id>
+              <goals>
+                <goal>test</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
-  
-  <repositories>
-    <repository>
-      <id>apache.releases</id>
-      <name>Apache Snapshot Repository</name>
-      <url>https://repository.apache.org/content/repositories/releases/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-    <repository>
-      <!-- For Hive snapshots until they get into Maven Central -->
-      <id>apache.snapshots</id>
-      <name>Apache Snapshot Repository</name>
-      <url>http://repository.apache.org/snapshots</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-    </repository>
-    <repository>
-      <!-- For CDH -->
-      <id>cloudera</id>
-      <url>https://repository.cloudera.com/content/repositories/releases/</url>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
 
 </project>

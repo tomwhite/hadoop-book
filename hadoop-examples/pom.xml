@@ -4,57 +4,56 @@
   <parent>
     <groupId>com.hadoopbook</groupId>
     <artifactId>book</artifactId>
-    <version>3.0</version>
+    <version>4.0</version>
     <relativePath>../book/pom.xml</relativePath>
   </parent>
   <groupId>com.hadoopbook</groupId>
   <artifactId>hadoop-examples</artifactId>
   <packaging>pom</packaging>
-  <version>3.0</version>
+  <version>4.0</version>
   <name>Hadoop Examples JAR</name>
   <!-- Packages all the Hadoop examples into a single JAR -->
   <dependencies>
     <dependency>
       <groupId>com.hadoopbook</groupId>
       <artifactId>common</artifactId>
-      <version>3.0</version>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch02</artifactId>
-      <version>3.0</version>
+      <artifactId>ch02-mr-intro</artifactId>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch03</artifactId>
-      <version>3.0</version>
+      <artifactId>ch03-hdfs</artifactId>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch04</artifactId>
-      <version>3.0</version>
+      <artifactId>ch05-io</artifactId>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch05</artifactId>
-      <version>3.0</version>
+      <artifactId>ch06-mr-dev</artifactId>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch07</artifactId>
-      <version>3.0</version>
+      <artifactId>ch08-mr-types</artifactId>
+      <version>4.0</version>
     </dependency>
     <dependency>
       <groupId>com.hadoopbook</groupId>
-      <artifactId>ch08</artifactId>
-      <version>3.0</version>
+      <artifactId>ch09-mr-features</artifactId>
+      <version>4.0</version>
     </dependency>
   </dependencies>
   <build>
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>2.2.1</version>
         <executions>
           <execution>
             <id>make-assembly</id>

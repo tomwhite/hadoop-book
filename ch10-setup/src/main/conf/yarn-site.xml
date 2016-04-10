@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!-- yarn-site.xml -->
+<configuration>
+  <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>resourcemanager</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.local-dirs</name>
+    <value>/disk1/nm-local-dir,/disk2/nm-local-dir</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce.shuffle</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.resource.memory-mb</name>
+    <value>16384</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.resource.cpu-vcores</name>
+    <value>16</value>
+  </property>
+</configuration>

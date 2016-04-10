@@ -8,7 +8,7 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
-      <directory>../ch05/src/main/resources/max-temp-workflow</directory>
+      <directory>../ch06-mr-dev/src/main/resources/max-temp-workflow</directory>
       <outputDirectory>max-temp-workflow</outputDirectory>
     </fileSet>
   </fileSets>

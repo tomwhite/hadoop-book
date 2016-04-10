@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.hadoopbook</groupId>
+    <artifactId>hadoop-meta</artifactId>
+    <version>4.0</version>
+    <relativePath>../hadoop-meta/pom.xml</relativePath>
+  </parent>
+  <groupId>com.hadoopbook</groupId>
+  <artifactId>ch15-sqoop</artifactId>
+  <packaging>jar</packaging>
+  <version>4.0</version>
+  <name>Chapter 15: Sqoop</name>
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.sqoop</groupId>
+      <artifactId>sqoop</artifactId>
+      <classifier>hadoop200</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro-mapred</artifactId>
+      <classifier>hadoop2</classifier>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>../book/src/main/assembly/jar.xml</descriptor>
+          </descriptors>
+          <finalName>sqoop-examples</finalName>
+          <outputDirectory>${project.build.directory}/../..</outputDirectory>
+          <appendAssemblyId>false</appendAssemblyId>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

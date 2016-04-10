@@ -1,0 +1,2 @@
+hadoop jar avro-examples.jar AvroSort input/avro/pairs.avro output \
+  ch12-avro/src/main/resources/SortedStringPair.avsc

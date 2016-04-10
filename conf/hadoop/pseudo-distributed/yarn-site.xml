@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!-- yarn-site.xml -->
+<configuration>
+  <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>localhost</value>
+  </property>
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+  </property>
+</configuration>
