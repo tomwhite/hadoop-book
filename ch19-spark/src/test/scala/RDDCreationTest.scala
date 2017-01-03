@@ -98,13 +98,13 @@ class RDDCreationTest extends FunSuite with BeforeAndAfterEach {
       job.getConfiguration)
 
     val record = data.first._1.datum
-    assert(record.get("left") === "L")
-    assert(record.get("right") === "R")
+    assert(record.get("left").toString === "L")
+    assert(record.get("right").toString === "R")
 
     // try to do a map to see if the Avro record can be serialized
     val record2 = data.map(rec => rec).first._1.datum
-    assert(record2.get("left") === "L")
-    assert(record2.get("right") === "R")
+    assert(record2.get("left").toString === "L")
+    assert(record2.get("right").toString === "R")
   }
 
   test("avro specific data file") {

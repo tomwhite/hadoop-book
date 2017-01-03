@@ -13,17 +13,17 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     
     <!-- Component versions are defined here -->
-    <avro.version>1.7.7</avro.version>
-    <crunch.version>0.11.0-hadoop2</crunch.version>
-    <hadoop.version>2.5.1</hadoop.version>
-    <hbase.version>0.98.7-hadoop2</hbase.version>
-    <hive.version>0.13.1</hive.version>
+    <avro.version>1.8.1</avro.version>
+    <crunch.version>0.14.0</crunch.version>
+    <hadoop.version>2.7.3</hadoop.version>
+    <hbase.version>1.2.4</hbase.version>
+    <hive.version>2.1.1</hive.version>
     <mrunit.version>1.1.0</mrunit.version>
-    <parquet.version>1.5.0</parquet.version>
-    <pig.version>0.13.0</pig.version>
-    <spark.version>1.1.0</spark.version>
-    <sqoop.version>1.4.5</sqoop.version>
-    <zookeeper.version>3.4.6</zookeeper.version>
+    <parquet.version>1.9.0</parquet.version>
+    <pig.version>0.16.0</pig.version>
+    <spark.version>2.1.0</spark.version>
+    <sqoop.version>1.4.6</sqoop.version>
+    <zookeeper.version>3.4.9</zookeeper.version>
   </properties>
   
   <dependencyManagement>
@@ -40,7 +40,7 @@
         <version>${avro.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.twitter</groupId>
+        <groupId>org.apache.parquet</groupId>
         <artifactId>parquet-avro</artifactId>
         <version>${parquet.version}</version>
         <exclusions>

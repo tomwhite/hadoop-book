@@ -39,7 +39,7 @@ public class PrimitiveOperationsTest implements Serializable {
     PCollection<Integer> a = MemPipeline.collectionOf(1, 3);
     PCollection<Integer> b = MemPipeline.collectionOf(2);
     PCollection<Integer> c = a.union(b);
-    assertEquals("{2,1,3}", dump(c));
+    assertEquals("{1,3,2}", dump(c));
   }
 
   @Test

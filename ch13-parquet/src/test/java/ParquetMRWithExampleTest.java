@@ -9,9 +9,9 @@ import org.apache.hadoop.util.Tool;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import parquet.example.data.Group;
-import parquet.hadoop.ParquetReader;
-import parquet.hadoop.example.GroupReadSupport;
+import org.apache.parquet.example.data.Group;
+import org.apache.parquet.hadoop.ParquetReader;
+import org.apache.parquet.hadoop.example.GroupReadSupport;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;

@@ -20,13 +20,12 @@
     <dependency>
       <groupId>org.apache.avro</groupId>
       <artifactId>avro-mapred</artifactId>
-      <version>1.7.6</version> <!-- Spark fails with Avro 1.7.7. TODO: investigate why -->
+      <classifier>hadoop2</classifier>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <!-- Spark uses a later version of Guava than Hadoop -->
-      <!-- TODO: remove when we upgrade to Spark 1.2.0, since it shades Guava https://issues.apache.org/jira/browse/SPARK-2848 -->
       <version>14.0.1</version>
     </dependency>
     <dependency>

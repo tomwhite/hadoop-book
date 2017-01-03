@@ -74,11 +74,10 @@ class DataSerializationTest extends FunSuite with BeforeAndAfterEach {
   test("avro specific java") {
     sc = new SparkContext("local", "test")
 
-    intercept[SparkException] {
-      sc.parallelize(Array(new IntWrapper(1), new IntWrapper(2), new IntWrapper(3)))
-        .map(_.getValue())
-        .reduce((x, y) => x + y)
-    }
+    val result = sc.parallelize(Array(new IntWrapper(1), new IntWrapper(2), new IntWrapper(3)))
+      .map(_.getValue())
+      .reduce((x, y) => x + y)
+    assert(result === 6)
   }
 
   test("avro specific kyro") {

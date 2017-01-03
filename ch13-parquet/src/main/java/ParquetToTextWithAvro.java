@@ -10,7 +10,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
-import parquet.avro.AvroParquetInputFormat;
+import org.apache.parquet.avro.AvroParquetInputFormat;
 
 /**
  * Convert Parquet files to text using Parquet's {@code AvroParquetInputFormat}.

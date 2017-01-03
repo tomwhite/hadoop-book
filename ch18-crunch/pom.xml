@@ -19,6 +19,12 @@
       <version>${crunch.version}</version>
     </dependency>
     <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <!-- Crunch uses a later version of Guava than Hadoop -->
+      <version>14.0.1</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.crunch</groupId>
       <artifactId>crunch-test</artifactId>
       <version>${crunch.version}</version>

@@ -9,8 +9,8 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
-import parquet.example.data.Group;
-import parquet.hadoop.example.ExampleInputFormat;
+import org.apache.parquet.example.data.Group;
+import org.apache.parquet.hadoop.example.ExampleInputFormat;
 
 /**
  * Convert Parquet files to text using Parquet's {@code ExampleInputFormat}.

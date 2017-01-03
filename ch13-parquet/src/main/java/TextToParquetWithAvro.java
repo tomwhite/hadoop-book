@@ -12,8 +12,8 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
-import parquet.avro.AvroParquetOutputFormat;
-import parquet.example.data.Group;
+import org.apache.parquet.avro.AvroParquetOutputFormat;
+import org.apache.parquet.example.data.Group;
 
 /**
  * Convert text files to Parquet files using Parquet's {@code AvroParquetOutputFormat}.

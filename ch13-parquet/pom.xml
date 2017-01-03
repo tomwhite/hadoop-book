@@ -14,7 +14,7 @@
   <name>Chapter 13: Parquet</name>
   <dependencies>
     <dependency>
-      <groupId>com.twitter</groupId>
+      <groupId>org.apache.parquet</groupId>
       <artifactId>parquet-avro</artifactId>
     </dependency>
     <dependency>
