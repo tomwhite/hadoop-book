@@ -11,6 +11,7 @@ public class MaxTemperatureMapper
   extends Mapper<LongWritable, Text, Text, IntWritable> {
 
   private static final int MISSING = 9999;
+  private static final Pattern qualityPattern = Pattern.compile("[01459]");
   
   @Override
   public void map(LongWritable key, Text value, Context context)
@@ -25,7 +26,7 @@ public class MaxTemperatureMapper
       airTemperature = Integer.parseInt(line.substring(87, 92));
     }
     String quality = line.substring(92, 93);
-    if (airTemperature != MISSING && quality.matches("[01459]")) {
+    if (airTemperature != MISSING && qualityPattern.matcher(quality).matches()) {
       context.write(new Text(year), new IntWritable(airTemperature));
     }
   }
