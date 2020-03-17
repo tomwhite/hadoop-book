@@ -14,7 +14,12 @@ Note that the chapter names and numbering has changed between editions, see
 
 ## Building and Running
 
-To build the code, you will first need to have installed Maven and Java. Then type
+To build the code, you will first need to have installed Maven and Java. 
+
+You may also need to create a `~/.m2/toolchains.xml` file as shown in the guide [here](
+https://maven.apache.org/guides/mini/guide-using-toolchains.html). 
+
+Then type
 
 ```bash
 % mvn package -DskipTests
