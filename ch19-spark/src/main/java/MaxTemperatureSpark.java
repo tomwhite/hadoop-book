@@ -25,7 +25,7 @@ public class MaxTemperatureSpark {
     });
     JavaRDD<String[]> filtered = records.filter(new Function<String[], Boolean>() {
       @Override public Boolean call(String[] rec) {
-        return rec[1] != "9999" && rec[2].matches("[01459]");
+        return !"9999".equals(rec[1]) && rec[2].matches("[01459]");
       }
     });
     JavaPairRDD<Integer, Integer> tuples = filtered.mapToPair(
